@@ -70,23 +70,29 @@ build() {
 	patch -Np1 -i $i || return 1
     done
 
-    if [ "$realtime_patch" = "0" ]; then
+#    if [ "$realtime_patch" = "0" ]; then
+# without fbcondecor, the rest of the patches apply cleanly
        # Applying extra gentoo patches
        for i in $(ls $startdir/src/[4-9][0-9][0-9][0-9]*); do
        	   echo "Applying $i" 
        	   patch -Np1 -i $i || return 1
        done
-    fi
+#    fi
 
     # applying reiserfs4 patch
     echo "Applying reiser4-for-2.6.30.patch" 
     patch -Np1 -i $startdir/src/reiser4-for-2.6.30.patch || return 1
 
-    if [ "$realtime_patch" = "0" ]; then
-       # applying tuxonice patch
-       echo "Applying current-tuxonice-for-2.6.31.patch-20090911-v1"
-       patch -Np1 -i $startdir/src/current-tuxonice-for-2.6.31.patch-20090911-v1 || return 1
+    # small fix to tuxonice patch to work with rt
+    if [ "$realtime_patch" = "1" ]; then
+       sed '/diff --git a\/kernel\/fork.c b\/kernel\/fork.c/,/{/d' \
+           $startdir/src/current-tuxonice-for-2.6.31.patch-20090911-v1 > \
+           $startdir/src/current-tuxonice-for-2.6.31.patch-20090911-v1
     fi
+
+    # applying tuxonice patch
+    echo "Applying current-tuxonice-for-2.6.31.patch-20090911-v1"
+    patch -Np1 -i $startdir/src/current-tuxonice-for-2.6.31.patch-20090911-v1 || return 1
 
     if [ "$enable_fastboot" = "1" ]; then
        # applying fastboot patch
