@@ -21,10 +21,8 @@ use_config_gz="0"
 ###
 
 source=(http://kernel.org/pub/linux/kernel/v2.6/linux-2.6.31.tar.bz2
-	http://www.kernel.org/pub/linux/kernel/v2.6/patch-2.6.31.1.bz2
-	http://www.kernel.org/pub/linux/kernel/projects/rt/patch-2.6.31-rt11.bz2
-	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.31/2300_cdc-acm-set-open-flag.patch
-	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.31/2900_cc1-option-fPIC-check.patch
+	http://www.kernel.org/pub/linux/kernel/v2.6/patch-2.6.31.2.bz2
+	http://www.kernel.org/pub/linux/kernel/projects/rt/patch-2.6.31.2-rt13.bz2
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.31/4100_dm-bbr.patch	
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.31/4202_fbcondecor-0.9.6.patch
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.31/4400_alpha-sysctl-uac.patch
@@ -38,10 +36,8 @@ source=(http://kernel.org/pub/linux/kernel/v2.6/linux-2.6.31.tar.bz2
 	mkinitcpio-$pkgname.conf)
 
 md5sums=('84c077a37684e4cbfa67b18154390d8a'
-         '43977a0a264dd7d173b6ef122c62fb20'
-         '7be575537db7ff654f8e53d4e17d1954'
-         '30cda1401d3791c55e586c9ff6503569'
-         'a6c79686b89a413153f3c26feb037c41'
+         '04bbd7d8b61e5e7536b978435f370f09'
+         '54827835fa03d2e82ae51c34919cfeb1'
          'e501d050605a7399e7b12a6b14903631'
          'b62bd712dd0d45b32ec73f522018a3a7'
          '21562518ab45d8be9c67d316aef9399f'
@@ -62,12 +58,12 @@ build() {
     
     # Applying official patch
     echo "Applying patch-$pkgver.1"
-    patch -Np1 -i $startdir/src/patch-$pkgver.1 || return 1
+    patch -Np1 -i $startdir/src/patch-$pkgver.2 || return 1
 
     # Applying realtime patch
     if [ "$realtime_patch" = "1" ]; then
        echo "Applying real time patch"
-       patch -Np1 -i $startdir/src/patch-2.6.31-rt11 || return 1       
+       patch -Np1 -i $startdir/src/patch-2.6.31.2-rt13 || return 1       
     fi
 
     # Applying base gentoo patches
