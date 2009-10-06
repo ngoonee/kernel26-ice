@@ -24,7 +24,6 @@ source=(http://kernel.org/pub/linux/kernel/v2.6/linux-2.6.31.tar.bz2
 	http://www.kernel.org/pub/linux/kernel/v2.6/patch-2.6.31.2.bz2
 	http://www.kernel.org/pub/linux/kernel/projects/rt/patch-2.6.31.2-rt13.bz2
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.31/4100_dm-bbr.patch	
-	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.31/4202_fbcondecor-0.9.6.patch
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.31/4400_alpha-sysctl-uac.patch
 	http://www.kernel.org/pub/linux/kernel/people/edward/reiser4/reiser4-for-2.6/reiser4-for-2.6.30.patch.gz
 	http://www.tuxonice.net/downloads/all/current-tuxonice-for-2.6.31.patch-20090911-v1.bz2
@@ -39,7 +38,6 @@ md5sums=('84c077a37684e4cbfa67b18154390d8a'
          '04bbd7d8b61e5e7536b978435f370f09'
          '54827835fa03d2e82ae51c34919cfeb1'
          'e501d050605a7399e7b12a6b14903631'
-         'b62bd712dd0d45b32ec73f522018a3a7'
          '21562518ab45d8be9c67d316aef9399f'
          'ecd82eb87e5da25e38db1ef34fd32b33'
          '0683813ac1a521408b4c136d72fbb9d2'
