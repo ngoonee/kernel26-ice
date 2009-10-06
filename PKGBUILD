@@ -2,7 +2,7 @@
 
 pkgname=kernel26-ice
 pkgver=2.6.31
-pkgrel=4
+pkgrel=5
 pkgdesc="The Linux Kernel and modules with gentoo-sources patchset and tuxonice support"
 arch=('i686' 'x86_64')
 license=('GPL2')
@@ -17,6 +17,7 @@ enable_fastboot="0"
 keep_source_code="0"
 menuconfig="0"
 realtime_patch="0"
+use_config_gz="0"
 ###
 
 source=(http://kernel.org/pub/linux/kernel/v2.6/linux-2.6.31.tar.bz2
@@ -29,7 +30,7 @@ source=(http://kernel.org/pub/linux/kernel/v2.6/linux-2.6.31.tar.bz2
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.31/4400_alpha-sysctl-uac.patch
 	http://www.kernel.org/pub/linux/kernel/people/edward/reiser4/reiser4-for-2.6/reiser4-for-2.6.30.patch.gz
 	http://www.tuxonice.net/downloads/all/current-tuxonice-for-2.6.31.patch-20090911-v1.bz2
-	http://ck.kolivas.org/patches/bfs/2.6.31-sched-bfs-300.patch
+	http://ck.kolivas.org/patches/bfs/2.6.31-sched-bfs-303.patch
 	Auke-Kok-s-patch-to-kernel-2.6.30.patch
 	config
 	config.x86_64
@@ -46,7 +47,7 @@ md5sums=('84c077a37684e4cbfa67b18154390d8a'
          '21562518ab45d8be9c67d316aef9399f'
          'ecd82eb87e5da25e38db1ef34fd32b33'
          '0683813ac1a521408b4c136d72fbb9d2'
-         'd6778635f317f7ac9477a091f04480bd'
+         '403360f48dd0f85621b357221ed011e3'
          '5bd5c60b7e7664e8794279e99cafd185'
          '5b6618e68db20c720ea6c9351b315c68'
          '575d39660246322e185b07bc3be698be'
@@ -102,7 +103,9 @@ build() {
     if [ "$bfs_scheduler" = "1" ]; then
        # applying BFS scheduler patch
        echo "Applying BFS scheduler patch"
-       patch -Np1 -i $startdir/src/2.6.31-sched-bfs-300.patch || return 1
+       ## Delete the Makefile changes that break patching.
+       sed '/Index: linux-2.6.31-bfs\/Makefile/,/To see a list of typical targets execute "make help"/d' \
+       $startdir/src/2.6.31-sched-bfs-303.patch | patch -Np1 || return 1
     fi     
 
     # remove extraversion
@@ -114,7 +117,13 @@ build() {
     else
 	cat ../config > ./.config
     fi
-    
+
+    # use existing config.gz
+    if [ "$use_config_gz" = "1" ]; then
+        zcat /proc/config.gz > ./.config
+        make oldconfig
+    fi
+
     # get kernel version
     make prepare
     _kernver="$(make kernelrelease)"
