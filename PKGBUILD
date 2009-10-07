@@ -15,7 +15,7 @@ install=kernel26-ice.install
 bfs_scheduler="0"
 enable_fastboot="0"
 keep_source_code="0"
-menuconfig="1"
+menuconfig="0"
 realtime_patch="0"
 use_config_gz="0"
 ###
