@@ -83,14 +83,14 @@ build() {
     echo "Applying reiser4-for-2.6.30.patch" 
     patch -Np1 -i $startdir/src/reiser4-for-2.6.30.patch || return 1
 
+    # applying tuxonice patch
+    echo "Applying current-tuxonice-for-2.6.31.patch-20090911-v1"
     # small fix to tuxonice patch to work with rt
     if [ "$realtime_patch" = "1" ]; then
        sed '/diff --git a\/kernel\/fork.c b\/kernel\/fork.c/,/{/d' \
            $startdir/src/current-tuxonice-for-2.6.31.patch-20090911-v1 \
-           patch -Np1 || return 1
+           | patch -Np1 || return 1
     else
-       # applying tuxonice patch
-       echo "Applying current-tuxonice-for-2.6.31.patch-20090911-v1"
        patch -Np1 -i $startdir/src/current-tuxonice-for-2.6.31.patch-20090911-v1 || return 1
     fi
 
@@ -123,6 +123,11 @@ build() {
         zcat /proc/config.gz > ./.config
         make oldconfig
     fi
+
+    # hack to prevent output kernel from being marked as dirty or git
+    sed 's/head=`git rev-parse --verify --short HEAD 2>\/dev\/null`/0/' \
+       $srcdir/linux-$pkgver/scripts/setlocalversion \
+       > $srcdir/linux-$pkgver/scripts/setlocalversion
 
     # get kernel version
     make prepare
