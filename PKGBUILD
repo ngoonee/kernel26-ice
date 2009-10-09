@@ -15,18 +15,18 @@ install=kernel26-ice.install
 bfs_scheduler="0"
 enable_fastboot="0"
 keep_source_code="0"
-menuconfig="0"
+menuconfig="1"
 realtime_patch="0"
 use_config_gz="0"
 ###
 
 source=(http://kernel.org/pub/linux/kernel/v2.6/linux-2.6.31.tar.bz2
-	http://www.kernel.org/pub/linux/kernel/v2.6/patch-2.6.31.2.bz2
+	http://www.kernel.org/pub/linux/kernel/v2.6/patch-2.6.31.3.bz2
 	http://www.kernel.org/pub/linux/kernel/projects/rt/patch-2.6.31.2-rt13.bz2
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.31/4100_dm-bbr.patch	
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.31/4400_alpha-sysctl-uac.patch
 	http://www.kernel.org/pub/linux/kernel/people/edward/reiser4/reiser4-for-2.6/reiser4-for-2.6.30.patch.gz
-	http://www.tuxonice.net/downloads/all/current-tuxonice-for-2.6.31.patch-20090911-v1.bz2
+	http://www.tuxonice.net/downloads/all/current-tuxonice-for-2.6.31.patch-20091009-v1.bz2
 	http://ck.kolivas.org/patches/bfs/2.6.31-sched-bfs-303.patch
 	Auke-Kok-s-patch-to-kernel-2.6.30.patch
 	config
@@ -35,12 +35,12 @@ source=(http://kernel.org/pub/linux/kernel/v2.6/linux-2.6.31.tar.bz2
 	mkinitcpio-$pkgname.conf)
 
 md5sums=('84c077a37684e4cbfa67b18154390d8a'
-         '04bbd7d8b61e5e7536b978435f370f09'
+	 '24d60ad6645211e2c08dc1c1c578b249'
          '54827835fa03d2e82ae51c34919cfeb1'
          'e501d050605a7399e7b12a6b14903631'
          '21562518ab45d8be9c67d316aef9399f'
          'ecd82eb87e5da25e38db1ef34fd32b33'
-         '0683813ac1a521408b4c136d72fbb9d2'
+         '8066cf922d24d227bf8e849dcba2e0b3'
          '403360f48dd0f85621b357221ed011e3'
          '5bd5c60b7e7664e8794279e99cafd185'
          '5b6618e68db20c720ea6c9351b315c68'
@@ -55,13 +55,16 @@ build() {
     cd $startdir/src/linux-$pkgver
     
     # Applying official patch
-    echo "Applying patch-$pkgver.2"
-    patch -Np1 -i $startdir/src/patch-$pkgver.2 || return 1
+    echo "Applying patch-$pkgver.3"
+    patch -Np1 -i $startdir/src/patch-$pkgver.3 || return 1
 
     # Applying realtime patch
     if [ "$realtime_patch" = "1" ]; then
        echo "Applying real time patch"
-       patch -Np1 -i $startdir/src/patch-2.6.31.2-rt13 || return 1       
+       # Strip './Makefile' changes
+       sed '/diff --git a\/Makefile b\/Makefile/,/ # *DOCUMENTATION*/d' \
+           $startdir/src/patch-2.6.31.2-rt13 \
+           | patch -Np1 || return 1
     fi
 
     # Applying base gentoo patches
@@ -83,14 +86,14 @@ build() {
     patch -Np1 -i $startdir/src/reiser4-for-2.6.30.patch || return 1
 
     # applying tuxonice patch
-    echo "Applying current-tuxonice-for-2.6.31.patch-20090911-v1"
+    echo "Applying current-tuxonice-for-2.6.31.patch-20091009-v1"
     # fix to tuxonice patch to work with rt
     if [ "$realtime_patch" = "1" ]; then
        sed '/diff --git a\/kernel\/fork.c b\/kernel\/fork.c/,/{/d' \
-           $startdir/src/current-tuxonice-for-2.6.31.patch-20090911-v1 \
+           $startdir/src/current-tuxonice-for-2.6.31.patch-20091009-v1 \
            | patch -Np1 || return 1
     else
-       patch -Np1 -i $startdir/src/current-tuxonice-for-2.6.31.patch-20090911-v1 || return 1
+       patch -Np1 -i $startdir/src/current-tuxonice-for-2.6.31.patch-20091009-v1 || return 1
     fi
 
     if [ "$enable_fastboot" = "1" ]; then
@@ -104,7 +107,7 @@ build() {
        echo "Applying BFS scheduler patch"
        ## Delete the Makefile changes that break patching.
        sed '/Index: linux-2.6.31-bfs\/Makefile/,/To see a list of typical targets execute "make help"/d' \
-       $startdir/src/2.6.31-sched-bfs-303.patch | patch -Np1 || return 1
+         $startdir/src/2.6.31-sched-bfs-303.patch | patch -Np1 || return 1
     fi     
 
     # remove extraversion
@@ -132,7 +135,7 @@ build() {
     make prepare
     _kernver="$(make kernelrelease)"
     
-    # configure kernel    
+    # configure kernel
     if [ "$menuconfig" = "1" ]; then
       make menuconfig
     fi
