@@ -3,7 +3,7 @@
 
 pkgname=kernel26-ice
 pkgver=2.6.31
-pkgrel=6
+pkgrel=7
 pkgdesc="The Linux Kernel and modules with gentoo-sources patchset and tuxonice support"
 arch=('i686' 'x86_64')
 license=('GPL2')
@@ -25,22 +25,18 @@ use_config_gz="0"
 file_kernel="linux-2.6.31.tar.bz2"
 file_kernel_patch="patch-2.6.31.3.bz2"
 file_rt="patch-2.6.31.2-rt13.bz2"
-file_gen_dm="4100_dm-bbr.patch"
-file_gen_fb="4200_fbcondecor-0.9.6.patch"
-file_gen_alpha="4400_alpha-sysctl-uac.patch"
 file_reiser4="reiser4-for-2.6.31.patch.gz"
 file_toi="current-tuxonice-for-2.6.31.patch-20091009-v1.bz2"
 file_bfs="2.6.31-sched-bfs-303.patch"
 file_fastboot="Auke-Kok-s-patch-to-kernel-2.6.30.patch"
-#file_=""
 ###
 
 source=(http://kernel.org/pub/linux/kernel/v2.6/${file_kernel}
 	http://www.kernel.org/pub/linux/kernel/v2.6/${file_kernel_patch}
 	http://www.kernel.org/pub/linux/kernel/projects/rt/${file_rt}
-	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.31/${file_gen_dm}
-	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.31/${file_gen_fb}
-	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.31/${file_gen_alpha}
+	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.31/4100_dm-bbr.patch
+	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.31/4200_fbcondecor-0.9.6.patch
+	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.31/4400_alpha-sysctl-uac.patch
 	http://www.kernel.org/pub/linux/kernel/people/edward/reiser4/reiser4-for-2.6/${file_reiser4}
 	http://www.tuxonice.net/downloads/all/${file_toi}
 	http://ck.kolivas.org/patches/bfs/${file_bfs}
