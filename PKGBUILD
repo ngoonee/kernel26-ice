@@ -154,6 +154,12 @@ build() {
     fi
     yes "" | make config
 
+    # get kernel version if it has been changed in make config
+    # Is this the best way to do it? Should make config just run before make prepare?
+    #      - ngoonee
+    make prepare
+    _kernver="$(make kernelrelease)"
+
     if [ "$keep_source_code" = "1" ]; then
 	echo -n "Copying source code..."
 	# Keep the source code
