@@ -10,7 +10,7 @@ license=('GPL2')
 url="http://www.kernel.org"
 backup=('boot/kconfig26-ice' etc/mkinitcpio.d/${pkgname}.preset etc/mkinitcpio.d/${pkgname}-fallback.conf)
 depends=('coreutils' 'module-init-tools' 'mkinitcpio>=0.5.15' 'kernel26-firmware')
-install=kernel26-ice.install
+install=$pkgname.install
 
 ### User defined variables
 bfs_scheduler="0"
