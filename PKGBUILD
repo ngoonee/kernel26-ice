@@ -76,7 +76,7 @@ build() {
        echo "Applying real time patch"
        # Strip './Makefile' changes
        bzip2 -dkc $startdir/src/${file_rt} \
-         | sed '/diff --git a\/Makefile b\/Makefile/,/ # *DOCUMENTATION*/d' \
+         | sed '/diff --git a\/Makefile b\/Makefile/,/*DOCUMENTATION*/d' \
          | patch -Np1 || return 1
     fi
 
