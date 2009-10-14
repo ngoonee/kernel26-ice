@@ -1,14 +1,15 @@
 # Contributor: Giuseppe Calderaro <giuseppecalderaro@gmail.com>
 # Contributor: (misc updates) Michael Evans <mjevans1983@gmail.com>
 
-pkgname=kernel26-ice
+pkgext=-ice
+pkgname=kernel26$pkgext
 pkgver=2.6.31
 pkgrel=8
 pkgdesc="The Linux Kernel and modules with gentoo-sources patchset and tuxonice support"
 arch=('i686' 'x86_64')
 license=('GPL2')
 url="http://www.kernel.org"
-backup=('boot/kconfig26-ice' etc/mkinitcpio.d/${pkgname}.preset etc/mkinitcpio.d/${pkgname}-fallback.conf)
+backup=('boot/kconfig26$pkgext' etc/mkinitcpio.d/${pkgname}.preset etc/mkinitcpio.d/${pkgname}-fallback.conf)
 depends=('coreutils' 'module-init-tools' 'mkinitcpio>=0.5.15' 'kernel26-firmware')
 install=$pkgname.install
 
@@ -59,7 +60,7 @@ md5sums=('84c077a37684e4cbfa67b18154390d8a'
          '403360f48dd0f85621b357221ed011e3'
          '5bd5c60b7e7664e8794279e99cafd185'
          '5b6618e68db20c720ea6c9351b315c68'
-         '575d39660246322e185b07bc3be698be'
+         '50c24f36184dd0e531115809706255c5'
          '541973d72e24a2def82d33884a781ee1'
          '07dc6997d19340b654f92c1d6a120cc0')
 
@@ -182,12 +183,12 @@ build() {
     make bzImage modules || return 1
     mkdir -p $startdir/pkg/{lib/modules,boot}
     make INSTALL_MOD_PATH=$startdir/pkg modules_install || return 1
-    install -D -m644 System.map $startdir/pkg/boot/System.map26-ice
-    install -D -m644 arch/$KARCH/boot/bzImage $startdir/pkg/boot/vmlinuz26-ice
+    install -D -m644 System.map $startdir/pkg/boot/System.map26$pkgext
+    install -D -m644 arch/$KARCH/boot/bzImage $startdir/pkg/boot/vmlinuz26$pkgext
     install -D -m644 Makefile $startdir/pkg/usr/src/linux-$_kernver/Makefile
     install -D -m644 kernel/Makefile $startdir/pkg/usr/src/linux-$_kernver/kernel/Makefile
     install -D -m644 .config $startdir/pkg/usr/src/linux-$_kernver/.config
-    install -D -m644 .config $startdir/pkg/boot/kconfig26-ice
+    install -D -m644 .config $startdir/pkg/boot/kconfig26$pkgext
     mkdir -p $startdir/pkg/usr/src/linux-$_kernver/include
 
     for i in acpi asm-{generic,$KARCH} config linux math-emu media net pcmcia scsi sound trace video; do
