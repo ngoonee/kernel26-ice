@@ -3,7 +3,7 @@
 
 pkgname=kernel26-ice
 pkgver=2.6.31
-pkgrel=7
+pkgrel=8
 pkgdesc="The Linux Kernel and modules with gentoo-sources patchset and tuxonice support"
 arch=('i686' 'x86_64')
 license=('GPL2')
@@ -23,7 +23,7 @@ use_config_gz="0"
 
 ### Files / Versions
 file_kernel="linux-2.6.31.tar.bz2"
-file_kernel_patch="patch-2.6.31.3.bz2"
+file_kernel_patch="patch-2.6.31.4.bz2"
 file_rt="patch-2.6.31.2-rt13.bz2"
 file_reiser4="reiser4-for-2.6.31.patch.gz"
 file_toi="current-tuxonice-for-2.6.31.patch-20091009-v1.bz2"
@@ -34,6 +34,7 @@ file_fastboot="Auke-Kok-s-patch-to-kernel-2.6.30.patch"
 source=(http://kernel.org/pub/linux/kernel/v2.6/${file_kernel}
 	http://www.kernel.org/pub/linux/kernel/v2.6/${file_kernel_patch}
 	http://www.kernel.org/pub/linux/kernel/projects/rt/${file_rt}
+	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.31/2700_kworld-plustv-dual-dvb.patch
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.31/4100_dm-bbr.patch
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.31/4200_fbcondecor-0.9.6.patch
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.31/4400_alpha-sysctl-uac.patch
@@ -47,8 +48,9 @@ source=(http://kernel.org/pub/linux/kernel/v2.6/${file_kernel}
 	mkinitcpio-$pkgname.conf)
 
 md5sums=('84c077a37684e4cbfa67b18154390d8a'
-         '24d60ad6645211e2c08dc1c1c578b249'
+         '02078f4231baee4f0004212f2875df2b'
          '54827835fa03d2e82ae51c34919cfeb1'
+         'e9d1d9593503bcf633f47a1c48a578b2'
          'e501d050605a7399e7b12a6b14903631'
          '6906c45acbaf073915fe24ec2632130b'
          '21562518ab45d8be9c67d316aef9399f'
@@ -81,10 +83,10 @@ build() {
     fi
 
     # Applying base gentoo patches
-    # for i in $(ls $startdir/src/[1-3][0-9][0-9][0-9]*); do
-    #	echo "Applying $i"
-    #   patch -Np1 -i $i || return 1
-    # done
+    for i in $(ls $startdir/src/[1-3][0-9][0-9][0-9]*); do
+    	echo "Applying $i"
+	patch -Np1 -i $i || return 1
+    done
 
     if [ "$realtime_patch" = "0" ]; then
       # Applying extra gentoo patches
