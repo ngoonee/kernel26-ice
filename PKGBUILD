@@ -28,7 +28,7 @@ file_kernel_patch="patch-2.6.31.4.bz2"
 file_rt="patch-2.6.31.4-rt14.bz2"
 file_reiser4="reiser4-for-2.6.31.patch.gz"
 file_toi="current-tuxonice-for-2.6.31.patch-20091009-v1.bz2"
-file_bfs="2.6.31-sched-bfs-303.patch"
+file_bfs="2.6.31-sched-bfs-304.patch"
 file_fastboot="Auke-Kok-s-patch-to-kernel-2.6.30.patch"
 ###
 
@@ -57,7 +57,7 @@ md5sums=('84c077a37684e4cbfa67b18154390d8a'
          '21562518ab45d8be9c67d316aef9399f'
          '62ab025dda9d5c291b6e7ce763e557c1'
          '8066cf922d24d227bf8e849dcba2e0b3'
-         '403360f48dd0f85621b357221ed011e3'
+         '7bc2c5fa16878272544e5f979fe6db0c'
          '5bd5c60b7e7664e8794279e99cafd185'
          '5b6618e68db20c720ea6c9351b315c68'
          '4aa04d55ae3cdeeea24fbf078ec33b3e'
