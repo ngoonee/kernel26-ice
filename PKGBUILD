@@ -5,7 +5,7 @@
 pkgext=-ice
 pkgname=kernel26$pkgext
 pkgver=2.6.31
-pkgrel=8
+pkgrel=9
 pkgdesc="The Linux Kernel and modules with gentoo-sources patchset and tuxonice support"
 arch=('i686' 'x86_64')
 license=('GPL2')
@@ -18,16 +18,16 @@ install=$pkgname.install
 bfs_scheduler="0"
 enable_fastboot="0"
 keep_source_code="0"
-menuconfig="0"
+menuconfig="1"
 realtime_patch="0"
 use_config_gz="0"
 ###
 
 ### Files / Versions
 file_kernel="linux-2.6.31.tar.bz2"
-file_kernel_patch="patch-2.6.31.4.bz2"
+file_kernel_patch="patch-2.6.31.5.bz2"
 file_rt="patch-2.6.31.4-rt14.bz2"
-file_reiser4="reiser4-for-2.6.31.patch.gz"
+file_reiser4="reiser4-for-2.6.31.patch.bz2"
 file_toi="current-tuxonice-for-2.6.31.patch-20091009-v1.bz2"
 file_bfs="2.6.31-sched-bfs-304.patch"
 file_fastboot="Auke-Kok-s-patch-to-kernel-2.6.30.patch"
@@ -36,7 +36,7 @@ file_fastboot="Auke-Kok-s-patch-to-kernel-2.6.30.patch"
 source=(http://kernel.org/pub/linux/kernel/v2.6/${file_kernel}
 	http://www.kernel.org/pub/linux/kernel/v2.6/${file_kernel_patch}
 	http://www.kernel.org/pub/linux/kernel/projects/rt/${file_rt}
-	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.31/2700_kworld-plustv-dual-dvb.patch
+	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.31/2700_kworld-plustv-dual-dvb.patch	
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.31/4100_dm-bbr.patch
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.31/4200_fbcondecor-0.9.6.patch
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.31/4400_alpha-sysctl-uac.patch
@@ -50,17 +50,17 @@ source=(http://kernel.org/pub/linux/kernel/v2.6/${file_kernel}
 	mkinitcpio-$pkgname.conf)
 
 md5sums=('84c077a37684e4cbfa67b18154390d8a'
-         '02078f4231baee4f0004212f2875df2b'
+         '6cac5e59d5562b591cdda485941204d5'
          'cc6ffc13f5ce52792ddc878e0beac5bb'
          'e9d1d9593503bcf633f47a1c48a578b2'
          'e501d050605a7399e7b12a6b14903631'
          '6906c45acbaf073915fe24ec2632130b'
          '21562518ab45d8be9c67d316aef9399f'
-         '62ab025dda9d5c291b6e7ce763e557c1'
+         'f43c1e626c8ac83e20f200998d3a818b'
          '8066cf922d24d227bf8e849dcba2e0b3'
          '7bc2c5fa16878272544e5f979fe6db0c'
          '5bd5c60b7e7664e8794279e99cafd185'
-         '5b6618e68db20c720ea6c9351b315c68'
+         'eab941d99b9ed85cedcc1f5df146fdd9'
          '4aa04d55ae3cdeeea24fbf078ec33b3e'
          '541973d72e24a2def82d33884a781ee1'
          '07dc6997d19340b654f92c1d6a120cc0')
@@ -100,7 +100,7 @@ build() {
 
     # applying reiserfs4 patch
     echo "Applying ${file_reiser4%.gz}"
-    gzip -dc $startdir/src/${file_reiser4} | patch -Np1 || return 1
+    bzip2 -dc $startdir/src/${file_reiser4} | patch -Np1 || return 1
 
     # applying tuxonice patch
     echo "Applying ${file_toi%.bz2}"
