@@ -26,7 +26,7 @@ use_config_gz="0"
 ### Files / Versions
 file_kernel="linux-2.6.31.tar.bz2"
 file_kernel_patch="patch-2.6.31.5.bz2"
-file_rt="patch-2.6.31.4-rt14.bz2"
+file_rt="patch-2.6.31.5-rt17.bz2"
 file_reiser4="reiser4-for-2.6.31.patch.bz2"
 file_toi="current-tuxonice-for-2.6.31.patch-20091009-v1.bz2"
 file_bfs="2.6.31-sched-bfs-304.patch"
@@ -51,7 +51,7 @@ source=(http://kernel.org/pub/linux/kernel/v2.6/${file_kernel}
 
 md5sums=('84c077a37684e4cbfa67b18154390d8a'
          '6cac5e59d5562b591cdda485941204d5'
-         'cc6ffc13f5ce52792ddc878e0beac5bb'
+         '5c8ba0ddb0fe1049d95a738f82d02f46'
          'e9d1d9593503bcf633f47a1c48a578b2'
          'e501d050605a7399e7b12a6b14903631'
          '6906c45acbaf073915fe24ec2632130b'
