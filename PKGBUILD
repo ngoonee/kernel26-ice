@@ -5,7 +5,7 @@
 pkgext=-ice
 pkgname=kernel26$pkgext
 pkgver=2.6.31
-pkgrel=9
+pkgrel=10
 pkgdesc="The Linux Kernel and modules with gentoo-sources patchset and tuxonice support"
 arch=('i686' 'x86_64')
 license=('GPL2')
@@ -26,16 +26,18 @@ use_config_gz="0"
 ### Files / Versions
 file_kernel="linux-2.6.31.tar.bz2"
 file_kernel_patch="patch-2.6.31.5.bz2"
-file_rt="patch-2.6.31.5-rt17.bz2"
+file_rt="patch-2.6.31.5-rt18.bz2"
 file_reiser4="reiser4-for-2.6.31.patch.bz2"
 file_toi="current-tuxonice-for-2.6.31.patch-20091009-v1.bz2"
-file_bfs="2.6.31-sched-bfs-304.patch"
+file_bfs="2.6.31-sched-bfs-310.patch"
 file_fastboot="Auke-Kok-s-patch-to-kernel-2.6.30.patch"
 ###
 
 source=(http://kernel.org/pub/linux/kernel/v2.6/${file_kernel}
 	http://www.kernel.org/pub/linux/kernel/v2.6/${file_kernel_patch}
 	http://www.kernel.org/pub/linux/kernel/projects/rt/${file_rt}
+	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.31/1500_pipe-c-null-ptr-dref.patch
+	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.31/1900_fsnotify-group-mark-fix.patch
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.31/2700_kworld-plustv-dual-dvb.patch	
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.31/4100_dm-bbr.patch
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.31/4200_fbcondecor-0.9.6.patch
@@ -51,14 +53,16 @@ source=(http://kernel.org/pub/linux/kernel/v2.6/${file_kernel}
 
 md5sums=('84c077a37684e4cbfa67b18154390d8a'
          '6cac5e59d5562b591cdda485941204d5'
-         '5c8ba0ddb0fe1049d95a738f82d02f46'
+         'e18d018a8b3c6e5e4328b1a3db170157'
+         'a7eb67f46b0a753cfdd6f529c70bbb6b'
+         'a2e31b23fc7b790be9e92936cd63de1a'
          'e9d1d9593503bcf633f47a1c48a578b2'
          'e501d050605a7399e7b12a6b14903631'
          '6906c45acbaf073915fe24ec2632130b'
          '21562518ab45d8be9c67d316aef9399f'
          'f43c1e626c8ac83e20f200998d3a818b'
          '8066cf922d24d227bf8e849dcba2e0b3'
-         '7bc2c5fa16878272544e5f979fe6db0c'
+         'c9fad237a3126cb76406f2e2d1397ede'
          '5bd5c60b7e7664e8794279e99cafd185'
          'eab941d99b9ed85cedcc1f5df146fdd9'
          '4aa04d55ae3cdeeea24fbf078ec33b3e'
