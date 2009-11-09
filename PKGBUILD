@@ -88,15 +88,15 @@ build() {
          | patch -Np1 || return 1
     fi
 
-    # Applying base gentoo patches
-    for i in $(ls $startdir/src/[1-3][0-9][0-9][0-9]*); do
-    	echo "Applying $i"
-	patch -Np1 -i $i || return 1
-    done
-
     if [ "$realtime_patch" = "0" ]; then
-      # Applying extra gentoo patches
-      for i in $(ls $startdir/src/[4-9][0-9][0-9][0-9]*); do
+      # Applying base and extra gentoo patches
+      for i in $(ls $startdir/src/[1-9][0-9][0-9][0-9]*); do
+        echo "Applying $i"
+        patch -Np1 -i $i || return 1
+      done
+    else
+      # Applying only those specific patches which work with RT patchset
+      for i in $(ls $startdir/src/{1900,2700,4100,4400}*); do
         echo "Applying $i"
         patch -Np1 -i $i || return 1
       done
