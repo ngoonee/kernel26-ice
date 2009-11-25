@@ -25,12 +25,19 @@ use_config_gz="0"
 
 ### Files / Versions
 file_kernel="linux-2.6.31.tar.bz2"
+sum_kernel="84c077a37684e4cbfa67b18154390d8a"
 file_kernel_patch="patch-2.6.31.6.bz2"
+sum_kernel_patch="89802830db41e517cdf0954145f73337"
 file_rt="patch-2.6.31.6-rt19.bz2"
+sum_rt="94e42d06b4e753662acf5dd3d3a8a3af"
 file_reiser4="reiser4-for-2.6.31.patch.bz2"
+sum_reiser4="f43c1e626c8ac83e20f200998d3a818b"
 file_toi="current-tuxonice-for-2.6.31.patch-20091009-v1.bz2"
+sum_toi="8066cf922d24d227bf8e849dcba2e0b3"
 file_bfs="2.6.31-sched-bfs-311.patch"
+sum_bfs="c68f1dd5dae05c09aa4f97e2091411b3"
 file_fastboot="Auke-Kok-s-patch-to-kernel-2.6.30.patch"
+sum_fastboot="5bd5c60b7e7664e8794279e99cafd185"
 ###
 
 source=(http://kernel.org/pub/linux/kernel/v2.6/${file_kernel}
@@ -42,26 +49,24 @@ source=(http://kernel.org/pub/linux/kernel/v2.6/${file_kernel}
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.31/4400_alpha-sysctl-uac.patch
 	http://www.kernel.org/pub/linux/kernel/people/edward/reiser4/reiser4-for-2.6/${file_reiser4}
 	http://www.tuxonice.net/downloads/all/${file_toi}
-
 	http://ck.kolivas.org/patches/bfs/${file_bfs}
 	${file_fastboot}
 	config
-
 	config.x86_64
 	$pkgname.preset
 	mkinitcpio-$pkgname.conf)
 
-md5sums=('84c077a37684e4cbfa67b18154390d8a'
-         '89802830db41e517cdf0954145f73337'
-         '94e42d06b4e753662acf5dd3d3a8a3af'
+md5sums=(${sum_kernel}
+	 ${sum_kernel_patch}
+	 ${sum_rt}
          'e9d1d9593503bcf633f47a1c48a578b2'
          'e501d050605a7399e7b12a6b14903631'
          '6906c45acbaf073915fe24ec2632130b'
          '21562518ab45d8be9c67d316aef9399f'
-         'f43c1e626c8ac83e20f200998d3a818b'
-         '8066cf922d24d227bf8e849dcba2e0b3'
-         'c68f1dd5dae05c09aa4f97e2091411b3'
-         '5bd5c60b7e7664e8794279e99cafd185'
+	 ${sum_reiser4}
+	 ${sum_toi}
+	 ${sum_bfs}
+	 ${sum_fastboot}
          'eab941d99b9ed85cedcc1f5df146fdd9'
          '4aa04d55ae3cdeeea24fbf078ec33b3e'
          '541973d72e24a2def82d33884a781ee1'
