@@ -29,7 +29,7 @@ file_kernel_patch="patch-2.6.31.6.bz2"
 file_rt="patch-2.6.31.6-rt19.bz2"
 file_reiser4="reiser4-for-2.6.31.patch.bz2"
 file_toi="current-tuxonice-for-2.6.31.patch-20091009-v1.bz2"
-file_bfs="2.6.31-sched-bfs-310.patch"
+file_bfs="2.6.31-sched-bfs-311.patch"
 file_fastboot="Auke-Kok-s-patch-to-kernel-2.6.30.patch"
 ###
 
@@ -42,9 +42,11 @@ source=(http://kernel.org/pub/linux/kernel/v2.6/${file_kernel}
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.31/4400_alpha-sysctl-uac.patch
 	http://www.kernel.org/pub/linux/kernel/people/edward/reiser4/reiser4-for-2.6/${file_reiser4}
 	http://www.tuxonice.net/downloads/all/${file_toi}
+
 	http://ck.kolivas.org/patches/bfs/${file_bfs}
 	${file_fastboot}
 	config
+
 	config.x86_64
 	$pkgname.preset
 	mkinitcpio-$pkgname.conf)
@@ -58,7 +60,7 @@ md5sums=('84c077a37684e4cbfa67b18154390d8a'
          '21562518ab45d8be9c67d316aef9399f'
          'f43c1e626c8ac83e20f200998d3a818b'
          '8066cf922d24d227bf8e849dcba2e0b3'
-         'c9fad237a3126cb76406f2e2d1397ede'
+         'c68f1dd5dae05c09aa4f97e2091411b3'
          '5bd5c60b7e7664e8794279e99cafd185'
          'eab941d99b9ed85cedcc1f5df146fdd9'
          '4aa04d55ae3cdeeea24fbf078ec33b3e'
