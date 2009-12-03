@@ -24,8 +24,8 @@ use_config_gz="0"
 ###
 
 ### Files / Versions
-file_kernel="linux-2.6.31.tar.bz2"
-file_kernel_patch="patch-2.6.31.6.bz2"
+file_kernel="linux-2.6.32.tar.bz2"
+#file_kernel_patch="patch-2.6.31.6.bz2"
 file_rt="patch-2.6.31.6-rt19.bz2"
 file_reiser4="reiser4-for-2.6.31.patch.bz2"
 file_toi="current-tuxonice-for-2.6.31.patch-20091009-v1.bz2"
@@ -34,7 +34,7 @@ file_fastboot="Auke-Kok-s-patch-to-kernel-2.6.30.patch"
 ###
 
 source=(http://kernel.org/pub/linux/kernel/v2.6/${file_kernel}
-	http://www.kernel.org/pub/linux/kernel/v2.6/${file_kernel_patch}
+#	http://www.kernel.org/pub/linux/kernel/v2.6/${file_kernel_patch}
 	http://www.kernel.org/pub/linux/kernel/projects/rt/${file_rt}
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.31/2700_kworld-plustv-dual-dvb.patch
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.31/4100_dm-bbr.patch
@@ -49,8 +49,7 @@ source=(http://kernel.org/pub/linux/kernel/v2.6/${file_kernel}
 	$pkgname.preset
 	mkinitcpio-$pkgname.conf)
 
-md5sums=('84c077a37684e4cbfa67b18154390d8a'
-         '89802830db41e517cdf0954145f73337'
+md5sums=('260551284ac224c3a43c4adac7df4879'
          '94e42d06b4e753662acf5dd3d3a8a3af'
          'e9d1d9593503bcf633f47a1c48a578b2'
          'e501d050605a7399e7b12a6b14903631'
@@ -72,8 +71,10 @@ build() {
     cd $startdir/src/linux-$pkgver
 
     # Applying official patch
-    echo "Applying ${file_kernel_patch%.bz2}"
-    patch -Np1 -i $startdir/src/${file_kernel_patch%.bz2} || return 1
+    if [ -n "${file_kernel_patch%.bz2}" ] ; then
+        echo "Applying ${file_kernel_patch%.bz2}"
+        patch -Np1 -i $startdir/src/${file_kernel_patch%.bz2} || return 1
+    fi
 
     # Applying realtime patch
     if [ "$realtime_patch" = "1" ]; then
