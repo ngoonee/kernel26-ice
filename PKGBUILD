@@ -4,8 +4,8 @@
 
 pkgext=-ice
 pkgname=kernel26$pkgext
-pkgver=2.6.31
-pkgrel=11
+pkgver=2.6.32
+pkgrel=1
 pkgdesc="The Linux Kernel and modules with gentoo-sources patchset and tuxonice support"
 arch=('i686' 'x86_64')
 license=('GPL2')
