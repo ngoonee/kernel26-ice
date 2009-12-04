@@ -21,6 +21,7 @@ keep_source_code="0"
 menuconfig="0"
 realtime_patch="0"
 use_config_gz="0"
+enable_reiser4="0"
 ###
 
 ### Files / Versions
@@ -100,8 +101,10 @@ build() {
     fi
 
     # applying reiserfs4 patch
-    echo "Applying ${file_reiser4%.gz}"
-    bzip2 -dc $startdir/src/${file_reiser4} | patch -Np1 || return 1
+    if [ "$enable_reiser4" = "1" ]; then
+	    echo "Applying ${file_reiser4%.gz}"
+	    bzip2 -dc $startdir/src/${file_reiser4} | patch -Np1 || return 1
+    fi
 
     # applying tuxonice patch
     echo "Applying ${file_toi%.bz2}"
