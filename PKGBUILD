@@ -36,10 +36,9 @@ file_fastboot="Auke-Kok-s-patch-to-kernel-2.6.30.patch"
 source=(http://kernel.org/pub/linux/kernel/v2.6/${file_kernel}
 #	http://www.kernel.org/pub/linux/kernel/v2.6/${file_kernel_patch}
 	http://www.kernel.org/pub/linux/kernel/projects/rt/${file_rt}
-	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.31/2700_kworld-plustv-dual-dvb.patch
-	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.31/4100_dm-bbr.patch
-	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.31/4200_fbcondecor-0.9.6.patch
-	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.31/4400_alpha-sysctl-uac.patch
+	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.32/4100_dm-bbr.patch
+	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.32/4200_fbcondecor-0.9.6.patch
+	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.32/4400_alpha-sysctl-uac.patch
 	http://www.kernel.org/pub/linux/kernel/people/edward/reiser4/reiser4-for-2.6/${file_reiser4}
 	http://www.tuxonice.net/downloads/all/${file_toi}
 
@@ -53,7 +52,6 @@ source=(http://kernel.org/pub/linux/kernel/v2.6/${file_kernel}
 
 md5sums=('260551284ac224c3a43c4adac7df4879'
          '94e42d06b4e753662acf5dd3d3a8a3af'
-         'e9d1d9593503bcf633f47a1c48a578b2'
          'e501d050605a7399e7b12a6b14903631'
          '6906c45acbaf073915fe24ec2632130b'
          '21562518ab45d8be9c67d316aef9399f'
