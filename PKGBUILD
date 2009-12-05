@@ -26,7 +26,7 @@ enable_reiser4="0"
 
 ### Files / Versions
 file_kernel="linux-2.6.32.tar.bz2"
-#file_kernel_patch="patch-2.6.31.6.bz2"
+# file_kernel_patch="patch-2.6.32.1.bz2"
 file_rt="patch-2.6.31.6-rt19.bz2"
 file_reiser4="reiser4-for-2.6.31.patch.bz2"
 file_toi="tuxonice-3.0.99.32-for-2.6.32.patch.bz2"
