@@ -30,35 +30,35 @@ file_kernel="linux-2.6.32.tar.bz2"
 file_rt="patch-2.6.31.6-rt19.bz2"
 file_reiser4="reiser4-for-2.6.31.patch.bz2"
 file_toi="tuxonice-3.0.99.32-for-2.6.32.patch.bz2"
-file_bfs="2.6.32-rc8-sched-bfs-311.patch"
+file_bfs="2.6.32-sched-bfs-311.patch"
 file_fastboot="Auke-Kok-s-patch-to-kernel-2.6.30.patch"
 ###
 
 source=(http://kernel.org/pub/linux/kernel/v2.6/${file_kernel}
 #	http://www.kernel.org/pub/linux/kernel/v2.6/${file_kernel_patch}
 	http://www.kernel.org/pub/linux/kernel/projects/rt/${file_rt}
+	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.32/1900_hfs-readdir-buffer-overflow.patch
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.32/4100_dm-bbr.patch
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.32/4200_fbcondecor-0.9.6.patch
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.32/4400_alpha-sysctl-uac.patch
 	http://www.kernel.org/pub/linux/kernel/people/edward/reiser4/reiser4-for-2.6/${file_reiser4}
 	http://www.tuxonice.net/downloads/all/${file_toi}
-
 	http://ck.kolivas.org/patches/bfs/${file_bfs}
 	${file_fastboot}
 	config
-
 	config.x86_64
 	$pkgname.preset
 	mkinitcpio-$pkgname.conf)
 
 md5sums=('260551284ac224c3a43c4adac7df4879'
          '94e42d06b4e753662acf5dd3d3a8a3af'
+         '33ba1f6da3af9acd445d3d92df4c551c'
          'e501d050605a7399e7b12a6b14903631'
          '6906c45acbaf073915fe24ec2632130b'
          '21562518ab45d8be9c67d316aef9399f'
          'f43c1e626c8ac83e20f200998d3a818b'
          'ec1d164264b909f4f290fc4670119aac'
-         '642e5fb118262553f6a32b8b0e911c97'
+         '03ead5f6ec0570f316450caa6841b5e0'
          '5bd5c60b7e7664e8794279e99cafd185'
          'eab941d99b9ed85cedcc1f5df146fdd9'
          '4aa04d55ae3cdeeea24fbf078ec33b3e'
