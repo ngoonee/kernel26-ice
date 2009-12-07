@@ -61,7 +61,7 @@ md5sums=('260551284ac224c3a43c4adac7df4879'
          '2449aacb3dc4250bcb7a3f80426a24b3'
          '5bd5c60b7e7664e8794279e99cafd185'
          'eab941d99b9ed85cedcc1f5df146fdd9'
-         '4aa04d55ae3cdeeea24fbf078ec33b3e'
+         'cbdcf252fbb542c269ea60406a26cfea'
          '541973d72e24a2def82d33884a781ee1'
          '07dc6997d19340b654f92c1d6a120cc0')
 
