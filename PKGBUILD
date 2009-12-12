@@ -18,7 +18,7 @@ install=$pkgname.install
 bfs_scheduler="0"
 enable_fastboot="0"
 keep_source_code="0"
-menuconfig="0"
+menuconfig="1"
 realtime_patch="0"
 use_config_gz="0"
 enable_reiser4="0"
@@ -58,9 +58,9 @@ md5sums=('260551284ac224c3a43c4adac7df4879'
          '21562518ab45d8be9c67d316aef9399f'
          'f43c1e626c8ac83e20f200998d3a818b'
          'ec1d164264b909f4f290fc4670119aac'
-         '2449aacb3dc4250bcb7a3f80426a24b3'
+         '7be76c1a8792628202e53ed64bacee5d'
          '5bd5c60b7e7664e8794279e99cafd185'
-         'c97ef23788f46e3a3f82fe0280b94b5a'
+         'cfbea5a101196497da0860f658ddd112'
          'cbdcf252fbb542c269ea60406a26cfea'
          '541973d72e24a2def82d33884a781ee1'
          '07dc6997d19340b654f92c1d6a120cc0')
