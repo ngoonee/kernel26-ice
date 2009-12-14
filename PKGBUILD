@@ -26,7 +26,7 @@ enable_reiser4="0"
 
 ### Files / Versions
 file_kernel="linux-2.6.32.tar.bz2"
-# file_kernel_patch="patch-2.6.32.1.bz2"
+file_kernel_patch="patch-2.6.32.1.bz2"
 file_rt="patch-2.6.31.6-rt19.bz2"
 file_reiser4="reiser4-for-2.6.31.patch.bz2"
 file_toi="tuxonice-3.0.99.41-for-2.6.32.patch.bz2"
@@ -35,7 +35,7 @@ file_fastboot="Auke-Kok-s-patch-to-kernel-2.6.30.patch"
 ###
 
 source=(http://kernel.org/pub/linux/kernel/v2.6/${file_kernel}
-#	http://www.kernel.org/pub/linux/kernel/v2.6/${file_kernel_patch}
+	http://www.kernel.org/pub/linux/kernel/v2.6/${file_kernel_patch}
 	http://www.kernel.org/pub/linux/kernel/projects/rt/${file_rt}
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.32/1900_hfs-readdir-buffer-overflow.patch
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.32/4100_dm-bbr.patch
@@ -51,6 +51,7 @@ source=(http://kernel.org/pub/linux/kernel/v2.6/${file_kernel}
 	mkinitcpio-$pkgname.conf)
 
 md5sums=('260551284ac224c3a43c4adac7df4879'
+         'abc24a9beb8431a75301dd3884b37a3c'
          '94e42d06b4e753662acf5dd3d3a8a3af'
          '33ba1f6da3af9acd445d3d92df4c551c'
          'e501d050605a7399e7b12a6b14903631'
