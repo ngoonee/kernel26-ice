@@ -128,7 +128,7 @@ build() {
        # applying BFS scheduler patch
        echo "Applying BFS scheduler patch"
        ## Delete the Makefile changes that break patching.
-       sed '/Index: linux-2.6.31-bfs\/Makefile/,/To see a list of typical targets execute "make help"/d' \
+       sed '/Index: linux-2.6.32-ck1\/Makefile/,/To see a list of typical targets execute "make help"/d' \
          $startdir/src/${file_bfs} | patch -Np1 || return 1
     fi
 
