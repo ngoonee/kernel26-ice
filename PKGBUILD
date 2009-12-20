@@ -26,7 +26,7 @@ enable_reiser4="0"
 
 ### Files / Versions
 file_kernel="linux-2.6.32.tar.bz2"
-file_kernel_patch="patch-2.6.32.1.bz2"
+file_kernel_patch="patch-2.6.32.2.bz2"
 file_rt="patch-2.6.31.6-rt19.bz2"
 file_reiser4="reiser4-for-2.6.31.patch.bz2"
 file_toi="tuxonice-3.0.99.44-for-2.6.32.patch.bz2"
@@ -37,7 +37,8 @@ file_fastboot="Auke-Kok-s-patch-to-kernel-2.6.30.patch"
 source=(http://kernel.org/pub/linux/kernel/v2.6/${file_kernel}
 	http://www.kernel.org/pub/linux/kernel/v2.6/${file_kernel_patch}
 	http://www.kernel.org/pub/linux/kernel/projects/rt/${file_rt}
-	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.32/1900_hfs-readdir-buffer-overflow.patch
+	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.32/1900_EFI-GPT-header-read-fix.patch
+	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.32/1910_sector-size-for-EFI-GPT-fix.patch
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.32/4100_dm-bbr.patch
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.32/4200_fbcondecor-0.9.6.patch
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.32/4400_alpha-sysctl-uac.patch
@@ -51,9 +52,10 @@ source=(http://kernel.org/pub/linux/kernel/v2.6/${file_kernel}
 	mkinitcpio-$pkgname.conf)
 
 md5sums=('260551284ac224c3a43c4adac7df4879'
-         'abc24a9beb8431a75301dd3884b37a3c'
+         '924b7aa0fcd6e54c12ecc9b3c3082f59'
          '94e42d06b4e753662acf5dd3d3a8a3af'
-         '33ba1f6da3af9acd445d3d92df4c551c'
+         '63b90f10d4db80b02c1735caade56027'
+         '62a454428b28b4fb27e8908f9678c613'
          'e501d050605a7399e7b12a6b14903631'
          '6906c45acbaf073915fe24ec2632130b'
          '21562518ab45d8be9c67d316aef9399f'
