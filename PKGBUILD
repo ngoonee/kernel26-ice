@@ -14,14 +14,14 @@ backup=('boot/kconfig26$pkgext' etc/mkinitcpio.d/${pkgname}.preset etc/mkinitcpi
 depends=('coreutils' 'module-init-tools' 'mkinitcpio>=0.5.15' 'kernel26-firmware')
 install=$pkgname.install
 
-### User defined variables
-bfs_scheduler="0"
-enable_fastboot="0"
-keep_source_code="0"
-menuconfig="0"
-realtime_patch="0"
-use_config_gz="0"
-enable_reiser4="0"
+### User/Environment defined variables
+bfs_scheduler=${bfs_scheduler:-0}
+enable_fastboot=${enable_fastboot:-0}
+keep_source_code=${keep_source_code:-0}
+menuconfig=${menuconfig:-0}
+realtime_patch=${realtime_patch:-0}
+use_config_gz=${use_config_gz:-0}
+enable_reiser4=${enable_reiser4:-0}
 ###
 
 ### Files / Versions
