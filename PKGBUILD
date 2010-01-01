@@ -30,7 +30,7 @@ file_kernel_patch="patch-2.6.32.2.bz2"
 file_rt="patch-2.6.31.6-rt19.bz2"
 file_reiser4="reiser4-for-2.6.31.patch.bz2"
 file_toi="tuxonice-3.0.99.44-for-2.6.32.patch.bz2"
-file_bfs="2.6.32-sched-bfs-312.patch"
+file_bfs="2.6.32-sched-bfs-313.patch"
 file_fastboot="Auke-Kok-s-patch-to-kernel-2.6.30.patch"
 ###
 
@@ -61,7 +61,7 @@ md5sums=('260551284ac224c3a43c4adac7df4879'
          '21562518ab45d8be9c67d316aef9399f'
          'f43c1e626c8ac83e20f200998d3a818b'
          '9bd6522b7cb35b90e3d9abeb99bf549b'
-         'ed370273d7679581a5a846c2587f431a'
+         '8741e030cb6242cb42e061b127407875'
          '5bd5c60b7e7664e8794279e99cafd185'
          'cfbea5a101196497da0860f658ddd112'
          'cbdcf252fbb542c269ea60406a26cfea'
