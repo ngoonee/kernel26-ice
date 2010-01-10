@@ -26,7 +26,7 @@ enable_reiser4=${enable_reiser4:-0}
 
 ### Files / Versions
 file_kernel="linux-2.6.32.tar.bz2"
-file_kernel_patch="patch-2.6.32.2.bz2"
+file_kernel_patch="patch-2.6.32.3.bz2"
 file_rt="patch-2.6.31.6-rt19.bz2"
 file_reiser4="reiser4-for-2.6.31.patch.bz2"
 file_toi="tuxonice-3.0.99.44-for-2.6.32.patch.bz2"
@@ -51,7 +51,7 @@ source=(http://kernel.org/pub/linux/kernel/v2.6/${file_kernel}
 	mkinitcpio-$pkgname.conf)
 
 md5sums=('260551284ac224c3a43c4adac7df4879'
-         '924b7aa0fcd6e54c12ecc9b3c3082f59'
+         '6bd3c5fea1e88bb4d0948ec3688bd8f6'
          '94e42d06b4e753662acf5dd3d3a8a3af'
          '63b90f10d4db80b02c1735caade56027'
          '62a454428b28b4fb27e8908f9678c613'
@@ -61,7 +61,7 @@ md5sums=('260551284ac224c3a43c4adac7df4879'
          '9bd6522b7cb35b90e3d9abeb99bf549b'
          '8741e030cb6242cb42e061b127407875'
          '5bd5c60b7e7664e8794279e99cafd185'
-         'cfbea5a101196497da0860f658ddd112'
+         '7a2d206c535518eddb14ad1dbe761004'
          'cbdcf252fbb542c269ea60406a26cfea'
          '541973d72e24a2def82d33884a781ee1'
          '07dc6997d19340b654f92c1d6a120cc0')
