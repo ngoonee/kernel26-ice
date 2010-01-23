@@ -1,7 +1,7 @@
 #
 # Automatically generated make config: don't edit
 # Linux kernel version: 2.6.32
-# Tue Jan 19 19:41:13 2010
+# Sat Jan 23 11:13:06 2010
 #
 # CONFIG_64BIT is not set
 CONFIG_X86_32=y
@@ -4470,6 +4470,7 @@ CONFIG_FTRACE=y
 # CONFIG_SYSPROF_TRACER is not set
 # CONFIG_SCHED_TRACER is not set
 # CONFIG_FTRACE_SYSCALLS is not set
+# CONFIG_OPEN_TRACER is not set
 # CONFIG_BOOT_TRACER is not set
 CONFIG_BRANCH_PROFILE_NONE=y
 # CONFIG_PROFILE_ANNOTATED_BRANCHES is not set
