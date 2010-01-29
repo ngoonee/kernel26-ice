@@ -26,7 +26,7 @@ enable_reiser4=${enable_reiser4:-0}
 
 ### Files / Versions
 file_kernel="linux-2.6.32.tar.bz2"
-file_kernel_patch="patch-2.6.32.6.bz2"
+file_kernel_patch="patch-2.6.32.7.bz2"
 file_rt="patch-2.6.31.12-rt20.bz2"
 file_reiser4="reiser4-for-2.6.31.patch.bz2"
 file_toi="tuxonice-3.0.99.44-for-2.6.32.patch.bz2"
@@ -37,8 +37,6 @@ file_fastboot="Auke-Kok-s-patch-to-kernel-2.6.30.patch"
 source=(http://kernel.org/pub/linux/kernel/v2.6/${file_kernel}
 	http://www.kernel.org/pub/linux/kernel/v2.6/${file_kernel_patch}
 	http://www.kernel.org/pub/linux/kernel/projects/rt/${file_rt}
-	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.32/1900_EFI-GPT-header-read-fix.patch
-	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.32/1910_sector-size-for-EFI-GPT-fix.patch
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.32/4200_fbcondecor-0.9.6.patch
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.32/4400_alpha-sysctl-uac.patch
 	http://www.kernel.org/pub/linux/kernel/people/edward/reiser4/reiser4-for-2.6/${file_reiser4}
@@ -51,17 +49,15 @@ source=(http://kernel.org/pub/linux/kernel/v2.6/${file_kernel}
 	mkinitcpio-$pkgname.conf)
 
 md5sums=('260551284ac224c3a43c4adac7df4879'
-         '94415211e7854fc9377e948379c86679'
+         'a68305d3e77dddc9555ba58f678a1ce2'
          'b23b4e242bf1a4626cf2ce972c0b6fbd'
-         '63b90f10d4db80b02c1735caade56027'
-         '62a454428b28b4fb27e8908f9678c613'
          '6906c45acbaf073915fe24ec2632130b'
          '21562518ab45d8be9c67d316aef9399f'
          'f43c1e626c8ac83e20f200998d3a818b'
          '9bd6522b7cb35b90e3d9abeb99bf549b'
          '8741e030cb6242cb42e061b127407875'
          '5bd5c60b7e7664e8794279e99cafd185'
-         'b7c53e5ff8c2b7c86ffdaac6a71050b3'
+         '944cdfa8e2625193d7de3495783a035e'
          'cbdcf252fbb542c269ea60406a26cfea'
          '541973d72e24a2def82d33884a781ee1'
          '07dc6997d19340b654f92c1d6a120cc0')
