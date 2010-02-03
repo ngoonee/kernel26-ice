@@ -10,7 +10,7 @@ pkgdesc="The Linux Kernel and modules with gentoo-sources patchset and tuxonice 
 arch=('i686' 'x86_64')
 license=('GPL2')
 url="http://www.kernel.org"
-backup=('boot/kconfig26$pkgext' etc/mkinitcpio.d/${pkgname}.preset etc/mkinitcpio.d/${pkgname}-fallback.conf)
+backup=(boot/kconfig26$pkgext etc/mkinitcpio.d/${pkgname}.preset etc/mkinitcpio.d/${pkgname}-fallback.conf)
 depends=('coreutils' 'module-init-tools' 'mkinitcpio>=0.5.15' 'kernel26-firmware')
 install=$pkgname.install
 
