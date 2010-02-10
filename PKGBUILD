@@ -5,7 +5,7 @@
 pkgext=-ice
 pkgname=kernel26$pkgext
 pkgver=2.6.32
-pkgrel=10
+pkgrel=11
 pkgdesc="The Linux Kernel and modules with gentoo-sources patchset and tuxonice support"
 arch=('i686' 'x86_64')
 license=('GPL2')
@@ -29,7 +29,7 @@ file_kernel="linux-2.6.32.tar.bz2"
 file_kernel_patch="patch-2.6.32.8.bz2"
 file_rt="patch-2.6.31.12-rt20.bz2"
 file_reiser4="reiser4-for-2.6.32.patch.bz2"
-file_toi="tuxonice-3.0.99.44-for-2.6.32.patch.bz2"
+file_toi="tuxonice-3.0.99.48-for-2.6.32.patch.bz2"
 file_bfs="2.6.32-sched-bfs-313.patch"
 file_fastboot="Auke-Kok-s-patch-to-kernel-2.6.30.patch"
 ###
@@ -56,7 +56,7 @@ md5sums=('260551284ac224c3a43c4adac7df4879'
          '6906c45acbaf073915fe24ec2632130b'
          '21562518ab45d8be9c67d316aef9399f'
          '3246397973d9271eb8e6d7c97c5d2d91'
-         '9bd6522b7cb35b90e3d9abeb99bf549b'
+         'b0e13852faf656a52eef2e1ff44e709e'
          '8741e030cb6242cb42e061b127407875'
          '5bd5c60b7e7664e8794279e99cafd185'
          '059817957023637030aaac986f71cece'
