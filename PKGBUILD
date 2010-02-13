@@ -37,7 +37,6 @@ file_fastboot="Auke-Kok-s-patch-to-kernel-2.6.30.patch"
 source=(http://kernel.org/pub/linux/kernel/v2.6/${file_kernel}
 	http://www.kernel.org/pub/linux/kernel/v2.6/${file_kernel_patch}
 	http://www.kernel.org/pub/linux/kernel/projects/rt/${file_rt}
-	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.32/2400_5906-transmit-hang-fix.patch
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.32/4200_fbcondecor-0.9.6.patch
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.32/4400_alpha-sysctl-uac.patch
 	http://www.kernel.org/pub/linux/kernel/people/edward/reiser4/reiser4-for-2.6/${file_reiser4}
@@ -52,7 +51,6 @@ source=(http://kernel.org/pub/linux/kernel/v2.6/${file_kernel}
 md5sums=('260551284ac224c3a43c4adac7df4879'
          'eabf01da4c72f7ea5b4e4bf8e8535e5f'
          'b23b4e242bf1a4626cf2ce972c0b6fbd'
-         'c95bc2936ab20348729479492343787a'
          '6906c45acbaf073915fe24ec2632130b'
          '21562518ab45d8be9c67d316aef9399f'
          '3246397973d9271eb8e6d7c97c5d2d91'
