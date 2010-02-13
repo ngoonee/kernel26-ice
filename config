@@ -1,7 +1,7 @@
 #
 # Automatically generated make config: don't edit
 # Linux kernel version: 2.6.32
-# Tue Feb  9 20:01:29 2010
+# Sat Feb 13 12:04:03 2010
 #
 # CONFIG_64BIT is not set
 CONFIG_X86_32=y
@@ -4643,6 +4643,7 @@ CONFIG_CRYPTO_TWOFISH_586=m
 CONFIG_CRYPTO_DEFLATE=m
 CONFIG_CRYPTO_ZLIB=m
 CONFIG_CRYPTO_LZO=m
+# CONFIG_CRYPTO_LZF is not set
 
 #
 # Random Number Generation
