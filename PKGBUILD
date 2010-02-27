@@ -27,7 +27,7 @@ enable_reiser4=${enable_reiser4:-0}
 ### Files / Versions
 file_kernel="linux-2.6.32.tar.bz2"
 file_kernel_patch="patch-2.6.32.9.bz2"
-file_rt="patch-2.6.31.12-rt21.bz2"
+file_rt="patch-2.6.33-rt4.bz2"
 file_reiser4="reiser4-for-2.6.32.patch.bz2"
 file_toi="tuxonice-3.0.99.48-for-2.6.32.patch.bz2"
 file_bfs="2.6.32-sched-bfs-313.patch"
@@ -52,7 +52,7 @@ source=(http://kernel.org/pub/linux/kernel/v2.6/${file_kernel}
 
 md5sums=('260551284ac224c3a43c4adac7df4879'
          '7f615dd3b4a3b19fb86e479996a2deb5'
-         'f9489cfa299b89f9d74ba0ced1ee803a'
+         'e85eafcc54372857a33438f752f48d54'
          '25636e95293794c8723e3f3e65fd39f0'
          '1f94389758b2cc7a4202a3501dfc925b'
          '6906c45acbaf073915fe24ec2632130b'
