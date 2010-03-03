@@ -37,7 +37,6 @@ file_fastboot="Auke-Kok-s-patch-to-kernel-2.6.30.patch"
 
 source=(http://kernel.org/pub/linux/kernel/v2.6/${file_kernel}
 	http://www.kernel.org/pub/linux/kernel/projects/rt/${file_rt}
-	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.33/4100_dm-bbr.patch
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.33/4200_fbcondecor-0.9.6.patch
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.33/4400_alpha-sysctl-uac.patch
 	http://www.kernel.org/pub/linux/kernel/people/edward/reiser4/reiser4-for-2.6/${file_reiser4}
@@ -51,7 +50,6 @@ source=(http://kernel.org/pub/linux/kernel/v2.6/${file_kernel}
 
 md5sums=('c3883760b18d50e8d78819c54d579b00'
          'e85eafcc54372857a33438f752f48d54'
-         'e501d050605a7399e7b12a6b14903631'
          '6906c45acbaf073915fe24ec2632130b'
          '21562518ab45d8be9c67d316aef9399f'
          '3246397973d9271eb8e6d7c97c5d2d91'
