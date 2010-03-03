@@ -25,17 +25,17 @@ enable_reiser4=${enable_reiser4:-0}
 ###
 
 ### Files / Versions
-file_kernel="linux-2.6.32.tar.bz2"
-file_kernel_patch="patch-2.6.32.9.bz2"
+file_kernel="linux-2.6.33.tar.bz2"
+#file_kernel_patch="patch-2.6.32.9.bz2"
+#http://www.kernel.org/pub/linux/kernel/v2.6/${file_kernel_patch}
 file_rt="patch-2.6.33-rt4.bz2"
 file_reiser4="reiser4-for-2.6.32.patch.bz2"
-file_toi="tuxonice-3.0.99.48-for-2.6.32.patch.bz2"
-file_bfs="2.6.32-sched-bfs-313.patch"
+file_toi="tuxonice-3.0.99.48-for-head.patch.bz2"
+file_bfs="2.6.33-sched-bfs-315.patch"
 file_fastboot="Auke-Kok-s-patch-to-kernel-2.6.30.patch"
 ###
 
 source=(http://kernel.org/pub/linux/kernel/v2.6/${file_kernel}
-	http://www.kernel.org/pub/linux/kernel/v2.6/${file_kernel_patch}
 	http://www.kernel.org/pub/linux/kernel/projects/rt/${file_rt}
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.32/2400_5906-transmit-hang-fix.patch
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.32/2500_libata-fix-truncated-LBA48-ret-vals.patch
@@ -50,16 +50,15 @@ source=(http://kernel.org/pub/linux/kernel/v2.6/${file_kernel}
 	$pkgname.preset
 	mkinitcpio-$pkgname.conf)
 
-md5sums=('260551284ac224c3a43c4adac7df4879'
-         '7f615dd3b4a3b19fb86e479996a2deb5'
+md5sums=('c3883760b18d50e8d78819c54d579b00'
          'e85eafcc54372857a33438f752f48d54'
          '25636e95293794c8723e3f3e65fd39f0'
          '1f94389758b2cc7a4202a3501dfc925b'
          '6906c45acbaf073915fe24ec2632130b'
          '21562518ab45d8be9c67d316aef9399f'
          '3246397973d9271eb8e6d7c97c5d2d91'
-         'b0e13852faf656a52eef2e1ff44e709e'
-         '8741e030cb6242cb42e061b127407875'
+         'a7b10e0a2d46efcdef455a5a356d8553'
+         'd4152678bafdc5d133d6dcc245d74f07'
          '5bd5c60b7e7664e8794279e99cafd185'
          '57d5c529800b6455f68111abb3fa067b'
          '8fbb969134ed1a826f00f326b336f7a4'
