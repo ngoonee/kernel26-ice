@@ -1,4 +1,4 @@
-KERNEL_VERSION=2.6.32-ice
+KERNEL_VERSION=2.6.33-ice
 
 post_install () {
 	echo ">"
