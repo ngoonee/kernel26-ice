@@ -194,7 +194,7 @@ build() {
     install -D -m644 .config $startdir/pkg/boot/kconfig26$pkgext
     mkdir -p $startdir/pkg/usr/src/linux-$_kernver/include
 
-    for i in acpi asm-{generic,$KARCH} config linux math-emu media net pcmcia scsi sound trace video; do
+    for i in acpi asm-{generic,$KARCH} config generated linux math-emu media net pcmcia scsi sound trace video; do
 	cp -a include/$i $startdir/pkg/usr/src/linux-$_kernver/include/
     done
 
