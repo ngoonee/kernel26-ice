@@ -184,7 +184,7 @@ build() {
     install -D -m644 .config $startdir/pkg/boot/kconfig26$pkgext
     mkdir -p $startdir/pkg/usr/src/linux-$_kernver/include
 
-    for i in acpi asm-{generic,$KARCH} config generated linux math-emu media net pcmcia scsi sound trace video; do
+    for i in acpi asm-generic config generated linux math-emu media net pcmcia scsi sound trace video; do
 	cp -a include/$i $startdir/pkg/usr/src/linux-$_kernver/include/
     done
 
@@ -247,8 +247,6 @@ build() {
 	mkdir -p $startdir/pkg/usr/src/linux-$_kernver/$(echo $i | sed 's|/Kconfig.*||')
 	cp $i $startdir/pkg/usr/src/linux-$_kernver/$i
     done
-
-    cd $startdir/pkg/usr/src/linux-$_kernver/include && ln -s asm-$KARCH asm
 
     chown -R root.root $startdir/pkg/usr/src/linux-$_kernver
     find $startdir/pkg/usr/src/linux-$_kernver -type d -exec chmod 755 {} \;
