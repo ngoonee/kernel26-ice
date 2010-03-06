@@ -16,7 +16,6 @@ install=$pkgname.install
 
 ### User/Environment defined variables
 bfs_scheduler=${bfs_scheduler:-0}
-enable_fastboot=${enable_fastboot:-0}
 keep_source_code=${keep_source_code:-0}
 menuconfig=${menuconfig:-0}
 realtime_patch=${realtime_patch:-0}
@@ -28,10 +27,9 @@ enable_reiser4=${enable_reiser4:-0}
 file_kernel="linux-2.6.33.tar.bz2"
 file_kernel_patch="patch-2.6.33.1.bz2"
 file_rt="patch-2.6.33-rt4.bz2"
-file_reiser4="reiser4-for-2.6.32.patch.bz2"
+file_reiser4="reiser4-for-2.6.33.patch.bz2"
 file_toi="tuxonice-3.0.99.48-for-head.patch.bz2"
 file_bfs="2.6.33-sched-bfs-315.patch"
-file_fastboot="Auke-Kok-s-patch-to-kernel-2.6.30.patch"
 ###
 
 source=(http://kernel.org/pub/linux/kernel/v2.6/${file_kernel}
@@ -43,7 +41,6 @@ source=(http://kernel.org/pub/linux/kernel/v2.6/${file_kernel}
 	http://www.kernel.org/pub/linux/kernel/people/edward/reiser4/reiser4-for-2.6/${file_reiser4}
 	http://www.tuxonice.net/downloads/all/${file_toi}
 	http://ck.kolivas.org/patches/bfs/${file_bfs}
-	${file_fastboot}
 	config
 	config.x86_64
 	$pkgname.preset
@@ -54,10 +51,9 @@ md5sums=('c3883760b18d50e8d78819c54d579b00'
          'e501d050605a7399e7b12a6b14903631'
          'ce66607145ad5e72b50931b9ae291b70'
          '22c2eea709b2914898b39ec737f85aab'
-         '3246397973d9271eb8e6d7c97c5d2d91'
+         '49da31ea1e6c3ae65f954cd5fc8fcc4e'
          'a7b10e0a2d46efcdef455a5a356d8553'
          'd4152678bafdc5d133d6dcc245d74f07'
-         '5bd5c60b7e7664e8794279e99cafd185'
          'ec81f069c8dba764b774b747d5143b55'
          'b1d044dea9620e2100e2a941868a120d'
          '541973d72e24a2def82d33884a781ee1'
@@ -113,12 +109,6 @@ build() {
          | patch -Np1 || return 1
     else
        bzip2 -dck $startdir/src/${file_toi} | patch -Np1 || return 1
-    fi
-
-    if [ "$enable_fastboot" = "1" ]; then
-       # applying fastboot patch
-       echo "Applying fastboot (${file_fastboot})"
-       patch -Np1 -i $startdir/src/${file_fastboot} || return 1
     fi
 
     if [ "$bfs_scheduler" = "1" ]; then
