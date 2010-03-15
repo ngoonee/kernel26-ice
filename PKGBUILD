@@ -33,7 +33,7 @@ file_bfs="2.6.33-sched-bfs-315.patch"
 ###
 
 source=(http://kernel.org/pub/linux/kernel/v2.6/${file_kernel}
-	# http://www.kernel.org/pub/linux/kernel/v2.6/${file_kernel_patch}
+	http://www.kernel.org/pub/linux/kernel/v2.6/${file_kernel_patch}
 	http://www.kernel.org/pub/linux/kernel/projects/rt/${file_rt}
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.33/4100_dm-bbr.patch
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.33/4200_fbcondecor-0.9.6.patch
@@ -65,11 +65,11 @@ build() {
 
     cd $startdir/src/linux-$pkgver
 
-    # Applying official patch
-    # if [ -n "${file_kernel_patch%.bz2}" ] ; then
-    #     echo "Applying ${file_kernel_patch%.bz2}"
-    #     patch -Np1 -i $startdir/src/${file_kernel_patch%.bz2} || return 1
-    # fi
+    Applying official patch
+    if [ -n "${file_kernel_patch%.bz2}" ] ; then
+        echo "Applying ${file_kernel_patch%.bz2}"
+        patch -Np1 -i $startdir/src/${file_kernel_patch%.bz2} || return 1
+    fi
 
     # Applying realtime patch
     if [ "$realtime_patch" = "1" ]; then
