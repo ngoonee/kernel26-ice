@@ -47,10 +47,11 @@ source=(http://kernel.org/pub/linux/kernel/v2.6/${file_kernel}
 	mkinitcpio-$pkgname.conf)
 
 md5sums=('c3883760b18d50e8d78819c54d579b00'
+         '745fd1355c630e163e40c40d4c9b79f9'
          '74008c0ceed5dd85fe8f84ebe60d4b54'
          'e501d050605a7399e7b12a6b14903631'
          'ce66607145ad5e72b50931b9ae291b70'
-         '22c2eea709b2914898b39ec737f85aab'
+         '9acdaf6a28cd6820b5ae138a3d76f9ec'
          '49da31ea1e6c3ae65f954cd5fc8fcc4e'
          'a7b10e0a2d46efcdef455a5a356d8553'
          'd4152678bafdc5d133d6dcc245d74f07'
