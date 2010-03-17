@@ -66,7 +66,7 @@ build() {
 
     cd $startdir/src/linux-$pkgver
 
-    Applying official patch
+    # Applying official patch
     if [ -n "${file_kernel_patch%.bz2}" ] ; then
         echo "Applying ${file_kernel_patch%.bz2}"
         patch -Np1 -i $startdir/src/${file_kernel_patch%.bz2} || return 1
