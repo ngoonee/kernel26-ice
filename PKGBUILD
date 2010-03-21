@@ -108,11 +108,11 @@ build() {
        bzip2 -dck $startdir/src/${file_toi} \
          | sed '/diff --git a\/kernel\/fork.c b\/kernel\/fork.c/,/{/d' \
          | sed 's/printk(KERN_INFO "PM: Creating hibernation image:\\n/printk(KERN_INFO "PM: Creating hibernation image: \\n/' \
-         | patch -Np1 || return 1
+         | patch -F 500 -Np1 || return 1
     else
        bzip2 -dck $startdir/src/${file_toi} \
          | sed 's/printk(KERN_INFO "PM: Creating hibernation image:\\n/printk(KERN_INFO "PM: Creating hibernation image: \\n/' \
-         | patch -Np1 || return 1
+         | patch -F 500 -Np1 || return 1
     fi
 
     if [ "$bfs_scheduler" = "1" ]; then
