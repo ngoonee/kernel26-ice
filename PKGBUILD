@@ -5,7 +5,7 @@
 pkgext=-ice
 pkgname=kernel26$pkgext
 pkgver=2.6.33
-pkgrel=4
+pkgrel=5
 pkgdesc="The Linux Kernel and modules with gentoo-sources patchset and tuxonice support"
 arch=('i686' 'x86_64')
 license=('GPL2')
@@ -29,7 +29,7 @@ file_kernel_patch="patch-2.6.33.2.bz2"
 file_rt="patch-2.6.33.2-rt13.bz2"
 file_reiser4="reiser4-for-2.6.33.patch.bz2"
 file_toi="tuxonice-3.1-for-head.patch.bz2"
-file_bfs="2.6.33-sched-bfs-315.patch"
+file_bfs="2.6.33-sched-bfs-316.patch"
 ###
 
 source=(http://kernel.org/pub/linux/kernel/v2.6/${file_kernel}
@@ -37,7 +37,6 @@ source=(http://kernel.org/pub/linux/kernel/v2.6/${file_kernel}
 	http://www.kernel.org/pub/linux/kernel/projects/rt/${file_rt}
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.33/4100_dm-bbr.patch
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.33/4200_fbcondecor-0.9.6.patch
-	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.33/4400_alpha-sysctl-uac.patch
 	http://www.kernel.org/pub/linux/kernel/people/edward/reiser4/reiser4-for-2.6/${file_reiser4}
 	http://www.tuxonice.net/downloads/all/${file_toi}
 	http://ck.kolivas.org/patches/bfs/${file_bfs}
@@ -51,10 +50,9 @@ md5sums=('c3883760b18d50e8d78819c54d579b00'
          '97ea61835807262b198606a75373c905'
          'e501d050605a7399e7b12a6b14903631'
          'ce66607145ad5e72b50931b9ae291b70'
-         '9acdaf6a28cd6820b5ae138a3d76f9ec'
          '49da31ea1e6c3ae65f954cd5fc8fcc4e'
          'c6e0b8c1876794118584a7dedaaeb604'
-         'd4152678bafdc5d133d6dcc245d74f07'
+         'bc692f8e0495bc828922f8129a0f740e'
          'ec4ab3fc7f3a0e16c63b06b03ed201aa'
          '56c5914cbfb047c44094ba9d83e600af'
          '541973d72e24a2def82d33884a781ee1'
