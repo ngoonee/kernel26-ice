@@ -5,7 +5,7 @@
 pkgext=-ice
 pkgname=kernel26$pkgext
 pkgver=2.6.33
-pkgrel=6
+pkgrel=7
 pkgdesc="The Linux Kernel and modules with gentoo-sources patchset and tuxonice support"
 arch=('i686' 'x86_64')
 license=('GPL2')
@@ -26,7 +26,7 @@ enable_reiser4=${enable_reiser4:-0}
 ### Files / Versions
 file_kernel="linux-2.6.33.tar.bz2"
 file_kernel_patch="patch-2.6.33.3.bz2"
-file_rt="patch-2.6.33.3-rt16.bz2"
+file_rt="patch-2.6.33.3-rt19.bz2"
 file_reiser4="reiser4-for-2.6.33.patch.bz2"
 file_toi="tuxonice-3.1-for-head.patch.bz2"
 file_bfs="2.6.33-sched-bfs-316.patch"
@@ -47,7 +47,7 @@ source=(http://kernel.org/pub/linux/kernel/v2.6/${file_kernel}
 
 md5sums=('c3883760b18d50e8d78819c54d579b00'
          'dd6cd6a3aea70a2d90d1e8fd6abc3b45'
-         '309c2b26f62de8bb43949797c27e16d6'
+         'f5f11d50c2047a118f7e2cf2435804ef'
          'e501d050605a7399e7b12a6b14903631'
          'ce66607145ad5e72b50931b9ae291b70'
          '49da31ea1e6c3ae65f954cd5fc8fcc4e'
