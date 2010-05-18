@@ -4,8 +4,8 @@
 
 pkgext=-ice
 pkgname=kernel26$pkgext
-pkgver=2.6.33
-pkgrel=8
+pkgver=2.6.34
+pkgrel=0
 pkgdesc="The Linux Kernel and modules with gentoo-sources patchset and tuxonice support"
 arch=('i686' 'x86_64')
 license=('GPL2')
@@ -24,16 +24,16 @@ enable_reiser4=${enable_reiser4:-0}
 ###
 
 ### Files / Versions
-file_kernel="linux-2.6.33.tar.bz2"
-file_kernel_patch="patch-2.6.33.4.bz2"
+file_kernel="linux-2.6.34.tar.bz2"
+#file_kernel_patch="patch-2.6.33.4.bz2"
 file_rt="patch-2.6.33.4-rt20.bz2"
 file_reiser4="reiser4-for-2.6.33.patch.bz2"
 file_toi="tuxonice-3.1-for-head.patch.bz2"
-file_bfs="2.6.33-sched-bfs-316.patch"
+file_bfs="2.6.34-sched-bfs-317.patch"
 ###
 
 source=(http://kernel.org/pub/linux/kernel/v2.6/${file_kernel}
-	http://www.kernel.org/pub/linux/kernel/v2.6/${file_kernel_patch}
+#	http://www.kernel.org/pub/linux/kernel/v2.6/${file_kernel_patch}
 	http://www.kernel.org/pub/linux/kernel/projects/rt/${file_rt}
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.33/4100_dm-bbr.patch
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.33/4200_fbcondecor-0.9.6.patch
@@ -45,14 +45,14 @@ source=(http://kernel.org/pub/linux/kernel/v2.6/${file_kernel}
 	$pkgname.preset
 	mkinitcpio-$pkgname.conf)
 
-md5sums=('c3883760b18d50e8d78819c54d579b00'
-         '27ea162c4a508d368fad9c6e4530ee43'
+md5sums=('10eebcb0178fb4540e2165bfd7efc7ad'
+#         '27ea162c4a508d368fad9c6e4530ee43'
          '3083075c4d3a3c74aba40dcfe7226c98'
          'e501d050605a7399e7b12a6b14903631'
          'ce66607145ad5e72b50931b9ae291b70'
          '49da31ea1e6c3ae65f954cd5fc8fcc4e'
          'c6e0b8c1876794118584a7dedaaeb604'
-         'bc692f8e0495bc828922f8129a0f740e'
+         'a53081668ee49ac50d1cc8ec6ed2f461'
          'ec4ab3fc7f3a0e16c63b06b03ed201aa'
          '56c5914cbfb047c44094ba9d83e600af'
          '541973d72e24a2def82d33884a781ee1'
@@ -65,10 +65,10 @@ build() {
     cd $startdir/src/linux-$pkgver
 
     # Applying official patch
-    if [ -n "${file_kernel_patch%.bz2}" ] ; then
-        echo "Applying ${file_kernel_patch%.bz2}"
-        patch -Np1 -i $startdir/src/${file_kernel_patch%.bz2} || return 1
-    fi
+#    if [ -n "${file_kernel_patch%.bz2}" ] ; then
+#        echo "Applying ${file_kernel_patch%.bz2}"
+#        patch -Np1 -i $startdir/src/${file_kernel_patch%.bz2} || return 1
+#    fi
 
     # Applying realtime patch
     if [ "$realtime_patch" = "1" ]; then
