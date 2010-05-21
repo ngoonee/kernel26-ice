@@ -29,7 +29,7 @@ file_kernel="linux-2.6.34.tar.bz2"
 file_rt="patch-2.6.33.4-rt20.bz2"
 file_reiser4="reiser4-for-2.6.33.patch.bz2"
 file_toi="tuxonice-3.1-for-head.patch.bz2"
-file_bfs="2.6.34-sched-bfs-317.patch"
+file_bfs="2.6.34-sched-bfs-318.patch"
 ###
 
 source=(http://kernel.org/pub/linux/kernel/v2.6/${file_kernel}
@@ -52,7 +52,7 @@ md5sums=('10eebcb0178fb4540e2165bfd7efc7ad'
          'ce66607145ad5e72b50931b9ae291b70'
          '49da31ea1e6c3ae65f954cd5fc8fcc4e'
          'c6e0b8c1876794118584a7dedaaeb604'
-         'a53081668ee49ac50d1cc8ec6ed2f461'
+         'e47d527b10d799281211e6ac677edf3c'
          'ec4ab3fc7f3a0e16c63b06b03ed201aa'
          '56c5914cbfb047c44094ba9d83e600af'
          '541973d72e24a2def82d33884a781ee1'
