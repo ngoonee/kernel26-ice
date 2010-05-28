@@ -5,7 +5,7 @@
 pkgext=-ice
 pkgname=kernel26$pkgext
 pkgver=2.6.34
-pkgrel=0
+pkgrel=1
 pkgdesc="The Linux Kernel and modules with gentoo-sources patchset and tuxonice support"
 arch=('i686' 'x86_64')
 license=('GPL2')
@@ -27,7 +27,7 @@ enable_reiser4=${enable_reiser4:-0}
 file_kernel="linux-2.6.34.tar.bz2"
 #file_kernel_patch="patch-2.6.33.4.bz2"
 file_rt="patch-2.6.33.4-rt20.bz2"
-file_reiser4="reiser4-for-2.6.33.patch.bz2"
+file_reiser4="reiser4-for-2.6.34.patch.bz2"
 file_toi="tuxonice-3.1-for-head.patch.bz2"
 file_bfs="2.6.34-sched-bfs-318.patch"
 ###
@@ -35,8 +35,8 @@ file_bfs="2.6.34-sched-bfs-318.patch"
 source=(http://kernel.org/pub/linux/kernel/v2.6/${file_kernel}
 #	http://www.kernel.org/pub/linux/kernel/v2.6/${file_kernel_patch}
 	http://www.kernel.org/pub/linux/kernel/projects/rt/${file_rt}
-	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.33/4100_dm-bbr.patch
-	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.33/4200_fbcondecor-0.9.6.patch
+	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.34/2900_xconfig-with-qt4.patch
+	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/2.6.34/4200_fbcondecor-0.9.6.patch
 	http://www.kernel.org/pub/linux/kernel/people/edward/reiser4/reiser4-for-2.6/${file_reiser4}
 	http://www.tuxonice.net/downloads/all/${file_toi}
 	http://ck.kolivas.org/patches/bfs/${file_bfs}
@@ -46,11 +46,10 @@ source=(http://kernel.org/pub/linux/kernel/v2.6/${file_kernel}
 	mkinitcpio-$pkgname.conf)
 
 md5sums=('10eebcb0178fb4540e2165bfd7efc7ad'
-#         '27ea162c4a508d368fad9c6e4530ee43'
          '3083075c4d3a3c74aba40dcfe7226c98'
-         'e501d050605a7399e7b12a6b14903631'
-         'ce66607145ad5e72b50931b9ae291b70'
-         '49da31ea1e6c3ae65f954cd5fc8fcc4e'
+         'aa68610ca948e3c17aab8c8686baba76'
+         'fea61fba2885bc4dff578e26ad7657f5'
+         'e7fa6eb244393be1df2a4b1a3f61e332'
          'c6e0b8c1876794118584a7dedaaeb604'
          'e47d527b10d799281211e6ac677edf3c'
          'ec4ab3fc7f3a0e16c63b06b03ed201aa'
