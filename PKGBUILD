@@ -98,19 +98,19 @@ build() {
 	    bzip2 -dc $startdir/src/${file_reiser4} | patch -Np1 || return 1
     fi
 
-    # applying tuxonice patch
-    echo "Applying ${file_toi%.bz2}"
-    # fix to tuxonice patch to work with rt
-    if [ "$realtime_patch" = "1" ]; then
-       bzip2 -dck $startdir/src/${file_toi} \
-         | sed '/diff --git a\/kernel\/fork.c b\/kernel\/fork.c/,/{/d' \
-         | sed 's/printk(KERN_INFO "PM: Creating hibernation image:\\n/printk(KERN_INFO "PM: Creating hibernation image: \\n/' \
-         | patch -Np1 || return 1
-    else
-       bzip2 -dck $startdir/src/${file_toi} \
-         | sed 's/printk(KERN_INFO "PM: Creating hibernation image:\\n/printk(KERN_INFO "PM: Creating hibernation image: \\n/' \
-         | patch -Np1 || return 1
-    fi
+    # # applying tuxonice patch
+    # echo "Applying ${file_toi%.bz2}"
+    # # fix to tuxonice patch to work with rt
+    # if [ "$realtime_patch" = "1" ]; then
+    #    bzip2 -dck $startdir/src/${file_toi} \
+    #      | sed '/diff --git a\/kernel\/fork.c b\/kernel\/fork.c/,/{/d' \
+    #      | sed 's/printk(KERN_INFO "PM: Creating hibernation image:\\n/printk(KERN_INFO "PM: Creating hibernation image: \\n/' \
+    #      | patch -Np1 || return 1
+    # else
+    #    bzip2 -dck $startdir/src/${file_toi} \
+    #      | sed 's/printk(KERN_INFO "PM: Creating hibernation image:\\n/printk(KERN_INFO "PM: Creating hibernation image: \\n/' \
+    #      | patch -Np1 || return 1
+    # fi
 
     if [ "$bfs_scheduler" = "1" ]; then
        # applying BFS scheduler patch
