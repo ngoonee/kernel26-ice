@@ -53,7 +53,7 @@ md5sums=('10eebcb0178fb4540e2165bfd7efc7ad'
          'c6e0b8c1876794118584a7dedaaeb604'
          'e47d527b10d799281211e6ac677edf3c'
          'd6a2858ae74a48d18dd22ab1bc0a8b6f'
-         '56c5914cbfb047c44094ba9d83e600af'
+         '9a05ab293dac7352f6fd604768a94f6d'
          '541973d72e24a2def82d33884a781ee1'
          '07dc6997d19340b654f92c1d6a120cc0')
 
