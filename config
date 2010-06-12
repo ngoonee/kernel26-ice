@@ -1,7 +1,7 @@
 #
 # Automatically generated make config: don't edit
 # Linux kernel version: 2.6.34
-# Sat Jun 12 11:11:47 2010
+# Sat Jun 12 12:29:03 2010
 #
 # CONFIG_64BIT is not set
 CONFIG_X86_32=y
@@ -4363,6 +4363,8 @@ CONFIG_JBD=m
 CONFIG_JBD2=m
 # CONFIG_JBD2_DEBUG is not set
 CONFIG_FS_MBCACHE=m
+CONFIG_REISER4_FS=m
+# CONFIG_REISER4_DEBUG is not set
 CONFIG_REISERFS_FS=m
 # CONFIG_REISERFS_CHECK is not set
 CONFIG_REISERFS_PROC_INFO=y
