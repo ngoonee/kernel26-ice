@@ -52,7 +52,7 @@ md5sums=('10eebcb0178fb4540e2165bfd7efc7ad'
          'e7fa6eb244393be1df2a4b1a3f61e332'
          'c6e0b8c1876794118584a7dedaaeb604'
          'e47d527b10d799281211e6ac677edf3c'
-         'ec4ab3fc7f3a0e16c63b06b03ed201aa'
+         'da0b2bc648e1111c5f75d2c25d6ddaa4'
          '56c5914cbfb047c44094ba9d83e600af'
          '541973d72e24a2def82d33884a781ee1'
          '07dc6997d19340b654f92c1d6a120cc0')
@@ -269,4 +269,3 @@ build() {
     # Delete firmware directory
     rm -rf ${pkgdir}/lib/firmware
 }
-
