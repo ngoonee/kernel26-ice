@@ -5,7 +5,7 @@
 pkgext=-ice
 pkgname=kernel26$pkgext
 pkgver=2.6.34
-pkgrel=2
+pkgrel=1
 pkgdesc="The Linux Kernel and modules with gentoo-sources patchset and tuxonice support"
 arch=('i686' 'x86_64')
 license=('GPL2')
@@ -28,7 +28,7 @@ file_kernel="linux-2.6.34.tar.bz2"
 file_kernel_patch="patch-2.6.34.1.bz2"
 file_rt="patch-2.6.33.5-rt23.bz2"
 file_reiser4="reiser4-for-2.6.34.patch.bz2"
-file_toi="tuxonice-3.1.1.1-for-2.6.34.patch.bz2"
+file_toi="tuxonice-3.1.1.1-for-head.patch.bz2"
 file_bfs="2.6.34-sched-bfs-318.patch"
 ###
 
@@ -50,7 +50,7 @@ md5sums=('10eebcb0178fb4540e2165bfd7efc7ad'
          'aa68610ca948e3c17aab8c8686baba76'
          'fea61fba2885bc4dff578e26ad7657f5'
          'e7fa6eb244393be1df2a4b1a3f61e332'
-         'd1bd3ba8d10ae891395e34bc7dbb8479'
+         'b5acf4d03ed610b498157e48a38340a0'
          'e47d527b10d799281211e6ac677edf3c'
          'd6a2858ae74a48d18dd22ab1bc0a8b6f'
          '9a05ab293dac7352f6fd604768a94f6d'
