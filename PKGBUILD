@@ -28,7 +28,7 @@ file_kernel="linux-2.6.34.tar.bz2"
 file_kernel_patch="patch-2.6.34.1.bz2"
 file_rt="patch-2.6.33.5-rt23.bz2"
 file_reiser4="reiser4-for-2.6.34.patch.bz2"
-file_toi="tuxonice-3.1.1.1-for-head.patch.bz2"
+file_toi="tuxonice-3.1.1.1-for-2.6.34.patch.bz2"
 file_bfs="2.6.34-sched-bfs-318.patch"
 ###
 
@@ -50,10 +50,10 @@ md5sums=('10eebcb0178fb4540e2165bfd7efc7ad'
          'aa68610ca948e3c17aab8c8686baba76'
          'fea61fba2885bc4dff578e26ad7657f5'
          'e7fa6eb244393be1df2a4b1a3f61e332'
-         'b5acf4d03ed610b498157e48a38340a0'
+         'd1bd3ba8d10ae891395e34bc7dbb8479'
          'e47d527b10d799281211e6ac677edf3c'
          'd6a2858ae74a48d18dd22ab1bc0a8b6f'
-         '9a05ab293dac7352f6fd604768a94f6d'
+         'a30e424cf719949d684af4e252a4352d'
          '541973d72e24a2def82d33884a781ee1'
          '07dc6997d19340b654f92c1d6a120cc0')
 
@@ -98,19 +98,19 @@ build() {
 	    bzip2 -dc $startdir/src/${file_reiser4} | patch -Np1 || return 1
     fi
 
-    # # applying tuxonice patch
-    # echo "Applying ${file_toi%.bz2}"
-    # # fix to tuxonice patch to work with rt
-    # if [ "$realtime_patch" = "1" ]; then
-    #    bzip2 -dck $startdir/src/${file_toi} \
-    #      | sed '/diff --git a\/kernel\/fork.c b\/kernel\/fork.c/,/{/d' \
-    #      | sed 's/printk(KERN_INFO "PM: Creating hibernation image:\\n/printk(KERN_INFO "PM: Creating hibernation image: \\n/' \
-    #      | patch -Np1 || return 1
-    # else
-    #    bzip2 -dck $startdir/src/${file_toi} \
-    #      | sed 's/printk(KERN_INFO "PM: Creating hibernation image:\\n/printk(KERN_INFO "PM: Creating hibernation image: \\n/' \
-    #      | patch -Np1 || return 1
-    # fi
+    # applying tuxonice patch
+    echo "Applying ${file_toi%.bz2}"
+    # fix to tuxonice patch to work with rt
+    if [ "$realtime_patch" = "1" ]; then
+       bzip2 -dck $startdir/src/${file_toi} \
+         | sed '/diff --git a\/kernel\/fork.c b\/kernel\/fork.c/,/{/d' \
+         | sed 's/printk(KERN_INFO "PM: Creating hibernation image:\\n/printk(KERN_INFO "PM: Creating hibernation image: \\n/' \
+         | patch -Np1 || return 1
+    else
+       bzip2 -dck $startdir/src/${file_toi} \
+         | sed 's/printk(KERN_INFO "PM: Creating hibernation image:\\n/printk(KERN_INFO "PM: Creating hibernation image: \\n/' \
+         | patch -Np1 -F4 || return 1
+    fi
 
     if [ "$bfs_scheduler" = "1" ]; then
        # applying BFS scheduler patch
