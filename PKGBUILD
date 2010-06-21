@@ -17,10 +17,10 @@ install=$pkgname.install
 ### User/Environment defined variables
 bfs_scheduler=${bfs_scheduler:-0}
 keep_source_code=${keep_source_code:-0}
-menuconfig=${menuconfig:-0}
+menuconfig=${menuconfig:-1}
 realtime_patch=${realtime_patch:-0}
 use_config_gz=${use_config_gz:-0}
-enable_reiser4=${enable_reiser4:-0}
+enable_reiser4=${enable_reiser4:-1}
 ###
 
 ### Files / Versions
@@ -52,7 +52,7 @@ md5sums=('10eebcb0178fb4540e2165bfd7efc7ad'
          'e7fa6eb244393be1df2a4b1a3f61e332'
          'd1bd3ba8d10ae891395e34bc7dbb8479'
          'e47d527b10d799281211e6ac677edf3c'
-         'd6a2858ae74a48d18dd22ab1bc0a8b6f'
+         '70b5593b4cc2a0c29457b7c10e39d036'
          'a30e424cf719949d684af4e252a4352d'
          '541973d72e24a2def82d33884a781ee1'
          '07dc6997d19340b654f92c1d6a120cc0')
