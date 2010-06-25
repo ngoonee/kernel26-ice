@@ -3,7 +3,6 @@
 # Contributor: (RT and misc) Ng Oon-Ee <ng oon ee AT gmail.com>
 
 pkgdesc="The Linux Kernel and modules with gentoo-sources patchset and tuxonice support"
-backup=(boot/kconfig26$pkgext etc/mkinitcpio.d/${pkgname}.preset etc/mkinitcpio.d/${pkgname}-fallback.conf)
 depends=('coreutils' 'module-init-tools' 'mkinitcpio>=0.5.15' 'kernel26-firmware')
 pkgext=-ice
 pkgname=kernel26$pkgext
@@ -22,6 +21,8 @@ menuconfig=${menuconfig:-0}
 realtime_patch=${realtime_patch:-0}
 use_config_gz=${use_config_gz:-0}
 enable_reiser4=${enable_reiser4:-0}
+### Compile time defined variables
+make_jobs=2
 ###
 
 ### Files / Versions
@@ -164,7 +165,7 @@ build() {
 
     cd ${srcdir}/linux-$pkgver
     # build kernel
-    make bzImage modules || return 1
+    make -j${make_jobs} bzImage modules || return 1
 }
 
 package_kernel26() {
