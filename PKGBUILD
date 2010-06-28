@@ -1,4 +1,4 @@
-# Contributor: Giuseppe Calderaro <giuseppecalderaro@gmail.com>
+# Maintainer: Giuseppe Calderaro <giuseppecalderaro@gmail.com>
 # Contributor: (misc updates) Michael Evans <mjevans1983@gmail.com>
 # Contributor: (RT and misc) Ng Oon-Ee <ng oon ee AT gmail.com>
 
