@@ -47,6 +47,7 @@ source=(http://kernel.org/pub/linux/kernel/v2.6/linux-${pkgver}.tar.bz2
 	mkinitcpio-$pkgname.conf)
 
 md5sums=('10eebcb0178fb4540e2165bfd7efc7ad'
+         '6606bcddb89228bd4c7a5b82de384aa5'
          'b42c870939b3ec190f37a58022ea30e6'
          'aa68610ca948e3c17aab8c8686baba76'
          'fea61fba2885bc4dff578e26ad7657f5'
