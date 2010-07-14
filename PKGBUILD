@@ -27,7 +27,7 @@ make_jobs=2
 ###
 
 ### Files / Versions
-file_rt="patch-2.6.33.5-rt23.bz2"
+file_rt="older/patch-2.6.33.5-rt23.bz2"
 file_reiser4="reiser4-for-2.6.34.patch.bz2"
 file_toi="tuxonice-3.1.1.1-for-2.6.34.patch.bz2"
 file_bfs="2.6.34-sched-bfs-318.patch"
