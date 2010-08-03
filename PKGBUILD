@@ -7,7 +7,7 @@ depends=('coreutils' 'module-init-tools' 'mkinitcpio>=0.5.15' 'kernel26-firmware
 pkgext=-ice
 pkgname=kernel26$pkgext
 pkgver=2.6.35
-_minor_patch=1
+_minor_patch=0
 icever=$pkgver$pkgext
 pkgrel=1
 makedepends=('xmlto' 'docbook-xsl')
@@ -22,14 +22,14 @@ menuconfig=${menuconfig:-0}
 realtime_patch=${realtime_patch:-0}
 use_config_gz=${use_config_gz:-0}
 enable_reiser4=${enable_reiser4:-0}
+make_jobs=${make_jobs:-2}
 ### Compile time defined variables
-make_jobs=2
 ###
 
 ### Files / Versions
 file_rt="patch-2.6.33.7-rt29.bz2"
 file_reiser4="reiser4-for-2.6.34.patch.bz2"
-file_toi="tuxonice-3.1.1.1-for-2.6.34.patch.bz2"
+file_toi="tuxonice-3.1.1.1-for-head.patch.bz2"
 file_bfs="2.6.34-sched-bfs-318.patch"
 ###
 
@@ -51,7 +51,7 @@ md5sums=('091abeb4684ce03d1d936851618687b6'
          'aa68610ca948e3c17aab8c8686baba76'
          'b31ec9691fdf2e5c2897ea1348c55600'
          'e7fa6eb244393be1df2a4b1a3f61e332'
-         'd1bd3ba8d10ae891395e34bc7dbb8479'
+         'b5acf4d03ed610b498157e48a38340a0'
          'e47d527b10d799281211e6ac677edf3c'
          '70b5593b4cc2a0c29457b7c10e39d036'
          '686a4866c9a56ac63d0209eed8104788'
