@@ -6,10 +6,10 @@ pkgdesc="The Linux Kernel and modules with gentoo-sources patchset and tuxonice 
 depends=('coreutils' 'module-init-tools' 'mkinitcpio>=0.5.15' 'kernel26-firmware')
 pkgext=-ice
 pkgname=kernel26$pkgext
-pkgver=2.6.34
+pkgver=2.6.35
 _minor_patch=1
 icever=$pkgver$pkgext
-pkgrel=2
+pkgrel=1
 makedepends=('xmlto' 'docbook-xsl')
 arch=(i686 x86_64)
 license=('GPL2')
@@ -27,14 +27,14 @@ make_jobs=2
 ###
 
 ### Files / Versions
-file_rt="older/patch-2.6.33.5-rt23.bz2"
+file_rt="patch-2.6.33.7-rt29.bz2"
 file_reiser4="reiser4-for-2.6.34.patch.bz2"
 file_toi="tuxonice-3.1.1.1-for-2.6.34.patch.bz2"
 file_bfs="2.6.34-sched-bfs-318.patch"
 ###
 
 source=(http://kernel.org/pub/linux/kernel/v2.6/linux-${pkgver}.tar.bz2
-	http://www.kernel.org/pub/linux/kernel/v2.6/patch-${pkgver}.${_minor_patch}.bz2
+	# http://www.kernel.org/pub/linux/kernel/v2.6/patch-${pkgver}.${_minor_patch}.bz2
 	http://www.kernel.org/pub/linux/kernel/projects/rt/${file_rt}
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/$pkgver/2900_xconfig-with-qt4.patch
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/$pkgver/4200_fbcondecor-0.9.6.patch
@@ -46,11 +46,10 @@ source=(http://kernel.org/pub/linux/kernel/v2.6/linux-${pkgver}.tar.bz2
 	$pkgname.preset
 	mkinitcpio-$pkgname.conf)
 
-md5sums=('10eebcb0178fb4540e2165bfd7efc7ad'
-         '6606bcddb89228bd4c7a5b82de384aa5'
-         'b42c870939b3ec190f37a58022ea30e6'
+md5sums=('091abeb4684ce03d1d936851618687b6'
+         'b59bd4ce52c54e639f9fd2d85c7cc951'
          'aa68610ca948e3c17aab8c8686baba76'
-         'fea61fba2885bc4dff578e26ad7657f5'
+         'b31ec9691fdf2e5c2897ea1348c55600'
          'e7fa6eb244393be1df2a4b1a3f61e332'
          'd1bd3ba8d10ae891395e34bc7dbb8479'
          'e47d527b10d799281211e6ac677edf3c'
