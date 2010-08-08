@@ -7,7 +7,7 @@ depends=('coreutils' 'module-init-tools' 'mkinitcpio>=0.5.15' 'kernel26-firmware
 pkgext=-ice
 pkgname=kernel26$pkgext
 pkgver=2.6.35
-_minor_patch=0
+_minor_patch=1
 icever=$pkgver$pkgext
 pkgrel=1
 makedepends=('xmlto' 'docbook-xsl')
@@ -41,6 +41,7 @@ source=(http://kernel.org/pub/linux/kernel/v2.6/linux-${pkgver}.tar.bz2
 	http://www.kernel.org/pub/linux/kernel/people/edward/reiser4/reiser4-for-2.6/${file_reiser4}
 	http://www.tuxonice.net/downloads/all/${file_toi}
 	http://ck.kolivas.org/patches/bfs/${file_bfs}
+	vanilla-2.6.35-anti-io-stalling.patch
 	config
 	config.x86_64
 	$pkgname.preset
@@ -53,6 +54,7 @@ md5sums=('091abeb4684ce03d1d936851618687b6'
          'e7fa6eb244393be1df2a4b1a3f61e332'
          'b5acf4d03ed610b498157e48a38340a0'
          'e47d527b10d799281211e6ac677edf3c'
+         'be68bdf00d287e6328226a174429fbb7'
          '70b5593b4cc2a0c29457b7c10e39d036'
          '686a4866c9a56ac63d0209eed8104788'
          '541973d72e24a2def82d33884a781ee1'
@@ -117,6 +119,10 @@ build() {
 	sed '/Index: linux-2.6.32-ck1\/Makefile/,/To see a list of typical targets execute "make help"/d' \
             ${srcdir}/${file_bfs} | patch -Np1 || return 1
     fi
+
+    # vanilla-2.6.35-anti-io-stalling.patch
+	echo "Applying vanilla-2.6.35-anti-io-stalling patch"
+	patch -Np1 -i ${srcdir}/vanilla-2.6.35-anti-io-stalling.patch || return 1
     
     # remove extraversion
     sed -i 's|^EXTRAVERSION = .*$|EXTRAVERSION =|g' Makefile
