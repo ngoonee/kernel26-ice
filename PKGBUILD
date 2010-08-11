@@ -22,6 +22,7 @@ menuconfig=${menuconfig:-0}
 realtime_patch=${realtime_patch:-0}
 use_config_gz=${use_config_gz:-0}
 enable_reiser4=${enable_reiser4:-0}
+enable_anti_stall=${enable_anti_stall:-0}
 make_jobs=${make_jobs:-2}
 ### Compile time defined variables
 ###
@@ -121,9 +122,11 @@ build() {
             ${srcdir}/${file_bfs} | patch -Np1 || return 1
     fi
 
-    # vanilla-2.6.35-anti-io-stalling.patch
+    if [ "$enable_anti_stall" = "1" ]; then
+	# vanilla-2.6.35-anti-io-stalling.patch
 	echo "Applying vanilla-2.6.35-anti-io-stalling patch"
 	patch -Np1 -i ${srcdir}/vanilla-2.6.35-anti-io-stalling.patch || return 1
+    fi
     
     # remove extraversion
     sed -i 's|^EXTRAVERSION = .*$|EXTRAVERSION =|g' Makefile
