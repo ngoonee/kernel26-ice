@@ -29,7 +29,7 @@ make_jobs=${make_jobs:-2}
 
 ### Files / Versions
 file_rt="patch-2.6.33.7-rt29.bz2"
-file_reiser4="reiser4-for-2.6.34.patch.bz2"
+file_reiser4="reiser4-for-2.6.35.patch.bz2"
 file_toi="tuxonice-3.1.1.1-for-head.patch.bz2"
 file_bfs="2.6.35-sched-bfs-323.patch"
 ###
@@ -53,7 +53,7 @@ md5sums=('091abeb4684ce03d1d936851618687b6'
          'b59bd4ce52c54e639f9fd2d85c7cc951'
          'aa68610ca948e3c17aab8c8686baba76'
          'b31ec9691fdf2e5c2897ea1348c55600'
-         'e7fa6eb244393be1df2a4b1a3f61e332'
+         '9d2bf8ef27b79559a0a7e09e59b41817'
          'b5acf4d03ed610b498157e48a38340a0'
          '83b3b6a9bfb00af3a0d5eac5c9231a76'
          'be68bdf00d287e6328226a174429fbb7'
