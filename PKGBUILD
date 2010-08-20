@@ -7,7 +7,7 @@ depends=('coreutils' 'module-init-tools' 'mkinitcpio>=0.5.15' 'kernel26-firmware
 pkgext=-ice
 pkgname=kernel26$pkgext
 pkgver=2.6.35
-_minor_patch=1
+_minor_patch=3
 icever=$pkgver$pkgext
 pkgrel=1
 makedepends=('xmlto' 'docbook-xsl')
@@ -49,7 +49,7 @@ source=(http://kernel.org/pub/linux/kernel/v2.6/linux-${pkgver}.tar.bz2
 	mkinitcpio-$pkgname.conf)
 
 md5sums=('091abeb4684ce03d1d936851618687b6'
-         '3b9d79bebb2e022c0906ca1cd54bd970'
+         'a921f7789b7047b84f30a6f283cf6d07'
          'b59bd4ce52c54e639f9fd2d85c7cc951'
          'aa68610ca948e3c17aab8c8686baba76'
          'b31ec9691fdf2e5c2897ea1348c55600'
@@ -74,7 +74,7 @@ build() {
     # Applying realtime patch
     if [ "$realtime_patch" = "1" ]; then
 	echo "Applying real time patch"
-       # Strip './Makefile' changes
+	# Strip './Makefile' changes
 	bzip2 -dkc ${srcdir}/${file_rt} \
             | sed '/diff --git a\/Makefile b\/Makefile/,/*DOCUMENTATION*/d' \
             | patch -Np1 || return 1
