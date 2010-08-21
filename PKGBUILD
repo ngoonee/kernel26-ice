@@ -68,7 +68,7 @@ build() {
     # Applying official patch
     if [ -n "${file_kernel_patch%.bz2}" ] ; then
 	echo "Applying ${file_kernel_patch%.bz2}"
-	patch -Np1 -i ${srcdir}/patch-${pkgver}.${_minor_patch}.bz2} || return 1
+	patch -Np1 -i ${srcdir}/patch-${pkgver}.${_minor_patch}.bz2 || return 1
     fi
     
     # Applying realtime patch
