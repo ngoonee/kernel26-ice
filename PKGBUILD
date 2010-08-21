@@ -145,9 +145,11 @@ build() {
     fi
     
     # hack to prevent output kernel from being marked as dirty or git
-    sed 's/head=$(git rev-parse --verify --short HEAD 2>\/dev\/null)/0/' \
+    sed 's/head=`git rev-parse --verify --short HEAD 2>\/dev\/null`/0/' \
 	${srcdir}/linux-$pkgver/scripts/setlocalversion \
-	> ${srcdir}/linux-$pkgver/scripts/setlocalversion
+	> ${srcdir}/linux-$pkgver/scripts/setlocalversion.new
+    mv ${srcdir}/linux-$pkgver/scripts/setlocalversion.new \
+	${srcdir}/linux-$pkgver/scripts/setlocalversion
     
     make prepare
     
