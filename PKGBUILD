@@ -196,7 +196,7 @@ package_kernel26-ice() {
 
     cd $srcdir/linux-$pkgver
     # get kernel version
-    mkdir -p $pkgdir/{lib/modules,boot}
+    mkdir -p $pkgdir/{lib/modules,lib/firmware,boot}
     make INSTALL_MOD_PATH=$pkgdir modules_install || return 1
     install -D -m644 System.map $pkgdir/boot/System.map26$pkgext
     install -D -m644 arch/$KARCH/boot/bzImage $pkgdir/boot/vmlinuz26$pkgext
