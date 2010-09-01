@@ -9,7 +9,7 @@ pkgname=kernel26$pkgext
 pkgver=2.6.35
 _minor_patch=4
 icever=$pkgver$pkgext
-pkgrel=2
+pkgrel=3
 makedepends=('xmlto' 'docbook-xsl')
 arch=(i686 x86_64)
 license=('GPL2')
@@ -30,8 +30,8 @@ make_jobs=${make_jobs:-2}
 ### Files / Versions
 file_rt="patch-2.6.33.7-rt29.bz2"
 file_reiser4="reiser4-for-2.6.35.patch.bz2"
-file_toi="tuxonice-3.1.1.1-for-head.patch.bz2"
-file_bfs="2.6.35-sched-bfs-323.patch"
+file_toi="tuxonice-3.2-rc1-for-2.6.35.patch.bz2"
+file_bfs="2.6.35-sched-bfs-330.patch"
 ###
 
 source=(http://kernel.org/pub/linux/kernel/v2.6/linux-${pkgver}.tar.bz2
@@ -41,7 +41,7 @@ source=(http://kernel.org/pub/linux/kernel/v2.6/linux-${pkgver}.tar.bz2
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/$pkgver/4200_fbcondecor-0.9.6.patch
 	http://www.kernel.org/pub/linux/kernel/people/edward/reiser4/reiser4-for-2.6/${file_reiser4}
 	http://www.tuxonice.net/downloads/all/${file_toi}
-	http://ck.kolivas.org/patches/bfs/${file_bfs}
+	http://ck.kolivas.org/patches/bfs/${pkgver}/${file_bfs}
 	vanilla-2.6.35-anti-io-stalling.patch
 	config
 	config.x86_64
@@ -54,8 +54,8 @@ md5sums=('091abeb4684ce03d1d936851618687b6'
          'aa68610ca948e3c17aab8c8686baba76'
          'b31ec9691fdf2e5c2897ea1348c55600'
          '9d2bf8ef27b79559a0a7e09e59b41817'
-         'b5acf4d03ed610b498157e48a38340a0'
-         '83b3b6a9bfb00af3a0d5eac5c9231a76'
+         '0c378c843a7fa717a5a866cb58b6c871'
+         'a6c4cce147143da9837d089d5e5d6ac5'
          'be68bdf00d287e6328226a174429fbb7'
          '70b5593b4cc2a0c29457b7c10e39d036'
          '05e289d000abfa2249de5c02934db799'
