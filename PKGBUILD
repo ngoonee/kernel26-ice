@@ -9,7 +9,7 @@ pkgname=kernel26$pkgext
 pkgver=2.6.35
 _minor_patch=4
 icever=$pkgver$pkgext
-pkgrel=4
+pkgrel=5
 makedepends=('xmlto' 'docbook-xsl')
 arch=(i686 x86_64)
 license=('GPL2')
@@ -57,10 +57,10 @@ md5sums=('091abeb4684ce03d1d936851618687b6'
          '2c5d5d05df84b77239f5df3f1e384791'
          'a6c4cce147143da9837d089d5e5d6ac5'
          'be68bdf00d287e6328226a174429fbb7'
-         '70b5593b4cc2a0c29457b7c10e39d036'
+         '94f93572254c95e2d716d15ff61f95de'
          '05e289d000abfa2249de5c02934db799'
          '541973d72e24a2def82d33884a781ee1'
-         '07dc6997d19340b654f92c1d6a120cc0')
+         '4ec86e859234dc251dd16884235a9e37')
 
 build() {
     cd ${srcdir}/linux-$pkgver
@@ -145,6 +145,7 @@ build() {
     fi
     
     # hack to prevent output kernel from being marked as dirty or git
+    chmod +x ${srcdir}/linux-$pkgver/scripts/setlocalversion
     sed 's/head=`git rev-parse --verify --short HEAD 2>\/dev\/null`/0/' \
 	${srcdir}/linux-$pkgver/scripts/setlocalversion \
 	> ${srcdir}/linux-$pkgver/scripts/setlocalversion.new
