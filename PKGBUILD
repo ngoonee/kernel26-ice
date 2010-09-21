@@ -7,9 +7,9 @@ depends=('coreutils' 'module-init-tools' 'mkinitcpio>=0.5.15' 'kernel26-firmware
 pkgext=-ice
 pkgname=kernel26$pkgext
 pkgver=2.6.35
-_minor_patch=4
+_minor_patch=5
 icever=$pkgver$pkgext
-pkgrel=5
+pkgrel=6
 makedepends=('xmlto' 'docbook-xsl')
 arch=(i686 x86_64)
 license=('GPL2')
@@ -49,7 +49,7 @@ source=(http://kernel.org/pub/linux/kernel/v2.6/linux-${pkgver}.tar.bz2
 	mkinitcpio-$pkgname.conf)
 
 md5sums=('091abeb4684ce03d1d936851618687b6'
-         '738f762746488345b1a8707d00895eef'
+         '5bf1900e4ea72b8c65f4f7aae0a28d14'
          'b59bd4ce52c54e639f9fd2d85c7cc951'
          'aa68610ca948e3c17aab8c8686baba76'
          'b31ec9691fdf2e5c2897ea1348c55600'
