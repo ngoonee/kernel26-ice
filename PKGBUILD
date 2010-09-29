@@ -9,7 +9,7 @@ pkgname=kernel26$pkgext
 pkgver=2.6.35
 _minor_patch=7
 icever=$pkgver$pkgext
-pkgrel=7
+pkgrel=8
 makedepends=('xmlto' 'docbook-xsl')
 arch=(i686 x86_64)
 license=('GPL2')
@@ -31,7 +31,7 @@ make_jobs=${make_jobs:-2}
 file_rt="patch-2.6.33.7-rt29.bz2"
 file_reiser4="reiser4-for-2.6.35.patch.bz2"
 file_toi="tuxonice-3.2-rc2-for-2.6.35.patch.bz2"
-file_bfs="2.6.35-sched-bfs-330.patch"
+file_bfs="2.6.35.5-sched-bfs-350.patch"
 ###
 
 source=(http://kernel.org/pub/linux/kernel/v2.6/linux-${pkgver}.tar.bz2
@@ -55,7 +55,7 @@ md5sums=('091abeb4684ce03d1d936851618687b6'
          'b31ec9691fdf2e5c2897ea1348c55600'
          '9d2bf8ef27b79559a0a7e09e59b41817'
          '2c5d5d05df84b77239f5df3f1e384791'
-         'a6c4cce147143da9837d089d5e5d6ac5'
+         '6f4f3a34a63a0eb3315fb269cb11d850'
          'be68bdf00d287e6328226a174429fbb7'
          'c60a0594efaa14be442a7d4e8d546d33'
          '05e289d000abfa2249de5c02934db799'
