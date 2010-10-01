@@ -28,6 +28,7 @@ make_jobs=${make_jobs:-2}
 ###
 
 ### Files / Versions
+file_kernel_patch="patch-${pkgver}.${_minor_patch}.bz2"
 file_rt="patch-2.6.33.7-rt29.bz2"
 file_reiser4="reiser4-for-2.6.35.patch.bz2"
 file_toi="tuxonice-3.2-rc2-for-2.6.35.patch.bz2"
@@ -35,7 +36,7 @@ file_bfs="2.6.35.5-sched-bfs-350.patch"
 ###
 
 source=(http://kernel.org/pub/linux/kernel/v2.6/linux-${pkgver}.tar.bz2
-	http://www.kernel.org/pub/linux/kernel/v2.6/patch-${pkgver}.${_minor_patch}.bz2
+	http://www.kernel.org/pub/linux/kernel/v2.6/${file_kernel_patch}
 	http://www.kernel.org/pub/linux/kernel/projects/rt/${file_rt}
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/$pkgver/2900_xconfig-with-qt4.patch
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/$pkgver/4200_fbcondecor-0.9.6.patch
