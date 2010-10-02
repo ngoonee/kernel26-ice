@@ -7,7 +7,7 @@ depends=('coreutils' 'module-init-tools' 'mkinitcpio>=0.5.15' 'kernel26-firmware
 pkgext=-ice
 pkgname=kernel26$pkgext
 pkgver=2.6.35
-_minor_patch=0
+_minor_patch=7
 icever=$pkgver$pkgext
 pkgrel=8
 makedepends=('xmlto' 'docbook-xsl')
