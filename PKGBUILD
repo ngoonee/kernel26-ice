@@ -71,8 +71,6 @@ build() {
 	patch -Np1 -i ${srcdir}/patch-${pkgver}.${_minor_patch} || return 1
     fi
     
-    return 1
-
     # Applying realtime patch
     if [ "$realtime_patch" = "1" ]; then
 	echo "Applying real time patch"
