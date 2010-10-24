@@ -9,7 +9,7 @@ pkgname=kernel26$pkgext
 pkgver=2.6.35
 _minor_patch=7
 icever=$pkgver$pkgext
-pkgrel=8
+pkgrel=9
 makedepends=('xmlto' 'docbook-xsl')
 arch=(i686 x86_64)
 license=('GPL2')
@@ -17,6 +17,7 @@ url="http://www.kernel.org"
 
 ### User/Environment defined variables
 bfs_scheduler=${bfs_scheduler:-0}
+ck_patches=${ck_patches:-0}
 keep_source_code=${keep_source_code:-0}
 menuconfig=${menuconfig:-0}
 realtime_patch=${realtime_patch:-0}
@@ -32,11 +33,14 @@ file_rt="patch-2.6.33.7-rt29.bz2"
 file_reiser4="reiser4-for-2.6.35.patch.bz2"
 file_toi="tuxonice-3.2-rc2-for-2.6.35.patch.bz2"
 file_bfs="2.6.35.7-sched-bfs357+penalise_fork_depth_account_threads.patch"
+patch_rev_ck="ck1"
+file_ck="patch-${pkgver}-${patch_rev_ck}.bz2"
 ###
 
 source=(http://kernel.org/pub/linux/kernel/v2.6/linux-${pkgver}.tar.bz2
 	http://www.kernel.org/pub/linux/kernel/v2.6/patch-${pkgver}.${_minor_patch}.bz2
 	http://www.kernel.org/pub/linux/kernel/projects/rt/${file_rt}
+	http://www.kernel.org/pub/linux/kernel/people/ck/patches/2.6/${pkgver}/${pkgver}-${patch_rev_ck}/${file_ck}
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/$pkgver/2900_xconfig-with-qt4.patch
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/$pkgver/4200_fbcondecor-0.9.6.patch
 	http://www.kernel.org/pub/linux/kernel/people/edward/reiser4/reiser4-for-2.6/${file_reiser4}
@@ -51,6 +55,7 @@ source=(http://kernel.org/pub/linux/kernel/v2.6/linux-${pkgver}.tar.bz2
 md5sums=('091abeb4684ce03d1d936851618687b6'
          '6a00ec267b0100f20a3fa900b97a5b7f'
          'b59bd4ce52c54e639f9fd2d85c7cc951'
+         '54743a1cc2a43d88daf40de7bbb53090'
          'aa68610ca948e3c17aab8c8686baba76'
          'b31ec9691fdf2e5c2897ea1348c55600'
          '9d2bf8ef27b79559a0a7e09e59b41817'
@@ -114,12 +119,17 @@ build() {
             | patch -Np1 -F4 || return 1
     fi
     
-    if [ "$bfs_scheduler" = "1" ]; then
+    if [ "${bfs_scheduler}" = "1" ] && [ "${ck_patches}" = "0" ]; then
        # applying BFS scheduler patch
 	echo "Applying BFS scheduler patch"
        ## Delete the Makefile changes that break patching.
 	sed '/Index: linux-2.6.32-ck1\/Makefile/,/To see a list of typical targets execute "make help"/d' \
             ${srcdir}/${file_bfs} | patch -Np1 || return 1
+    fi
+    if [ "${ck_patches}" = "1" ] ; then
+	echo "Applying CK patches ${file_ck%.*}"
+	bzip2 -dck ${srcdir}/${file_ck} \
+	    | patch -Np1 || return 1
     fi
 
     if [ "$enable_anti_stall" = "1" ]; then
