@@ -128,7 +128,9 @@ build() {
     fi
     if [ "${ck_patches}" = "1" ] ; then
 	echo "Applying CK patches ${file_ck%.*}"
+	# sed out the -ckX version to make kernel naming happy.
 	bzip2 -dck ${srcdir}/${file_ck} \
+	    | sed 's/+EXTRAVERSION := $(EXTRAVERSION)$(CKVERSION)/+EXTRAVERSION := $(EXTRAVERSION)/' \
 	    | patch -Np1 || return 1
     fi
 
