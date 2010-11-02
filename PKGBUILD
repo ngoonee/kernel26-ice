@@ -6,10 +6,10 @@ pkgdesc="The Linux Kernel and modules with gentoo-sources patchset and tuxonice 
 depends=('coreutils' 'module-init-tools' 'mkinitcpio>=0.5.15' 'kernel26-firmware')
 pkgext=-ice
 pkgname=kernel26$pkgext
-pkgver=2.6.36
-_minor_patch=0
+pkgver=2.6.35
+_minor_patch=7
 icever=$pkgver$pkgext
-pkgrel=1
+pkgrel=9
 makedepends=('xmlto' 'docbook-xsl')
 arch=(i686 x86_64)
 license=('GPL2')
@@ -31,38 +31,38 @@ make_jobs=${make_jobs:-2}
 ### Files / Versions
 file_rt="patch-2.6.33.7-rt29.bz2"
 file_reiser4="reiser4-for-2.6.35.patch.bz2"
-file_toi="tuxonice-3.2-rc2-for-2.6.36.patch.bz2"
-file_bfs="2.6.36-sched-bfs-357-1.patch"
-file_bfs_fix="bfs357-worker_fix.patch"
-patch_rev_ck="ck2"
+file_toi="tuxonice-3.2-rc2-for-2.6.35.patch.bz2"
+file_bfs="2.6.35.7-sched-bfs357+penalise_fork_depth_account_threads.patch"
+#file_bfs_fix="bfs357-worker_fix.patch"
+patch_rev_ck="ck1"
 file_ck="patch-${pkgver}-${patch_rev_ck}.bz2"
 ###
 
 source=(http://kernel.org/pub/linux/kernel/v2.6/linux-${pkgver}.tar.bz2
-#	http://www.kernel.org/pub/linux/kernel/v2.6/patch-${pkgver}.${_minor_patch}.bz2
+	http://www.kernel.org/pub/linux/kernel/v2.6/patch-${pkgver}.${_minor_patch}.bz2
 	http://www.kernel.org/pub/linux/kernel/projects/rt/${file_rt}
 	http://www.kernel.org/pub/linux/kernel/people/ck/patches/2.6/${pkgver}/${pkgver}-${patch_rev_ck}/${file_ck}
 	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/$pkgver/2900_xconfig-with-qt4.patch
-#	Does not apply cleanly, comment out for now
-#	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/$pkgver/4200_fbcondecor-0.9.6.patch
+	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/$pkgver/4200_fbcondecor-0.9.6.patch
 	http://www.kernel.org/pub/linux/kernel/people/edward/reiser4/reiser4-for-2.6/${file_reiser4}
 	http://www.tuxonice.net/files/${file_toi}
 	http://ck.kolivas.org/patches/bfs/${pkgver}/${file_bfs}
-	http://ck.kolivas.org/patches/bfs/${pkgver}/${file_bfs_fix}
+#	http://ck.kolivas.org/patches/bfs/${pkgver}/${file_bfs_fix}
 	vanilla-2.6.35-anti-io-stalling.patch
 	config
 	config.x86_64
 	$pkgname.preset
 	mkinitcpio-$pkgname.conf)
 
-md5sums=('61f3739a73afb6914cb007f37fb09b62'
+md5sums=('091abeb4684ce03d1d936851618687b6'
+         '6a00ec267b0100f20a3fa900b97a5b7f'
          'b59bd4ce52c54e639f9fd2d85c7cc951'
-         '055c90cf7a835efe7dfd216df3e92828'
-         '0747caf23082278db4b464890d8484de'
+         '54743a1cc2a43d88daf40de7bbb53090'
+         'aa68610ca948e3c17aab8c8686baba76'
+         'b31ec9691fdf2e5c2897ea1348c55600'
          '9d2bf8ef27b79559a0a7e09e59b41817'
-         '9e9986a855a12e44b143f741fb6ed26d'
-         'bca5af01398d41a8e0c8c8111f823177'
-         'ece08f6312a3c95ace5966e75a87dc01'
+         '2c5d5d05df84b77239f5df3f1e384791'
+         '1c0d9e1a2f191de75f575dffc9bcf0d6'
          'be68bdf00d287e6328226a174429fbb7'
          'c60a0594efaa14be442a7d4e8d546d33'
          'e7b3c699e1c2f9618c6d43ecd8d51167'
@@ -124,8 +124,8 @@ build() {
     if [ "${bfs_scheduler}" = "1" ] && [ "${ck_patches}" = "0" ]; then
        # applying BFS scheduler patch
 	echo "Applying BFS scheduler patch"
-        patch -Np1 -i ${srcdir}/${file_bfs} || return 1
-        patch -Np1 -i ${srcdir}/${file_bfs_fix} || return 1
+	patch -Np1 -i ${srcdir}/${file_bfs} || return 1
+	#patch -Np1 -i ${srcdir}/${file_bfs_fix} || return 1
     fi
     if [ "${ck_patches}" = "1" ] ; then
 	echo "Applying CK patches ${file_ck%.*}"
@@ -135,7 +135,7 @@ build() {
 	    | patch -Np1 || return 1
     fi
 
-    if [ "$enable_anti_stall" = "1" ]; then
+    if [ "$enable_anti_stall" = "1" ] && [ "${bfs_scheduler}" = "0" ] && [ "${ck_patches}" = "0" ]; then
 	# vanilla-2.6.35-anti-io-stalling.patch
 	echo "Applying vanilla-2.6.35-anti-io-stalling patch"
 	patch -Np1 -i ${srcdir}/vanilla-2.6.35-anti-io-stalling.patch || return 1
