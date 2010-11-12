@@ -19,10 +19,10 @@ url="http://www.kernel.org"
 bfs_scheduler=${bfs_scheduler:-0}
 ck_patches=${ck_patches:-0}
 keep_source_code=${keep_source_code:-0}
-menuconfig=${menuconfig:-1}
+menuconfig=${menuconfig:-0}
 realtime_patch=${realtime_patch:-0}
 use_config_gz=${use_config_gz:-0}
-enable_reiser4=${enable_reiser4:-1}
+enable_reiser4=${enable_reiser4:-0}
 make_jobs=${make_jobs:-2}
 ### Compile time defined variables
 ###
