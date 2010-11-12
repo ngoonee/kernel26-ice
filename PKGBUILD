@@ -19,11 +19,10 @@ url="http://www.kernel.org"
 bfs_scheduler=${bfs_scheduler:-0}
 ck_patches=${ck_patches:-0}
 keep_source_code=${keep_source_code:-0}
-menuconfig=${menuconfig:-0}
+menuconfig=${menuconfig:-1}
 realtime_patch=${realtime_patch:-0}
 use_config_gz=${use_config_gz:-0}
-enable_reiser4=${enable_reiser4:-0}
-enable_anti_stall=${enable_anti_stall:-0}
+enable_reiser4=${enable_reiser4:-1}
 make_jobs=${make_jobs:-2}
 ### Compile time defined variables
 ###
@@ -42,14 +41,15 @@ source=(http://kernel.org/pub/linux/kernel/v2.6/linux-${pkgver}.tar.bz2
 #	http://www.kernel.org/pub/linux/kernel/v2.6/patch-${pkgver}.${_minor_patch}.bz2
 	http://www.kernel.org/pub/linux/kernel/projects/rt/${file_rt}
 	http://www.kernel.org/pub/linux/kernel/people/ck/patches/2.6/${pkgver}/${pkgver}-${patch_rev_ck}/${file_ck}
-	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/$pkgver/2900_xconfig-with-qt4.patch
-#	Does not apply cleanly, comment out for now
-#	http://sources.gentoo.org/viewcvs.py/*checkout*/linux-patches/genpatches-2.6/trunk/$pkgver/4200_fbcondecor-0.9.6.patch
+	http://dev.gentoo.org/~mpagano/genpatches/trunk/2.6.36/2700_disable-sticky-PCM-stream-assignment-for-AD-codecs.patch
+	http://dev.gentoo.org/~mpagano/genpatches/trunk/2.6.36/2900_xconfig-with-qt4.patch
+	http://dev.gentoo.org/~mpagano/genpatches/trunk/2.6.36/2905_proper-qt4-detection.patch
+	http://dev.gentoo.org/~mpagano/genpatches/trunk/2.6.36/2910_support-for-bzip2-lzma-lzo-compression.patch
+	http://dev.gentoo.org/~mpagano/genpatches/trunk/2.6.36/4200_fbcondecor-0.9.6.patch
 	http://www.kernel.org/pub/linux/kernel/people/edward/reiser4/reiser4-for-2.6/${file_reiser4}
 	http://www.tuxonice.net/files/${file_toi}
 	http://ck.kolivas.org/patches/bfs/${pkgver}/${file_bfs}
 	http://ck.kolivas.org/patches/bfs/${pkgver}/${file_bfs_fix}
-	vanilla-2.6.35-anti-io-stalling.patch
 	config
 	config.x86_64
 	$pkgname.preset
@@ -58,13 +58,16 @@ source=(http://kernel.org/pub/linux/kernel/v2.6/linux-${pkgver}.tar.bz2
 md5sums=('61f3739a73afb6914cb007f37fb09b62'
          'b59bd4ce52c54e639f9fd2d85c7cc951'
          '055c90cf7a835efe7dfd216df3e92828'
-         '0747caf23082278db4b464890d8484de'
+         '7a8d9893143ffdbb03762eb7596e9a94'
+         'cd184283ba32d735bcfcb75c6206cc61'
+         'edf91e7e02468c07ad5a73d7f2a615a2'
+         '1b38c6f7e73d3b2160bd4e88218c145a'
+         'd2bda9d3929d676333c537f8c7c10ee0'
          '9d2bf8ef27b79559a0a7e09e59b41817'
          '9e9986a855a12e44b143f741fb6ed26d'
          'bca5af01398d41a8e0c8c8111f823177'
          'ece08f6312a3c95ace5966e75a87dc01'
-         'be68bdf00d287e6328226a174429fbb7'
-         'c60a0594efaa14be442a7d4e8d546d33'
+         '33946ae31868ea734e7d6750f6e113d1'
          'e7b3c699e1c2f9618c6d43ecd8d51167'
          '541973d72e24a2def82d33884a781ee1'
          '4ec86e859234dc251dd16884235a9e37')
@@ -133,12 +136,6 @@ build() {
 	bzip2 -dck ${srcdir}/${file_ck} \
 	    | sed 's/+EXTRAVERSION := $(EXTRAVERSION)$(CKVERSION)/+EXTRAVERSION := $(EXTRAVERSION)/' \
 	    | patch -Np1 || return 1
-    fi
-
-    if [ "$enable_anti_stall" = "1" ]; then
-	# vanilla-2.6.35-anti-io-stalling.patch
-	echo "Applying vanilla-2.6.35-anti-io-stalling patch"
-	patch -Np1 -i ${srcdir}/vanilla-2.6.35-anti-io-stalling.patch || return 1
     fi
     
     # remove extraversion
