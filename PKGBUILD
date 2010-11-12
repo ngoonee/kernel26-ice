@@ -245,11 +245,11 @@ package_kernel26-ice() {
     cp drivers/media/video/*.h  $pkgdir/usr/src/linux-$icever/drivers/media/video/
     for i in bt8xx cpia2 cx25840 cx88 em28xx et61x251 pwc saa7134 sn9c102 usbvideo zc0301
     do
-	if ls drivers/media/video/$i/*.h 1>/dev/null 2>&1 ; then
+	if ls drivers/media/video/$i/*.h &>/dev/null; then
 		mkdir -p $pkgdir/usr/src/linux-$icever/drivers/media/video/$i
 		cp -a drivers/media/video/$i/*.h $pkgdir/usr/src/linux-$icever/drivers/media/video/$i
 	else
-		echo Skipping $i : `drivers/media/video/$i/*.h`
+		echo Skipping $i : drivers/media/video/$i/*.h
 	fi
     done
     
