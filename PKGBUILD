@@ -38,7 +38,7 @@ file_ck="patch-${pkgver}-${patch_rev_ck}.bz2"
 ###
 
 source=(http://kernel.org/pub/linux/kernel/v2.6/linux-${pkgver}.tar.bz2
-#	http://www.kernel.org/pub/linux/kernel/v2.6/patch-${pkgver}.${_minor_patch}.bz2
+ 	http://www.kernel.org/pub/linux/kernel/v2.6/patch-${pkgver}.${_minor_patch}.bz2
 	http://www.kernel.org/pub/linux/kernel/projects/rt/${file_rt}
 	http://www.kernel.org/pub/linux/kernel/people/ck/patches/2.6/${pkgver}/${pkgver}-${patch_rev_ck}/${file_ck}
 	http://dev.gentoo.org/~mpagano/genpatches/trunk/2.6.36/2700_disable-sticky-PCM-stream-assignment-for-AD-codecs.patch
@@ -56,6 +56,7 @@ source=(http://kernel.org/pub/linux/kernel/v2.6/linux-${pkgver}.tar.bz2
 	mkinitcpio-$pkgname.conf)
 
 md5sums=('61f3739a73afb6914cb007f37fb09b62'
+         'dd38a6caf08df2822f93541ee95aed7d'
          'b59bd4ce52c54e639f9fd2d85c7cc951'
          '055c90cf7a835efe7dfd216df3e92828'
          '7a8d9893143ffdbb03762eb7596e9a94'
@@ -71,6 +72,7 @@ md5sums=('61f3739a73afb6914cb007f37fb09b62'
          'e7b3c699e1c2f9618c6d43ecd8d51167'
          '541973d72e24a2def82d33884a781ee1'
          '4ec86e859234dc251dd16884235a9e37')
+
 
 build() {
     cd ${srcdir}/linux-$pkgver
