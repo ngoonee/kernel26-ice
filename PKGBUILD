@@ -9,7 +9,7 @@ pkgname=kernel26$pkgext
 pkgver=2.6.36
 _minor_patch=1
 icever=$pkgver$pkgext
-pkgrel=2
+pkgrel=3
 makedepends=('xmlto' 'docbook-xsl')
 arch=(i686 x86_64)
 license=('GPL2')
@@ -29,7 +29,7 @@ make_jobs=${make_jobs:-2}
 
 ### Files / Versions
 file_rt="patch-2.6.33.7-rt29.bz2"
-file_reiser4="reiser4-for-2.6.35.patch.bz2"
+file_reiser4="reiser4-for-2.6.36.patch.bz2"
 file_toi="tuxonice-3.2-rc2-for-2.6.36.patch.bz2"
 file_bfs="2.6.36-sched-bfs-357-1.patch"
 file_bfs_fix="bfs357-worker_fix.patch"
@@ -64,15 +64,14 @@ md5sums=('61f3739a73afb6914cb007f37fb09b62'
          'edf91e7e02468c07ad5a73d7f2a615a2'
          '1b38c6f7e73d3b2160bd4e88218c145a'
          'd2bda9d3929d676333c537f8c7c10ee0'
-         '9d2bf8ef27b79559a0a7e09e59b41817'
+         'c4e430daff0705d837d0e1e5087059fa'
          '9e9986a855a12e44b143f741fb6ed26d'
          'bca5af01398d41a8e0c8c8111f823177'
          'ece08f6312a3c95ace5966e75a87dc01'
          '33946ae31868ea734e7d6750f6e113d1'
-         'e7b3c699e1c2f9618c6d43ecd8d51167'
+         'b514a165cb337e32ab527b3d40a81ae3'
          '541973d72e24a2def82d33884a781ee1'
          '4ec86e859234dc251dd16884235a9e37')
-
 
 build() {
     cd ${srcdir}/linux-$pkgver
