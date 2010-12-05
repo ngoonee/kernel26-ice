@@ -9,7 +9,7 @@ pkgname=kernel26$pkgext
 pkgver=2.6.36
 _minor_patch=1
 icever=$pkgver$pkgext
-pkgrel=3
+pkgrel=4
 makedepends=('xmlto' 'docbook-xsl')
 arch=(i686 x86_64)
 license=('GPL2')
@@ -64,7 +64,7 @@ md5sums=('61f3739a73afb6914cb007f37fb09b62'
          'edf91e7e02468c07ad5a73d7f2a615a2'
          '1b38c6f7e73d3b2160bd4e88218c145a'
          'd2bda9d3929d676333c537f8c7c10ee0'
-         'c4e430daff0705d837d0e1e5087059fa'
+         'aa10a96bea25a1c5338c146dcd02fe81'
          '9e9986a855a12e44b143f741fb6ed26d'
          'bca5af01398d41a8e0c8c8111f823177'
          'ece08f6312a3c95ace5966e75a87dc01'
