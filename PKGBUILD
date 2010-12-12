@@ -41,7 +41,6 @@ source=(http://kernel.org/pub/linux/kernel/v2.6/linux-${pkgver}.tar.bz2
  	http://www.kernel.org/pub/linux/kernel/v2.6/patch-${pkgver}.${_minor_patch}.bz2
 	http://www.kernel.org/pub/linux/kernel/projects/rt/${file_rt}
 	http://www.kernel.org/pub/linux/kernel/people/ck/patches/2.6/${pkgver}/${pkgver}-${patch_rev_ck}/${file_ck}
-	http://dev.gentoo.org/~mpagano/genpatches/trunk/2.6.36/2700_disable-sticky-PCM-stream-assignment-for-AD-codecs.patch
 	http://dev.gentoo.org/~mpagano/genpatches/trunk/2.6.36/2900_xconfig-with-qt4.patch
 	http://dev.gentoo.org/~mpagano/genpatches/trunk/2.6.36/2905_proper-qt4-detection.patch
 	http://dev.gentoo.org/~mpagano/genpatches/trunk/2.6.36/2910_support-for-bzip2-lzma-lzo-compression.patch
@@ -59,12 +58,11 @@ md5sums=('61f3739a73afb6914cb007f37fb09b62'
          '4b01c5f9657a9587b262df5f8d784116'
          'b59bd4ce52c54e639f9fd2d85c7cc951'
          '055c90cf7a835efe7dfd216df3e92828'
-         '7a8d9893143ffdbb03762eb7596e9a94'
          'cd184283ba32d735bcfcb75c6206cc61'
          'edf91e7e02468c07ad5a73d7f2a615a2'
          '1b38c6f7e73d3b2160bd4e88218c145a'
          'd2bda9d3929d676333c537f8c7c10ee0'
-         'c4e430daff0705d837d0e1e5087059fa'
+         '097f10382043d4b9328d2db3fa80bf94'
          '9e9986a855a12e44b143f741fb6ed26d'
          'bca5af01398d41a8e0c8c8111f823177'
          'ece08f6312a3c95ace5966e75a87dc01'
