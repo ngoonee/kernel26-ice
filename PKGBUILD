@@ -32,7 +32,6 @@ file_rt="patch-2.6.33.7-rt29.bz2"
 file_reiser4="reiser4-for-2.6.36.patch.bz2"
 file_toi="tuxonice-3.2-rc2-for-2.6.36.patch.bz2"
 file_bfs="2.6.36-sched-bfs-360.patch"
-file_bfs_fix="bfs357-worker_fix.patch"
 patch_rev_ck="ck2"
 file_ck="patch-${pkgver}-${patch_rev_ck}.bz2"
 ###
@@ -48,7 +47,6 @@ source=(http://kernel.org/pub/linux/kernel/v2.6/linux-${pkgver}.tar.bz2
 	http://www.kernel.org/pub/linux/kernel/people/edward/reiser4/reiser4-for-2.6/${file_reiser4}
 	http://www.tuxonice.net/files/${file_toi}
 	http://ck.kolivas.org/patches/bfs/${pkgver}/${file_bfs}
-	http://ck.kolivas.org/patches/bfs/${pkgver}/${file_bfs_fix}
 	config
 	config.x86_64
 	$pkgname.preset
@@ -65,7 +63,6 @@ md5sums=('61f3739a73afb6914cb007f37fb09b62'
          '097f10382043d4b9328d2db3fa80bf94'
          '9e9986a855a12e44b143f741fb6ed26d'
          'f919677c86a0c147b9c873f177f050a1'
-         'ece08f6312a3c95ace5966e75a87dc01'
          '33946ae31868ea734e7d6750f6e113d1'
          'b514a165cb337e32ab527b3d40a81ae3'
          '541973d72e24a2def82d33884a781ee1'
@@ -127,7 +124,6 @@ build() {
        # applying BFS scheduler patch
 	echo "Applying BFS scheduler patch"
         patch -Np1 -i ${srcdir}/${file_bfs} || return 1
-        patch -Np1 -i ${srcdir}/${file_bfs_fix} || return 1
     fi
     if [ "${ck_patches}" = "1" ] ; then
 	echo "Applying CK patches ${file_ck%.*}"
