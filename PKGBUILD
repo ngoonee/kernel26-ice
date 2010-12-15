@@ -31,7 +31,7 @@ make_jobs=${make_jobs:-2}
 file_rt="patch-2.6.33.7-rt29.bz2"
 file_reiser4="reiser4-for-2.6.36.patch.bz2"
 file_toi="tuxonice-3.2-rc2-for-2.6.36.patch.bz2"
-file_bfs="2.6.36-sched-bfs-357-1.patch"
+file_bfs="2.6.36-sched-bfs-360.patch"
 file_bfs_fix="bfs357-worker_fix.patch"
 patch_rev_ck="ck2"
 file_ck="patch-${pkgver}-${patch_rev_ck}.bz2"
@@ -64,7 +64,7 @@ md5sums=('61f3739a73afb6914cb007f37fb09b62'
          'd2bda9d3929d676333c537f8c7c10ee0'
          '097f10382043d4b9328d2db3fa80bf94'
          '9e9986a855a12e44b143f741fb6ed26d'
-         'bca5af01398d41a8e0c8c8111f823177'
+         'f919677c86a0c147b9c873f177f050a1'
          'ece08f6312a3c95ace5966e75a87dc01'
          '33946ae31868ea734e7d6750f6e113d1'
          'b514a165cb337e32ab527b3d40a81ae3'
