@@ -28,7 +28,7 @@ make_jobs=${make_jobs:-2}
 ###
 
 ### Files / Versions
-file_rt="patch-2.6.33.7-rt29.bz2"
+file_rt="patch-2.6.33.7.2-rt30.bz2"
 file_reiser4="reiser4-for-2.6.36.patch.bz2"
 file_toi="tuxonice-3.2-rc2-for-2.6.36.patch.bz2"
 file_bfs="2.6.36-sched-bfs-360.patch"
@@ -54,7 +54,7 @@ source=(http://kernel.org/pub/linux/kernel/v2.6/linux-${pkgver}.tar.bz2
 
 md5sums=('61f3739a73afb6914cb007f37fb09b62'
          '4b01c5f9657a9587b262df5f8d784116'
-         'b59bd4ce52c54e639f9fd2d85c7cc951'
+         'da527aea6a4a374f963f4063e548dc74'
          '055c90cf7a835efe7dfd216df3e92828'
          'cd184283ba32d735bcfcb75c6206cc61'
          'edf91e7e02468c07ad5a73d7f2a615a2'
