@@ -207,7 +207,7 @@ package_kernel26-ice() {
     install -D -m644 .config $pkgdir/boot/kconfig26$pkgext
     mkdir -p $pkgdir/usr/src/linux-$icever/include
     
-    for i in acpi asm-generic config generated linux math-emu media net pcmcia scsi sound trace video; do
+    for i in acpi asm-generic config generated linux math-emu media net pcmcia scsi sound trace video xen; do
   	cp -a include/$i $pkgdir/usr/src/linux-$icever/include/
     done
     
