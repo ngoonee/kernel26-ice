@@ -6,10 +6,10 @@ pkgdesc="The Linux Kernel and modules with gentoo-sources patchset and tuxonice 
 depends=('coreutils' 'module-init-tools' 'mkinitcpio>=0.5.15' 'kernel26-firmware')
 pkgext=-ice
 pkgname=kernel26$pkgext
-pkgver=2.6.36
-_minor_patch=2
+pkgver=2.6.37
+_minor_patch=0
 icever=$pkgver$pkgext
-pkgrel=5
+pkgrel=1
 makedepends=('xmlto' 'docbook-xsl')
 arch=(i686 x86_64)
 license=('GPL2')
@@ -22,7 +22,7 @@ keep_source_code=${keep_source_code:-0}
 menuconfig=${menuconfig:-0}
 realtime_patch=${realtime_patch:-0}
 use_config_gz=${use_config_gz:-0}
-enable_reiser4=${enable_reiser4:-0}
+enable_reiser4=${enable_reiser4:-0} # not yet released for 2.6.37
 make_jobs=${make_jobs:-2}
 ### Compile time defined variables
 ###
@@ -30,21 +30,22 @@ make_jobs=${make_jobs:-2}
 ### Files / Versions
 file_rt="patch-2.6.33.7.2-rt30.bz2"
 file_reiser4="reiser4-for-2.6.36.patch.bz2"
-file_toi="tuxonice-3.2-rc2-for-2.6.36.patch.bz2"
-file_bfs="2.6.36-sched-bfs-360.patch"
-patch_rev_ck="ck2"
+#file_toi="tuxonice-3.2-rc2-for-2.6.36.patch.bz2"
+file_toi="current-tuxonice-for-2.6.37.patch_0.bz2"
+file_bfs="2.6.37-sched-bfs-363.patch"
+patch_rev_ck="ck1"
 file_ck="patch-${pkgver}-${patch_rev_ck}.bz2"
 ###
 
 source=(http://kernel.org/pub/linux/kernel/v2.6/linux-${pkgver}.tar.bz2
- 	http://www.kernel.org/pub/linux/kernel/v2.6/patch-${pkgver}.${_minor_patch}.bz2
+# 	http://www.kernel.org/pub/linux/kernel/v2.6/patch-${pkgver}.${_minor_patch}.bz2
 	http://www.kernel.org/pub/linux/kernel/projects/rt/${file_rt}
 	http://www.kernel.org/pub/linux/kernel/people/ck/patches/2.6/${pkgver}/${pkgver}-${patch_rev_ck}/${file_ck}
-	http://dev.gentoo.org/~mpagano/genpatches/trunk/2.6.36/2900_xconfig-with-qt4.patch
-	http://dev.gentoo.org/~mpagano/genpatches/trunk/2.6.36/2905_proper-qt4-detection.patch
-	http://dev.gentoo.org/~mpagano/genpatches/trunk/2.6.36/2910_support-for-bzip2-lzma-lzo-compression.patch
-	http://dev.gentoo.org/~mpagano/genpatches/trunk/2.6.36/4200_fbcondecor-0.9.6.patch
-	http://www.kernel.org/pub/linux/kernel/people/edward/reiser4/reiser4-for-2.6/${file_reiser4}
+#	http://dev.gentoo.org/~mpagano/genpatches/trunk/2.6.36/2900_xconfig-with-qt4.patch
+#	http://dev.gentoo.org/~mpagano/genpatches/trunk/2.6.36/2905_proper-qt4-detection.patch
+#	http://dev.gentoo.org/~mpagano/genpatches/trunk/2.6.36/2910_support-for-bzip2-lzma-lzo-compression.patch
+#	http://dev.gentoo.org/~mpagano/genpatches/trunk/2.6.36/4200_fbcondecor-0.9.6.patch
+#	http://www.kernel.org/pub/linux/kernel/people/edward/reiser4/reiser4-for-2.6/${file_reiser4}
 	http://www.tuxonice.net/files/${file_toi}
 	http://ck.kolivas.org/patches/bfs/${pkgver}/${file_bfs}
 	config
@@ -52,19 +53,13 @@ source=(http://kernel.org/pub/linux/kernel/v2.6/linux-${pkgver}.tar.bz2
 	$pkgname.preset
 	mkinitcpio-$pkgname.conf)
 
-md5sums=('61f3739a73afb6914cb007f37fb09b62'
-         '4b01c5f9657a9587b262df5f8d784116'
+md5sums=('c8ee37b4fdccdb651e0603d35350b434'
          'da527aea6a4a374f963f4063e548dc74'
-         '055c90cf7a835efe7dfd216df3e92828'
-         'cd184283ba32d735bcfcb75c6206cc61'
-         'edf91e7e02468c07ad5a73d7f2a615a2'
-         '1b38c6f7e73d3b2160bd4e88218c145a'
-         'd2bda9d3929d676333c537f8c7c10ee0'
-         '097f10382043d4b9328d2db3fa80bf94'
-         '9e9986a855a12e44b143f741fb6ed26d'
-         'f919677c86a0c147b9c873f177f050a1'
+         'd5c93c7df1692d364c15d8eea0b384c9'
+         '6b19322620d4fabfb2db1bf6748020eb'
+         '3455da009658ce7dd2f5f4ab358d29ee'
          '33946ae31868ea734e7d6750f6e113d1'
-         'b514a165cb337e32ab527b3d40a81ae3'
+         '0c0fe551f217f9ebc762e3f8d4bc68d0'
          '541973d72e24a2def82d33884a781ee1'
          '4ec86e859234dc251dd16884235a9e37')
 
