@@ -16,13 +16,14 @@ license=('GPL2')
 url="http://www.kernel.org"
 
 ### User/Environment defined variables
+enable_toi=${enable_toi:-1}
 bfs_scheduler=${bfs_scheduler:-0}
 ck_patches=${ck_patches:-0}
 keep_source_code=${keep_source_code:-0}
 menuconfig=${menuconfig:-0}
 realtime_patch=${realtime_patch:-0}
-local_patch_dir=${local_patch_dir:-}
-use_config=${use_config:-}
+local_patch_dir="${local_patch_dir:-}"
+use_config="${use_config:-}"
 use_config_gz=${use_config_gz:-0}
 enable_reiser4=${enable_reiser4:-0} # not yet released for 2.6.37
 make_jobs=${make_jobs:-2}
@@ -112,19 +113,21 @@ build() {
     fi
     
     # applying tuxonice patch
-    echo "Applying ${file_toi%.bz2}"
-    # fix to tuxonice patch to work with rt
-    if [ "$realtime_patch" = "1" ]; then
-	bzip2 -dck ${srcdir}/${file_toi} \
-            | sed '/diff --git a\/kernel\/fork.c b\/kernel\/fork.c/,/{/d' \
-            | sed 's/printk(KERN_INFO "PM: Creating hibernation image:\\n/printk(KERN_INFO "PM: Creating hibernation image: \\n/' \
-            | patch -Np1 || return 1
-    else
-	bzip2 -dck ${srcdir}/${file_toi} \
-            | sed 's/printk(KERN_INFO "PM: Creating hibernation image:\\n/printk(KERN_INFO "PM: Creating hibernation image: \\n/' \
-            | patch -Np1 -F4 || return 1
+    if [ "${enable_toi}" = "1" ]; then
+	echo "Applying ${file_toi%.bz2}"
+	# fix to tuxonice patch to work with rt
+	if [ "$realtime_patch" = "1" ]; then
+		bzip2 -dck ${srcdir}/${file_toi} \
+		| sed '/diff --git a\/kernel\/fork.c b\/kernel\/fork.c/,/{/d' \
+		| sed 's/printk(KERN_INFO "PM: Creating hibernation image:\\n/printk(KERN_INFO "PM: Creating hibernation image: \\n/' \
+		| patch -Np1 || return 1
+	else
+		bzip2 -dck ${srcdir}/${file_toi} \
+		| sed 's/printk(KERN_INFO "PM: Creating hibernation image:\\n/printk(KERN_INFO "PM: Creating hibernation image: \\n/' \
+		| patch -Np1 -F4 || return 1
+	fi
     fi
-    
+
     if [ "${bfs_scheduler}" = "1" ] && [ "${ck_patches}" = "0" ]; then
        # applying BFS scheduler patch
 	echo "Applying BFS scheduler patch"
@@ -147,6 +150,7 @@ build() {
     else
 	cat ../config > ./.config
     fi
+
     # use custom config instead
     if [ -n "${use_config}" ] ; then
 	echo "Using config: '${use_config}'"
