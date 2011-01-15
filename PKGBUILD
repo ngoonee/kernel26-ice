@@ -21,6 +21,8 @@ ck_patches=${ck_patches:-0}
 keep_source_code=${keep_source_code:-0}
 menuconfig=${menuconfig:-0}
 realtime_patch=${realtime_patch:-0}
+local_patch_dir=${local_patch_dir:-}
+use_config=${use_config:-}
 use_config_gz=${use_config_gz:-0}
 enable_reiser4=${enable_reiser4:-0} # not yet released for 2.6.37
 make_jobs=${make_jobs:-2}
@@ -71,7 +73,15 @@ build() {
 	echo "Applying patch-${pkgver}.${_minor_patch}.bz2"
 	patch -Np1 -i ${srcdir}/patch-${pkgver}.${_minor_patch} || return 1
     fi
-    
+
+    if [ -n "${local_patch_dir}" ] && [ -d "${local_patch_dir}" ] ; then
+	echo "Applying patches from ${local_patch_dir} ..."
+	for my_patch in "${local_patch_dir}"/* ; do
+		echo -e "Applying custom patch:\t'${my_patch}'" || true
+		patch -Np1 -i "${my_patch}" || return 1
+	done
+    fi
+
     # Applying realtime patch
     if [ "$realtime_patch" = "1" ]; then
 	echo "Applying real time patch"
@@ -137,7 +147,13 @@ build() {
     else
 	cat ../config > ./.config
     fi
-    
+    # use custom config instead
+    if [ -n "${use_config}" ] ; then
+	echo "Using config: '${use_config}'"
+	cat "${use_config}" > ./.config
+	make oldconfig
+    fi
+
     # use existing config.gz
     if [ "$use_config_gz" = "1" ]; then
 	zcat /proc/config.gz > ./.config
