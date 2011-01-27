@@ -2,7 +2,7 @@
 # Contributor: (misc updates) Michael Evans <mjevans1983@gmail.com>
 # Contributor: (RT and misc) Ng Oon-Ee <ng oon ee AT gmail.com>
 
-pkgdesc="The Linux Kernel and modules with gentoo-sources patchset and tuxonice support"
+pkgdesc="The Linux Kernel and modules with tuxonice support and optional bfs/ck patches"
 depends=('coreutils' 'module-init-tools' 'mkinitcpio>=0.5.15' 'kernel26-firmware')
 pkgext=-ice
 pkgname=kernel26$pkgext
@@ -44,11 +44,6 @@ source=(http://kernel.org/pub/linux/kernel/v2.6/linux-${pkgver}.tar.bz2
 # 	http://www.kernel.org/pub/linux/kernel/v2.6/patch-${pkgver}.${_minor_patch}.bz2
 	http://www.kernel.org/pub/linux/kernel/projects/rt/${file_rt}
 	http://www.kernel.org/pub/linux/kernel/people/ck/patches/2.6/${pkgver}/${pkgver}-${patch_rev_ck}/${file_ck}
-#	http://dev.gentoo.org/~mpagano/genpatches/trunk/2.6.36/2900_xconfig-with-qt4.patch
-#	http://dev.gentoo.org/~mpagano/genpatches/trunk/2.6.36/2905_proper-qt4-detection.patch
-#	http://dev.gentoo.org/~mpagano/genpatches/trunk/2.6.36/2910_support-for-bzip2-lzma-lzo-compression.patch
-#	http://dev.gentoo.org/~mpagano/genpatches/trunk/2.6.36/4200_fbcondecor-0.9.6.patch
-#	http://www.kernel.org/pub/linux/kernel/people/edward/reiser4/reiser4-for-2.6/${file_reiser4}
 	http://www.tuxonice.net/files/${file_toi}
 	http://ck.kolivas.org/patches/bfs/${pkgver}/${file_bfs}
 	config
@@ -90,20 +85,6 @@ build() {
 	bzip2 -dkc ${srcdir}/${file_rt} \
             | sed '/diff --git a\/Makefile b\/Makefile/,/*DOCUMENTATION*/d' \
             | patch -Np1 || return 1
-    fi
-    
-    if [ "$realtime_patch" = "0" ]; then
-      # Applying base and extra gentoo patches
-	for i in $(ls ${srcdir}/[1-9][0-9][0-9][0-9]*); do
-            echo "Applying $i"
-            patch -Np1 -i $i || return 1
-	done
-    else
-      # Applying only those specific patches which work with RT patchset
-	for i in $(ls ${srcdir}/{1900,2700,4100,4400}*); do
-            echo "Applying $i"
-            patch -Np1 -i $i || return 1
-	done
     fi
     
     # applying reiserfs4 patch
