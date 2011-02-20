@@ -7,7 +7,7 @@ depends=('coreutils' 'module-init-tools' 'mkinitcpio>=0.5.15' 'kernel26-firmware
 pkgext=-ice
 pkgname=kernel26$pkgext
 pkgver=2.6.37
-_minor_patch=0
+_minor_patch=1
 icever=$pkgver$pkgext
 pkgrel=1
 makedepends=('xmlto' 'docbook-xsl')
@@ -41,7 +41,7 @@ file_ck="patch-${pkgver}-${patch_rev_ck}.bz2"
 ###
 
 source=(http://kernel.org/pub/linux/kernel/v2.6/linux-${pkgver}.tar.bz2
-# 	http://www.kernel.org/pub/linux/kernel/v2.6/patch-${pkgver}.${_minor_patch}.bz2
+ 	http://www.kernel.org/pub/linux/kernel/v2.6/patch-${pkgver}.${_minor_patch}.bz2
 	http://www.kernel.org/pub/linux/kernel/projects/rt/${file_rt}
 	http://www.kernel.org/pub/linux/kernel/people/ck/patches/2.6/${pkgver}/${pkgver}-${patch_rev_ck}/${file_ck}
 	http://www.tuxonice.net/files/${file_toi}
@@ -52,6 +52,7 @@ source=(http://kernel.org/pub/linux/kernel/v2.6/linux-${pkgver}.tar.bz2
 	mkinitcpio-$pkgname.conf)
 
 md5sums=('c8ee37b4fdccdb651e0603d35350b434'
+         '7693d1d32ed39346cc988e0f027e5890'
          'da527aea6a4a374f963f4063e548dc74'
          'd5c93c7df1692d364c15d8eea0b384c9'
          '6b19322620d4fabfb2db1bf6748020eb'
