@@ -18,14 +18,14 @@ url="http://www.kernel.org"
 ### User/Environment defined variables
 enable_toi=${enable_toi:-1}
 bfs_scheduler=${bfs_scheduler:-0}
-ck_patches=${ck_patches:-0}
+#ck_patches=${ck_patches:-0}
 keep_source_code=${keep_source_code:-0}
 menuconfig=${menuconfig:-0}
 realtime_patch=${realtime_patch:-0}
 local_patch_dir="${local_patch_dir:-}"
 use_config="${use_config:-}"
 use_config_gz=${use_config_gz:-0}
-enable_reiser4=${enable_reiser4:-0} # not yet released for 2.6.37
+enable_reiser4=${enable_reiser4:-0}
 make_jobs=${make_jobs:-2}
 ### Compile time defined variables
 ###
@@ -44,7 +44,8 @@ file_ck="patch-${pkgver}-${patch_rev_ck}.bz2"
 source=(http://kernel.org/pub/linux/kernel/v2.6/linux-${pkgver}.tar.bz2
  	http://www.kernel.org/pub/linux/kernel/v2.6/patch-${pkgver}.${_minor_patch}.bz2
 	http://www.kernel.org/pub/linux/kernel/projects/rt/${file_rt}
-	http://www.kernel.org/pub/linux/kernel/people/ck/patches/2.6/${pkgver}/${pkgver}-${patch_rev_ck}/${file_ck}
+#	http://www.kernel.org/pub/linux/kernel/people/ck/patches/2.6/${pkgver}/${pkgver}-${patch_rev_ck}/${file_ck}
+  http://www.kernel.org/pub/linux/kernel/people/edward/reiser4/reiser4-for-2.6/${file_reiser4}
 	http://www.tuxonice.net/files/${file_toi}
 	http://ck.kolivas.org/patches/bfs/${pkgver}/${file_bfs}
 	http://ck.kolivas.org/patches/bfs/${pkgver}/${file_bfs_b}
@@ -56,12 +57,12 @@ source=(http://kernel.org/pub/linux/kernel/v2.6/linux-${pkgver}.tar.bz2
 md5sums=('c8ee37b4fdccdb651e0603d35350b434'
          '7693d1d32ed39346cc988e0f027e5890'
          'da527aea6a4a374f963f4063e548dc74'
-         '1728f86fb9af46a2222a9280a87f6488'
+         '097f10382043d4b9328d2db3fa80bf94'
          '6b19322620d4fabfb2db1bf6748020eb'
          '3455da009658ce7dd2f5f4ab358d29ee'
          '06ce0480314f6ec0818ba5c5b7a53886'
          '33946ae31868ea734e7d6750f6e113d1'
-         '0c0fe551f217f9ebc762e3f8d4bc68d0'
+         '56f7920169e0e7e6808fe86412b865fc'
          '541973d72e24a2def82d33884a781ee1'
          '4ec86e859234dc251dd16884235a9e37')
 
@@ -118,14 +119,16 @@ build() {
 	echo "Applying BFS scheduler patch"
         patch -Np1 -i ${srcdir}/${file_bfs} || return 1
         patch -Np1 -i ${srcdir}/${file_bfs_b} || return 1
+#Applying quick-fix 2.6.37.1 patch for bfs/ck
+patch -Np1 -i ${srcdir}/2.6.37.1-fix-no-more-unsigned.patch
     fi
-    if [ "${ck_patches}" = "1" ] ; then
-	echo "Applying CK patches ${file_ck%.*}"
-	# sed out the -ckX version to make kernel naming happy.
-	bzip2 -dck ${srcdir}/${file_ck} \
-	    | sed 's/+EXTRAVERSION := $(EXTRAVERSION)$(CKVERSION)/+EXTRAVERSION := $(EXTRAVERSION)/' \
-	    | patch -Np1 || return 1
-    fi
+#    if [ "${ck_patches}" = "1" ] ; then
+#	echo "Applying CK patches ${file_ck%.*}"
+#	# sed out the -ckX version to make kernel naming happy.
+#	bzip2 -dck ${srcdir}/${file_ck} \
+#	    | sed 's/+EXTRAVERSION := $(EXTRAVERSION)$(CKVERSION)/+EXTRAVERSION := $(EXTRAVERSION)/' \
+#	    | patch -Np1 || return 1
+#    fi
     
     # remove extraversion
     sed -i 's|^EXTRAVERSION = .*$|EXTRAVERSION =|g' Makefile
