@@ -57,7 +57,7 @@ source=(http://kernel.org/pub/linux/kernel/v2.6/linux-${pkgver}.tar.bz2
 md5sums=('c8ee37b4fdccdb651e0603d35350b434'
          '7693d1d32ed39346cc988e0f027e5890'
          'da527aea6a4a374f963f4063e548dc74'
-         '097f10382043d4b9328d2db3fa80bf94'
+         '4b079b72941bf700a82bc13557043ee6'
          '6b19322620d4fabfb2db1bf6748020eb'
          '3455da009658ce7dd2f5f4ab358d29ee'
          '06ce0480314f6ec0818ba5c5b7a53886'
