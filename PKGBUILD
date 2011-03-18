@@ -6,10 +6,10 @@ pkgdesc="The Linux Kernel and modules with tuxonice support and optional bfs/ck 
 depends=('coreutils' 'module-init-tools' 'mkinitcpio>=0.5.15' 'kernel26-firmware')
 pkgext=-ice
 pkgname=kernel26$pkgext
-pkgver=2.6.37
-_minor_patch=4
+pkgver=2.6.38
+_minor_patch=0
 icever=$pkgver$pkgext
-pkgrel=5
+pkgrel=1
 makedepends=('xmlto' 'docbook-xsl')
 arch=(i686 x86_64)
 license=('GPL2')
@@ -43,20 +43,19 @@ file_ck="patch-${pkgver}-${patch_rev_ck}.bz2"
 ###
 
 source=(http://kernel.org/pub/linux/kernel/v2.6/linux-${pkgver}.tar.bz2
- 	http://www.kernel.org/pub/linux/kernel/v2.6/patch-${pkgver}.${_minor_patch}.bz2
+# 	http://www.kernel.org/pub/linux/kernel/v2.6/patch-${pkgver}.${_minor_patch}.bz2
 	http://www.kernel.org/pub/linux/kernel/projects/rt/${file_rt}
 #	http://www.kernel.org/pub/linux/kernel/people/ck/patches/2.6/${pkgver}/${pkgver}-${patch_rev_ck}/${file_ck}
   http://www.kernel.org/pub/linux/kernel/people/edward/reiser4/reiser4-for-2.6/${file_reiser4}
 	http://www.tuxonice.net/files/${file_toi}
-	http://ck.kolivas.org/patches/bfs/${pkgver}/${file_bfs}
-	http://ck.kolivas.org/patches/bfs/${pkgver}/${file_bfs_b}
+	http://ck.kolivas.org/patches/bfs/2.6.37/${file_bfs}
+	http://ck.kolivas.org/patches/bfs/2.6.37/${file_bfs_b}
 	config
 	config.x86_64
 	$pkgname.preset
 	mkinitcpio-$pkgname.conf)
 
-md5sums=('c8ee37b4fdccdb651e0603d35350b434'
-         '5e5ad9a86f9a29cd2c1b8a171d89f9aa'
+md5sums=('7d471477bfa67546f902da62227fa976'
          'da527aea6a4a374f963f4063e548dc74'
          '42405369b3395bcdfd53d7d389b23d4a'
          '6b19322620d4fabfb2db1bf6748020eb'
