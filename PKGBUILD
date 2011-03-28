@@ -1,6 +1,6 @@
-# Maintainer: Giuseppe Calderaro <giuseppecalderaro@gmail.com>
+# Contributor: Giuseppe Calderaro <giuseppecalderaro@gmail.com>
 # Contributor: (misc updates) Michael Evans <mjevans1983@gmail.com>
-# Contributor: (RT and misc) Ng Oon-Ee <ng oon ee AT gmail.com>
+# Maintainer: (RT and misc) Ng Oon-Ee <ngoonee.talk@gmail.com>
 
 pkgdesc="The Linux Kernel and modules with tuxonice support and optional bfs/ck patches"
 depends=('coreutils' 'module-init-tools' 'mkinitcpio>=0.5.15' 'kernel26-firmware')
