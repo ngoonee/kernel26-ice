@@ -7,7 +7,7 @@ depends=('coreutils' 'module-init-tools' 'mkinitcpio>=0.5.15' 'kernel26-firmware
 pkgext=-ice
 pkgname=kernel26$pkgext
 pkgver=2.6.38
-_minor_patch=0
+_minor_patch=2
 icever=$pkgver$pkgext
 pkgrel=1
 makedepends=('xmlto' 'docbook-xsl')
@@ -34,7 +34,6 @@ make_jobs=${make_jobs:-2}
 ### Files / Versions
 file_rt="patch-2.6.33.7.2-rt30.bz2"
 file_reiser4="reiser4-for-2.6.37.patch.bz2"
-#file_toi="tuxonice-3.2-rc2-for-2.6.36.patch.bz2"
 file_toi="current-tuxonice-for-2.6.37.patch_0.bz2"
 file_bfs="2.6.37-sched-bfs-363.patch"
 file_bfs_b="2637-bfs363-nonhotplug_fix.patch"
@@ -43,7 +42,7 @@ file_ck="patch-${pkgver}-${patch_rev_ck}.bz2"
 ###
 
 source=(http://kernel.org/pub/linux/kernel/v2.6/linux-${pkgver}.tar.bz2
-# 	http://www.kernel.org/pub/linux/kernel/v2.6/patch-${pkgver}.${_minor_patch}.bz2
+ 	http://www.kernel.org/pub/linux/kernel/v2.6/patch-${pkgver}.${_minor_patch}.bz2
 	http://www.kernel.org/pub/linux/kernel/projects/rt/${file_rt}
 #	http://www.kernel.org/pub/linux/kernel/people/ck/patches/2.6/${pkgver}/${pkgver}-${patch_rev_ck}/${file_ck}
   http://www.kernel.org/pub/linux/kernel/people/edward/reiser4/reiser4-for-2.6/${file_reiser4}
@@ -56,6 +55,7 @@ source=(http://kernel.org/pub/linux/kernel/v2.6/linux-${pkgver}.tar.bz2
 	mkinitcpio-$pkgname.conf)
 
 md5sums=('7d471477bfa67546f902da62227fa976'
+         '599badab31c4920d4122133208c810d7'
          'da527aea6a4a374f963f4063e548dc74'
          '42405369b3395bcdfd53d7d389b23d4a'
          '6b19322620d4fabfb2db1bf6748020eb'
