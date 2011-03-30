@@ -2,3 +2,5 @@
 *.bz2
 src/
 pkg/
+*.pkg.tar.*
+*.src.tar.*
