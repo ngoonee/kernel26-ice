@@ -1,2 +1,4 @@
 *.patch
 *.bz2
+src/
+pkg/
