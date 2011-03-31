@@ -170,6 +170,7 @@ build() {
     make menuconfig
   fi
   yes "" | make config
+  make prepare # Necessary in case config has been changed
   # build!
   make ${MAKEFLAGS} bzImage modules
 }
