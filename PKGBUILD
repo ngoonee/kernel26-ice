@@ -164,7 +164,7 @@ build() {
     ${srcdir}/linux-${_basekernel}/scripts/setlocalversion
 
   make prepare
-
+  # load configuration
   # Configure the kernel. Replace the line below with one of your choice.
   if [ "$menuconfig" = "1" ]; then
     make menuconfig
@@ -265,6 +265,11 @@ package_kernel26-ice() {
    mkdir -p ${pkgdir}/usr/src/linux-${_kernver}/drivers/media/video/$i
    cp -a drivers/media/video/$i/*.h ${pkgdir}/usr/src/linux-${_kernver}/drivers/media/video/$i
   done
+  mkdir -p ${pkgdir}/usr/src/linux-${_kernver}/drivers/staging/usbvideo/
+  cp -a drivers/staging/usbvideo/*.h ${pkgdir}/usr/src/linux-${_kernver}/drivers/staging/usbvideo/
+  # add docbook makefile
+  install -D -m644 Documentation/DocBook/Makefile \
+    ${pkgdir}/usr/src/linux-${_kernver}/Documentation/DocBook/Makefile
   # add dm headers
   mkdir -p ${pkgdir}/usr/src/linux-${_kernver}/drivers/md
   cp drivers/md/*.h  ${pkgdir}/usr/src/linux-${_kernver}/drivers/md
@@ -274,10 +279,47 @@ package_kernel26-ice() {
   # add wireless headers
   mkdir -p ${pkgdir}/usr/src/linux-${_kernver}/net/mac80211/
   cp net/mac80211/*.h ${pkgdir}/usr/src/linux-${_kernver}/net/mac80211/
+  # add dvb headers for external modules
+  # in reference to:
+  # http://bugs.archlinux.org/task/9912
+  mkdir -p ${pkgdir}/usr/src/linux-${_kernver}/drivers/media/dvb/dvb-core
+  cp drivers/media/dvb/dvb-core/*.h ${pkgdir}/usr/src/linux-${_kernver}/drivers/media/dvb/dvb-core/
+  # add dvb headers for external modules
+  # in reference to:
+  # http://bugs.archlinux.org/task/11194
+  mkdir -p ${pkgdir}/usr/src/linux-${_kernver}/include/config/dvb/
+  cp include/config/dvb/*.h ${pkgdir}/usr/src/linux-${_kernver}/include/config/dvb/
+  # add dvb headers for http://mcentral.de/hg/~mrec/em28xx-new
+  # in reference to:
+  # http://bugs.archlinux.org/task/13146
+  mkdir -p ${pkgdir}/usr/src/linux-${_kernver}/drivers/media/dvb/frontends/
+  cp drivers/media/dvb/frontends/lgdt330x.h ${pkgdir}/usr/src/linux-${_kernver}/drivers/media/dvb/frontends/
+  cp drivers/media/video/msp3400-driver.h ${pkgdir}/usr/src/linux-${_kernver}/drivers/media/dvb/frontends/
+  # add dvb headers  
+  # in reference to:
+  # http://bugs.archlinux.org/task/20402
+  mkdir -p ${pkgdir}/usr/src/linux-${_kernver}/drivers/media/dvb/dvb-usb
+  cp drivers/media/dvb/dvb-usb/*.h ${pkgdir}/usr/src/linux-${_kernver}/drivers/media/dvb/dvb-usb/
+  mkdir -p ${pkgdir}/usr/src/linux-${_kernver}/drivers/media/dvb/frontends
+  cp drivers/media/dvb/frontends/*.h ${pkgdir}/usr/src/linux-${_kernver}/drivers/media/dvb/frontends/
+  mkdir -p ${pkgdir}/usr/src/linux-${_kernver}/drivers/media/common/tuners
+  cp drivers/media/common/tuners/*.h ${pkgdir}/usr/src/linux-${_kernver}/drivers/media/common/tuners/
   # add xfs and shmem for aufs building
   mkdir -p ${pkgdir}/usr/src/linux-${_kernver}/fs/xfs
   mkdir -p ${pkgdir}/usr/src/linux-${_kernver}/mm
   cp fs/xfs/xfs_sb.h ${pkgdir}/usr/src/linux-${_kernver}/fs/xfs/xfs_sb.h
+  # add headers vor virtualbox
+  # in reference to:
+  # http://bugs.archlinux.org/task/14568
+  cp -a include/drm $pkgdir/usr/src/linux-${_kernver}/include/
+  # add headers for broadcom wl
+  # in reference to:
+  # http://bugs.archlinux.org/task/14568
+  cp -a include/trace $pkgdir/usr/src/linux-${_kernver}/include/
+  # add headers for crypto modules
+  # in reference to:
+  # http://bugs.archlinux.org/task/22081
+  cp -a include/crypto $pkgdir/usr/src/linux-${_kernver}/include/
   # copy in Kconfig files
   for i in `find . -name "Kconfig*"`; do 
     mkdir -p ${pkgdir}/usr/src/linux-${_kernver}/`echo $i | sed 's|/Kconfig.*||'`
@@ -286,9 +328,19 @@ package_kernel26-ice() {
 
   chown -R root.root ${pkgdir}/usr/src/linux-${_kernver}
   find ${pkgdir}/usr/src/linux-${_kernver} -type d -exec chmod 755 {} \;
+  # strip scripts directory
+  find ${pkgdir}/usr/src/linux-${_kernver}/scripts  -type f -perm -u+w 2>/dev/null | while read binary ; do
+  case "$(file -bi "$binary")" in
+    *application/x-sharedlib*) # Libraries (.so)
+    /usr/bin/strip $STRIP_SHARED "$binary";;
+    *application/x-archive*) # Libraries (.a)
+    /usr/bin/strip $STRIP_STATIC "$binary";;
+    *application/x-executable*) # Binaries
+    /usr/bin/strip $STRIP_BINARIES "$binary";;
+    esac 
+  done 
   # remove unneeded architectures
   if [ "$keep_source_code" = "0" ]; then
     rm -rf ${pkgdir}/usr/src/linux-${_kernver}/arch/{alpha,arm,arm26,avr32,blackfin,cris,frv,h8300,ia64,m32r,m68k,m68knommu,mips,microblaze,mn10300,parisc,powerpc,ppc,s390,sh,sh64,sparc,sparc64,um,v850,xtensa}
   fi
-
 }
