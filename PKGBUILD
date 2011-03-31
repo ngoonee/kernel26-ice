@@ -212,75 +212,68 @@ KARCH=x86
 
 
   for i in acpi asm-generic config generated linux math-emu media net pcmcia scsi sound trace video xen; do
-    cp -a include/$i $pkgdir/usr/src/linux-${_kernver}/include/
+    cp -a include/$i ${pkgdir}/usr/src/linux-${_kernver}/include/
   done
 
   # copy arch includes for external modules
-  mkdir -p $pkgdir/usr/src/linux-${_kernver}/arch/$KARCH
-  cp -a arch/$KARCH/include $pkgdir/usr/src/linux-${_kernver}/arch/$KARCH/
+  mkdir -p ${pkgdir}/usr/src/linux-${_kernver}/arch/x86
+  cp -a arch/x86/include ${pkgdir}/usr/src/linux-${_kernver}/arch/x86/
 
   # copy files necessary for later builds, like nvidia and vmware
-  cp Module.symvers $pkgdir/usr/src/linux-${_kernver}
-  cp -a scripts $pkgdir/usr/src/linux-${_kernver}
-
+  cp Module.symvers ${pkgdir}/usr/src/linux-${_kernver}
+  cp -a scripts ${pkgdir}/usr/src/linux-${_kernver}
   # fix permissions on scripts dir
-  chmod og-w -R $pkgdir/usr/src/linux-${_kernver}/scripts
+  chmod og-w -R ${pkgdir}/usr/src/linux-${_kernver}/scripts
+  mkdir -p ${pkgdir}/usr/src/linux-${_kernver}/.tmp_versions
 
-  mkdir -p $pkgdir/usr/src/linux-${_kernver}/arch/$KARCH/kernel
+  mkdir -p ${pkgdir}/usr/src/linux-${_kernver}/arch/$KARCH/kernel
 
-  cp arch/$KARCH/Makefile $pkgdir/usr/src/linux-${_kernver}/arch/$KARCH/
-  if [ "${CARCH}" = "i686" ]; then
-    cp arch/$KARCH/Makefile_32.cpu $pkgdir/usr/src/linux-${_kernver}/arch/$KARCH/
+  cp arch/$KARCH/Makefile ${pkgdir}/usr/src/linux-${_kernver}/arch/$KARCH/
+  if [ "$CARCH" = "i686" ]; then
+    cp arch/$KARCH/Makefile_32.cpu ${pkgdir}/usr/src/linux-${_kernver}/arch/$KARCH/
   fi
-  cp arch/$KARCH/kernel/asm-offsets.s $pkgdir/usr/src/linux-${_kernver}/arch/$KARCH/kernel/
+  cp arch/$KARCH/kernel/asm-offsets.s ${pkgdir}/usr/src/linux-${_kernver}/arch/$KARCH/kernel/
 
   # add headers for lirc package
-  mkdir -p $pkgdir/usr/src/linux-${_kernver}/drivers/media/video
-  cp drivers/media/video/*.h  $pkgdir/usr/src/linux-${_kernver}/drivers/media/video/
-  for i in bt8xx cpia2 cx25840 cx88 em28xx et61x251 pwc saa7134 sn9c102 usbvideo zc0301
-  do
-    if ls drivers/media/video/$i/*.h &>/dev/null; then
-      mkdir -p $pkgdir/usr/src/linux-${_kernver}/drivers/media/video/$i
-      cp -a drivers/media/video/$i/*.h $pkgdir/usr/src/linux-${_kernver}/drivers/media/video/$i
-    else
-      echo Skipping $i : drivers/media/video/$i/*.h
-    fi
+  mkdir -p ${pkgdir}/usr/src/linux-${_kernver}/drivers/media/video
+  cp drivers/media/video/*.h  ${pkgdir}/usr/src/linux-${_kernver}/drivers/media/video/
+  for i in bt8xx cpia2 cx25840 cx88 em28xx et61x251 pwc saa7134 sn9c102; do
+   mkdir -p ${pkgdir}/usr/src/linux-${_kernver}/drivers/media/video/$i
+   cp -a drivers/media/video/$i/*.h ${pkgdir}/usr/src/linux-${_kernver}/drivers/media/video/$i
   done
 
   # add dm headers
-  mkdir -p $pkgdir/usr/src/linux-${_kernver}/drivers/md
-  cp drivers/md/*.h  $pkgdir/usr/src/linux-${_kernver}/drivers/md
-
+  mkdir -p ${pkgdir}/usr/src/linux-${_kernver}/drivers/md
+  cp drivers/md/*.h  ${pkgdir}/usr/src/linux-${_kernver}/drivers/md
   # add inotify.h
-  mkdir -p $pkgdir/usr/src/linux-${_kernver}/include/linux
-  cp include/linux/inotify.h $pkgdir/usr/src/linux-${_kernver}/include/linux/
+  mkdir -p ${pkgdir}/usr/src/linux-${_kernver}/include/linux
+  cp include/linux/inotify.h ${pkgdir}/usr/src/linux-${_kernver}/include/linux/
 
   # add CLUSTERIP file for iptables
   mkdir -p $pkgdir/usr/src/linux-${_kernver}/net/ipv4/netfilter/
   cp net/ipv4/netfilter/ipt_CLUSTERIP.c $pkgdir/usr/src/linux-${_kernver}/net/ipv4/netfilter/
 
   # add wireless headers
-  mkdir -p $pkgdir/usr/src/linux-${_kernver}/net/mac80211/
-  cp net/mac80211/*.h $pkgdir/usr/src/linux-${_kernver}/net/mac80211/
+  mkdir -p ${pkgdir}/usr/src/linux-${_kernver}/net/mac80211/
+  cp net/mac80211/*.h ${pkgdir}/usr/src/linux-${_kernver}/net/mac80211/
 
   # add xfs and shmem for aufs building
-  mkdir -p $pkgdir/usr/src/linux-${_kernver}/fs/xfs
-  mkdir -p $pkgdir/usr/src/linux-${_kernver}/mm
-  cp fs/xfs/xfs_sb.h $pkgdir/usr/src/linux-${_kernver}/fs/xfs/xfs_sb.h
+  mkdir -p ${pkgdir}/usr/src/linux-${_kernver}/fs/xfs
+  mkdir -p ${pkgdir}/usr/src/linux-${_kernver}/mm
+  cp fs/xfs/xfs_sb.h ${pkgdir}/usr/src/linux-${_kernver}/fs/xfs/xfs_sb.h
   cp mm/shmem.c $pkgdir/usr/src/linux-${_kernver}/mm/shmem.c
 
   # add vmlinux
   cp vmlinux $pkgdir/usr/src/linux-${_kernver}
 
   # copy in Kconfig files
-  for i in $(find . -name "Kconfig*")
-  do
-    mkdir -p $pkgdir/usr/src/linux-${_kernver}/$(echo $i | sed 's|/Kconfig.*||')
-    cp $i $pkgdir/usr/src/linux-${_kernver}/$i
+  for i in `find . -name "Kconfig*"`; do 
+    mkdir -p ${pkgdir}/usr/src/linux-${_kernver}/`echo $i | sed 's|/Kconfig.*||'`
+    cp $i ${pkgdir}/usr/src/linux-${_kernver}/$i
   done
 
-  chown -R root.root $pkgdir/usr/src/linux-${_kernver}
-  find $pkgdir/usr/src/linux-${_kernver} -type d -exec chmod 755 {} \;
+  chown -R root.root ${pkgdir}/usr/src/linux-${_kernver}
+  find ${pkgdir}/usr/src/linux-${_kernver} -type d -exec chmod 755 {} \;
   cd $pkgdir/lib/modules/${_kernver} && (rm -f source build;
   ln -sf ../../../usr/src/linux-${_kernver} build)
 
