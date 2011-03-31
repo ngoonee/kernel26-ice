@@ -6,11 +6,11 @@ pkgdesc="The Linux Kernel and modules with tuxonice support and optional bfs/ck 
 backup=(etc/mkinitcpio.d/$pkgname.preset)
 depends=('coreutils' 'linux-firmware' 'module-init-tools' 'mkinitcpio>=0.5.20')
 optdepends=('crda: to set the correct wireless channels of your country')
-pkgext=-ice
-pkgname=kernel26$pkgext
+pkgname=kernel26-ice
+_kernelname=${pkgname#kernel26}
 pkgver=2.6.37
 _minor_patch=5
-icever=$pkgver$pkgext
+icever=$pkgver$kernelname
 pkgrel=6
 install=$pkgname.install
 makedepends=('xmlto' 'docbook-xsl')
@@ -46,18 +46,15 @@ file_ck="patch-${pkgver}-${patch_rev_ck}.bz2"
 
 options=(!strip)
 source=(http://kernel.org/pub/linux/kernel/v2.6/linux-${pkgver}.tar.bz2
- 	http://www.kernel.org/pub/linux/kernel/v2.6/patch-${pkgver}.${_minor_patch}.bz2
-	http://www.kernel.org/pub/linux/kernel/projects/rt/${file_rt}
-#	http://www.kernel.org/pub/linux/kernel/people/ck/patches/2.6/${pkgver}/${pkgver}-${patch_rev_ck}/${file_ck}
-  http://www.kernel.org/pub/linux/kernel/people/edward/reiser4/reiser4-for-2.6/${file_reiser4}
-	http://www.tuxonice.net/files/${file_toi}
-	http://ck.kolivas.org/patches/bfs/${pkgver}/${file_bfs}
-	http://ck.kolivas.org/patches/bfs/${pkgver}/${file_bfs_b}
-	config
-	config.x86_64
-	$pkgname.preset
-	mkinitcpio-$pkgname.conf)
-
+        http://www.kernel.org/pub/linux/kernel/v2.6/patch-${pkgver}.${_minor_patch}.bz2
+        http://www.kernel.org/pub/linux/kernel/projects/rt/${file_rt}
+        #http://www.kernel.org/pub/linux/kernel/people/ck/patches/2.6/${pkgver}/${pkgver}-${patch_rev_ck}/${file_ck}
+        http://www.kernel.org/pub/linux/kernel/people/edward/reiser4/reiser4-for-2.6/${file_reiser4}
+        http://www.tuxonice.net/files/${file_toi}
+        http://ck.kolivas.org/patches/bfs/${pkgver}/${file_bfs}
+        http://ck.kolivas.org/patches/bfs/${pkgver}/${file_bfs_b}
+        config config.x86_64
+        $pkgname.preset)
 md5sums=('c8ee37b4fdccdb651e0603d35350b434'
          '55efa62ef683700869ef33f56046b521'
          'da527aea6a4a374f963f4063e548dc74'
@@ -67,8 +64,7 @@ md5sums=('c8ee37b4fdccdb651e0603d35350b434'
          '06ce0480314f6ec0818ba5c5b7a53886'
          '33946ae31868ea734e7d6750f6e113d1'
          '56f7920169e0e7e6808fe86412b865fc'
-         '541973d72e24a2def82d33884a781ee1'
-         '4ec86e859234dc251dd16884235a9e37')
+         'fb68a8239ef0794deb70cbb7397c2f23')
 
 build() {
   cd ${srcdir}/linux-$pkgver
@@ -156,6 +152,9 @@ build() {
     zcat /proc/config.gz > ./.config
     make oldconfig
   fi
+  if [ "${_kernelname}" != "" ]; then
+    sed -i "s|CONFIG_LOCALVERSION=.*|CONFIG_LOCALVERSION=\"${_kernelname}\"|g" ./.config
+  fi
 
   # hack to prevent output kernel from being marked as dirty or git
   chmod +x ${srcdir}/linux-$pkgver/scripts/setlocalversion
@@ -199,15 +198,19 @@ KARCH=x86
    
   cd $srcdir/linux-$pkgver
   # get kernel version
-  mkdir -p $pkgdir/{lib/modules,lib/firmware,boot}
-  make INSTALL_MOD_PATH=$pkgdir modules_install || return 1
-  install -D -m644 System.map $pkgdir/boot/System.map26$pkgext
-  install -D -m644 arch/$KARCH/boot/bzImage $pkgdir/boot/vmlinuz26$pkgext
+  _kernver="$(make kernelrelease)"
+  mkdir -p ${pkgdir}/{lib/modules,lib/firmware,boot}
+  make INSTALL_MOD_PATH=${pkgdir} modules_install
+  cp System.map ${pkgdir}/boot/System.map26${_kernelname}
+  cp arch/$KARCH/boot/bzImage ${pkgdir}/boot/vmlinuz26${_kernelname}
   install -D -m644 Makefile $pkgdir/usr/src/linux-$icever/Makefile
   install -D -m644 kernel/Makefile $pkgdir/usr/src/linux-$icever/kernel/Makefile
   install -D -m644 .config $pkgdir/usr/src/linux-$icever/.config
-  install -D -m644 .config $pkgdir/boot/kconfig26$pkgext
+  install -D -m644 .config $pkgdir/boot/kconfig26$kernelname
   mkdir -p $pkgdir/usr/src/linux-$icever/include
+  # install fallback mkinitcpio.conf file and preset file for kernel
+  install -m644 -D ${srcdir}/$pkgname.preset ${pkgdir}/etc/mkinitcpio.d/${pkgname}.preset
+
 
   for i in acpi asm-generic config generated linux math-emu media net pcmcia scsi sound trace video xen; do
     cp -a include/$i $pkgdir/usr/src/linux-$icever/include/
@@ -281,10 +284,6 @@ KARCH=x86
   find $pkgdir/usr/src/linux-$icever -type d -exec chmod 755 {} \;
   cd $pkgdir/lib/modules/$icever && (rm -f source build;
   ln -sf ../../../usr/src/linux-$icever build)
-
-  # install fallback mkinitcpio.conf file and preset file for kernel
-  install -m644 -D ${srcdir}/$pkgname.preset $pkgdir/etc/mkinitcpio.d/${pkgname}.preset || return 1
-  install -m644 -D ${srcdir}/mkinitcpio-$pkgname.conf $pkgdir/etc/mkinitcpio.d/$pkgname-fallback.conf || return 1
 
   # set correct depmod command for install
   sed -i -e "s/KERNEL_VERSION=.*/KERNEL_VERSION=$icever/g" $startdir/$pkgname.install
