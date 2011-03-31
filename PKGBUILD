@@ -3,13 +3,16 @@
 # Maintainer: (RT and misc) Ng Oon-Ee <ngoonee.talk@gmail.com>
 
 pkgdesc="The Linux Kernel and modules with tuxonice support and optional bfs/ck patches"
-depends=('coreutils' 'module-init-tools' 'mkinitcpio>=0.5.15' 'kernel26-firmware')
+backup=(etc/mkinitcpio.d/$pkgname.preset)
+depends=('coreutils' 'linux-firmware' 'module-init-tools' 'mkinitcpio>=0.5.20')
+optdepends=('crda: to set the correct wireless channels of your country')
 pkgext=-ice
 pkgname=kernel26$pkgext
 pkgver=2.6.37
 _minor_patch=5
 icever=$pkgver$pkgext
 pkgrel=6
+install=$pkgname.install
 makedepends=('xmlto' 'docbook-xsl')
 arch=(i686 x86_64)
 license=('GPL2')
@@ -176,17 +179,6 @@ build() {
 }
 
 package_kernel26-ice() {
-  pkgdesc="The Linux Kernel and modules"
-  groups=('base')
-  backup=(etc/mkinitcpio.d/$pkgname.preset)
-  depends=('coreutils' 'linux-firmware' 'module-init-tools' 'mkinitcpio>=0.5.20')
-  replaces=('kernel24' 'kernel24-scsi' 'kernel26-scsi'
-            'alsa-driver' 'ieee80211' 'hostap-driver26'
-            'pwc' 'nforce' 'squashfs' 'unionfs' 'ivtv'
-            'zd1211' 'kvm-modules' 'iwlwifi' 'rt2x00-cvs'
-            'gspcav1' 'atl2' 'wlan-ng26' 'rt2500' 'nouveau-drm')
-  install=$pkgname.install
-  optdepends=('crda: to set the correct wireless channels of your country')
 
 KARCH=x86
 
