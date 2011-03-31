@@ -3,10 +3,10 @@
 # Maintainer: (RT and misc) Ng Oon-Ee <ngoonee.talk@gmail.com>
 
 pkgdesc="The Linux Kernel and modules with tuxonice support and optional bfs/ck patches"
-backup=(etc/mkinitcpio.d/$pkgname.preset)
 depends=('coreutils' 'linux-firmware' 'module-init-tools' 'mkinitcpio>=0.5.20')
 optdepends=('crda: to set the correct wireless channels of your country')
 pkgname=kernel26-ice
+backup=(etc/mkinitcpio.d/$pkgname.preset)
 _kernelname=${pkgname#kernel26}
 _basekernel=2.6.37
 _minor_patch=5
@@ -224,6 +224,7 @@ package_kernel26-ice() {
   # gzip -9 all modules to safe 100MB of space
   find "$pkgdir" -name '*.ko' -exec gzip -9 {} \;
 
+  mkdir -p ${pkgdir}/lib/modules/${_kernver}
   cd ${pkgdir}/lib/modules/${_kernver}
   ln -sf ../../../usr/src/linux-${_kernver} build
   cd ${srcdir}/linux-$_basekernel
@@ -265,8 +266,6 @@ package_kernel26-ice() {
    mkdir -p ${pkgdir}/usr/src/linux-${_kernver}/drivers/media/video/$i
    cp -a drivers/media/video/$i/*.h ${pkgdir}/usr/src/linux-${_kernver}/drivers/media/video/$i
   done
-  mkdir -p ${pkgdir}/usr/src/linux-${_kernver}/drivers/staging/usbvideo/
-  cp -a drivers/staging/usbvideo/*.h ${pkgdir}/usr/src/linux-${_kernver}/drivers/staging/usbvideo/
   # add docbook makefile
   install -D -m644 Documentation/DocBook/Makefile \
     ${pkgdir}/usr/src/linux-${_kernver}/Documentation/DocBook/Makefile
@@ -284,11 +283,6 @@ package_kernel26-ice() {
   # http://bugs.archlinux.org/task/9912
   mkdir -p ${pkgdir}/usr/src/linux-${_kernver}/drivers/media/dvb/dvb-core
   cp drivers/media/dvb/dvb-core/*.h ${pkgdir}/usr/src/linux-${_kernver}/drivers/media/dvb/dvb-core/
-  # add dvb headers for external modules
-  # in reference to:
-  # http://bugs.archlinux.org/task/11194
-  mkdir -p ${pkgdir}/usr/src/linux-${_kernver}/include/config/dvb/
-  cp include/config/dvb/*.h ${pkgdir}/usr/src/linux-${_kernver}/include/config/dvb/
   # add dvb headers for http://mcentral.de/hg/~mrec/em28xx-new
   # in reference to:
   # http://bugs.archlinux.org/task/13146
