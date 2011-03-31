@@ -291,7 +291,7 @@ KARCH=x86
 
   if [ "$keep_source_code" = "0" ]; then
     # remove unneeded architectures
-    rm -rf $pkgdir/usr/src/linux-$icever/arch/{alpha,arm,arm26,avr32,blackfin,cris,frv,h8300,ia64,m32r,m68k,m68knommu,mips,mn10300,parisc,powerpc,ppc,s390,sh,sh64,sparc,sparc64,um,v850,xtensa}
+    rm -rf ${pkgdir}/usr/src/linux-${icever}/arch/{alpha,arm,arm26,avr32,blackfin,cris,frv,h8300,ia64,m32r,m68k,m68knommu,mips,microblaze,mn10300,parisc,powerpc,ppc,s390,sh,sh64,sparc,sparc64,um,v850,xtensa}
   fi
 
   # Delete firmware directory
