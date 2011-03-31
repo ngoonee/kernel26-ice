@@ -30,7 +30,6 @@ local_patch_dir="${local_patch_dir:-}"
 use_config="${use_config:-}"
 use_config_gz=${use_config_gz:-0}
 enable_reiser4=${enable_reiser4:-0}
-make_jobs=${make_jobs:-2}
 ### Compile time defined variables
 ###
 
@@ -135,9 +134,9 @@ build() {
   
   # load configuration for i686 or x86_64
   if [ "$CARCH" = "x86_64" ]; then
-    cat ../config.x86_64 > ./.config
+    cat ../config.x86_64 >./.config
   else
-    cat ../config > ./.config
+    cat ../config >./.config
   fi
 
   # use custom config instead
@@ -166,19 +165,19 @@ build() {
 
   make prepare
 
-  # configure kernel
+  # Configure the kernel. Replace the line below with one of your choice.
   if [ "$menuconfig" = "1" ]; then
     make menuconfig
   fi
   yes "" | make config
-  # build kernel
-  make -j${make_jobs} bzImage modules || return 1
+  # build!
+  make ${MAKEFLAGS} bzImage modules
 }
 
 package_kernel26-ice() {
 
-KARCH=x86
-
+  KARCH=x86
+  cd ${srcdir}/linux-$_basekernel
   if [ "$keep_source_code" = "1" ]; then
     echo -n "Copying source code..."
     # Keep the source code
@@ -194,7 +193,6 @@ KARCH=x86
     echo "OK"
   fi
    
-  cd $srcdir/linux-${_basekernel}
   # get kernel version
   _kernver="$(make kernelrelease)"
   mkdir -p ${pkgdir}/{lib/modules,lib/firmware,boot}
@@ -205,7 +203,7 @@ KARCH=x86
   install -m644 -D vmlinux ${pkgdir}/usr/src/linux-${_kernver}/vmlinux
 
   # install fallback mkinitcpio.conf file and preset file for kernel
-  install -m644 -D ${srcdir}/$pkgname.preset ${pkgdir}/etc/mkinitcpio.d/${pkgname}.preset
+  install -m644 -D ${srcdir}/${pkgname}.preset ${pkgdir}/etc/mkinitcpio.d/${pkgname}.preset
   # set correct depmod command for install
   sed \
     -e  "s/KERNEL_NAME=.*/KERNEL_NAME=${_kernelname}/g" \
