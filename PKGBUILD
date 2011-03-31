@@ -10,7 +10,6 @@ pkgname=kernel26-ice
 _kernelname=${pkgname#kernel26}
 pkgver=2.6.37
 _minor_patch=5
-icever=$pkgver$kernelname
 pkgrel=6
 install=$pkgname.install
 makedepends=('xmlto' 'docbook-xsl')
@@ -186,13 +185,13 @@ KARCH=x86
     # Keep the source code
     cd $startdir
     mkdir -p $pkgdir/usr/src || return 1
-    cp -a ${srcdir}/linux-$pkgver $pkgdir/usr/src/linux-$icever || return 1
+    cp -a ${srcdir}/linux-$pkgver $pkgdir/usr/src/linux-${_kernver} || return 1
 
     #Add a link from the modules directory
-    mkdir -p $pkgdir/lib/modules/$icever || return 1
-    cd $pkgdir/lib/modules/$icever || return 1
+    mkdir -p $pkgdir/lib/modules/${_kernver} || return 1
+    cd $pkgdir/lib/modules/${_kernver} || return 1
     rm -f source
-    ln -s ../../../usr/src/linux-$icever source || return 1
+    ln -s ../../../usr/src/linux-${_kernver} source || return 1
     echo "OK"
   fi
    
@@ -203,95 +202,95 @@ KARCH=x86
   make INSTALL_MOD_PATH=${pkgdir} modules_install
   cp System.map ${pkgdir}/boot/System.map26${_kernelname}
   cp arch/$KARCH/boot/bzImage ${pkgdir}/boot/vmlinuz26${_kernelname}
-  install -D -m644 Makefile $pkgdir/usr/src/linux-$icever/Makefile
-  install -D -m644 kernel/Makefile $pkgdir/usr/src/linux-$icever/kernel/Makefile
-  install -D -m644 .config $pkgdir/usr/src/linux-$icever/.config
+  install -D -m644 Makefile $pkgdir/usr/src/linux-${_kernver}/Makefile
+  install -D -m644 kernel/Makefile $pkgdir/usr/src/linux-${_kernver}/kernel/Makefile
+  install -D -m644 .config $pkgdir/usr/src/linux-${_kernver}/.config
   install -D -m644 .config $pkgdir/boot/kconfig26$kernelname
-  mkdir -p $pkgdir/usr/src/linux-$icever/include
+  mkdir -p $pkgdir/usr/src/linux-${_kernver}/include
   # install fallback mkinitcpio.conf file and preset file for kernel
   install -m644 -D ${srcdir}/$pkgname.preset ${pkgdir}/etc/mkinitcpio.d/${pkgname}.preset
 
 
   for i in acpi asm-generic config generated linux math-emu media net pcmcia scsi sound trace video xen; do
-    cp -a include/$i $pkgdir/usr/src/linux-$icever/include/
+    cp -a include/$i $pkgdir/usr/src/linux-${_kernver}/include/
   done
 
   # copy arch includes for external modules
-  mkdir -p $pkgdir/usr/src/linux-$icever/arch/$KARCH
-  cp -a arch/$KARCH/include $pkgdir/usr/src/linux-$icever/arch/$KARCH/
+  mkdir -p $pkgdir/usr/src/linux-${_kernver}/arch/$KARCH
+  cp -a arch/$KARCH/include $pkgdir/usr/src/linux-${_kernver}/arch/$KARCH/
 
   # copy files necessary for later builds, like nvidia and vmware
-  cp Module.symvers $pkgdir/usr/src/linux-$icever
-  cp -a scripts $pkgdir/usr/src/linux-$icever
+  cp Module.symvers $pkgdir/usr/src/linux-${_kernver}
+  cp -a scripts $pkgdir/usr/src/linux-${_kernver}
 
   # fix permissions on scripts dir
-  chmod og-w -R $pkgdir/usr/src/linux-$icever/scripts
+  chmod og-w -R $pkgdir/usr/src/linux-${_kernver}/scripts
 
-  mkdir -p $pkgdir/usr/src/linux-$icever/arch/$KARCH/kernel
+  mkdir -p $pkgdir/usr/src/linux-${_kernver}/arch/$KARCH/kernel
 
-  cp arch/$KARCH/Makefile $pkgdir/usr/src/linux-$icever/arch/$KARCH/
+  cp arch/$KARCH/Makefile $pkgdir/usr/src/linux-${_kernver}/arch/$KARCH/
   if [ "${CARCH}" = "i686" ]; then
-    cp arch/$KARCH/Makefile_32.cpu $pkgdir/usr/src/linux-$icever/arch/$KARCH/
+    cp arch/$KARCH/Makefile_32.cpu $pkgdir/usr/src/linux-${_kernver}/arch/$KARCH/
   fi
-  cp arch/$KARCH/kernel/asm-offsets.s $pkgdir/usr/src/linux-$icever/arch/$KARCH/kernel/
+  cp arch/$KARCH/kernel/asm-offsets.s $pkgdir/usr/src/linux-${_kernver}/arch/$KARCH/kernel/
 
   # add headers for lirc package
-  mkdir -p $pkgdir/usr/src/linux-$icever/drivers/media/video
-  cp drivers/media/video/*.h  $pkgdir/usr/src/linux-$icever/drivers/media/video/
+  mkdir -p $pkgdir/usr/src/linux-${_kernver}/drivers/media/video
+  cp drivers/media/video/*.h  $pkgdir/usr/src/linux-${_kernver}/drivers/media/video/
   for i in bt8xx cpia2 cx25840 cx88 em28xx et61x251 pwc saa7134 sn9c102 usbvideo zc0301
   do
     if ls drivers/media/video/$i/*.h &>/dev/null; then
-      mkdir -p $pkgdir/usr/src/linux-$icever/drivers/media/video/$i
-      cp -a drivers/media/video/$i/*.h $pkgdir/usr/src/linux-$icever/drivers/media/video/$i
+      mkdir -p $pkgdir/usr/src/linux-${_kernver}/drivers/media/video/$i
+      cp -a drivers/media/video/$i/*.h $pkgdir/usr/src/linux-${_kernver}/drivers/media/video/$i
     else
       echo Skipping $i : drivers/media/video/$i/*.h
     fi
   done
 
   # add dm headers
-  mkdir -p $pkgdir/usr/src/linux-$icever/drivers/md
-  cp drivers/md/*.h  $pkgdir/usr/src/linux-$icever/drivers/md
+  mkdir -p $pkgdir/usr/src/linux-${_kernver}/drivers/md
+  cp drivers/md/*.h  $pkgdir/usr/src/linux-${_kernver}/drivers/md
 
   # add inotify.h
-  mkdir -p $pkgdir/usr/src/linux-$icever/include/linux
-  cp include/linux/inotify.h $pkgdir/usr/src/linux-$icever/include/linux/
+  mkdir -p $pkgdir/usr/src/linux-${_kernver}/include/linux
+  cp include/linux/inotify.h $pkgdir/usr/src/linux-${_kernver}/include/linux/
 
   # add CLUSTERIP file for iptables
-  mkdir -p $pkgdir/usr/src/linux-$icever/net/ipv4/netfilter/
-  cp net/ipv4/netfilter/ipt_CLUSTERIP.c $pkgdir/usr/src/linux-$icever/net/ipv4/netfilter/
+  mkdir -p $pkgdir/usr/src/linux-${_kernver}/net/ipv4/netfilter/
+  cp net/ipv4/netfilter/ipt_CLUSTERIP.c $pkgdir/usr/src/linux-${_kernver}/net/ipv4/netfilter/
 
   # add wireless headers
-  mkdir -p $pkgdir/usr/src/linux-$icever/net/mac80211/
-  cp net/mac80211/*.h $pkgdir/usr/src/linux-$icever/net/mac80211/
+  mkdir -p $pkgdir/usr/src/linux-${_kernver}/net/mac80211/
+  cp net/mac80211/*.h $pkgdir/usr/src/linux-${_kernver}/net/mac80211/
 
   # add xfs and shmem for aufs building
-  mkdir -p $pkgdir/usr/src/linux-$icever/fs/xfs
-  mkdir -p $pkgdir/usr/src/linux-$icever/mm
-  cp fs/xfs/xfs_sb.h $pkgdir/usr/src/linux-$icever/fs/xfs/xfs_sb.h
-  cp mm/shmem.c $pkgdir/usr/src/linux-$icever/mm/shmem.c
+  mkdir -p $pkgdir/usr/src/linux-${_kernver}/fs/xfs
+  mkdir -p $pkgdir/usr/src/linux-${_kernver}/mm
+  cp fs/xfs/xfs_sb.h $pkgdir/usr/src/linux-${_kernver}/fs/xfs/xfs_sb.h
+  cp mm/shmem.c $pkgdir/usr/src/linux-${_kernver}/mm/shmem.c
 
   # add vmlinux
-  cp vmlinux $pkgdir/usr/src/linux-$icever
+  cp vmlinux $pkgdir/usr/src/linux-${_kernver}
 
   # copy in Kconfig files
   for i in $(find . -name "Kconfig*")
   do
-    mkdir -p $pkgdir/usr/src/linux-$icever/$(echo $i | sed 's|/Kconfig.*||')
-    cp $i $pkgdir/usr/src/linux-$icever/$i
+    mkdir -p $pkgdir/usr/src/linux-${_kernver}/$(echo $i | sed 's|/Kconfig.*||')
+    cp $i $pkgdir/usr/src/linux-${_kernver}/$i
   done
 
-  chown -R root.root $pkgdir/usr/src/linux-$icever
-  find $pkgdir/usr/src/linux-$icever -type d -exec chmod 755 {} \;
-  cd $pkgdir/lib/modules/$icever && (rm -f source build;
-  ln -sf ../../../usr/src/linux-$icever build)
+  chown -R root.root $pkgdir/usr/src/linux-${_kernver}
+  find $pkgdir/usr/src/linux-${_kernver} -type d -exec chmod 755 {} \;
+  cd $pkgdir/lib/modules/${_kernver} && (rm -f source build;
+  ln -sf ../../../usr/src/linux-${_kernver} build)
 
   # set correct depmod command for install
-  sed -i -e "s/KERNEL_VERSION=.*/KERNEL_VERSION=$icever/g" $startdir/$pkgname.install
-  echo -e "# DO NOT EDIT THIS FILE\nALL_kver='$icever'" > $pkgdir/etc/mkinitcpio.d/$pkgname.kver
+  sed -i -e "s/KERNEL_VERSION=.*/KERNEL_VERSION=${_kernver}/g" $startdir/$pkgname.install
+  echo -e "# DO NOT EDIT THIS FILE\nALL_kver='${_kernver}'" > $pkgdir/etc/mkinitcpio.d/$pkgname.kver
 
   if [ "$keep_source_code" = "0" ]; then
     # remove unneeded architectures
-    rm -rf ${pkgdir}/usr/src/linux-${icever}/arch/{alpha,arm,arm26,avr32,blackfin,cris,frv,h8300,ia64,m32r,m68k,m68knommu,mips,microblaze,mn10300,parisc,powerpc,ppc,s390,sh,sh64,sparc,sparc64,um,v850,xtensa}
+    rm -rf ${pkgdir}/usr/src/linux-${_kernver}/arch/{alpha,arm,arm26,avr32,blackfin,cris,frv,h8300,ia64,m32r,m68k,m68knommu,mips,microblaze,mn10300,parisc,powerpc,ppc,s390,sh,sh64,sparc,sparc64,um,v850,xtensa}
   fi
 
   # Delete firmware directory
