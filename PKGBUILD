@@ -221,6 +221,8 @@ package_kernel26-ice() {
   rm -f ${pkgdir}/lib/modules/${_kernver}/{source,build}
   # remove the firmware
   rm -rf ${pkgdir}/lib/firmware
+  # gzip -9 all modules to safe 100MB of space
+  find "$pkgdir" -name '*.ko' -exec gzip -9 {} \;
 
   cd ${pkgdir}/lib/modules/${_kernver}
   ln -sf ../../../usr/src/linux-${_kernver} build
