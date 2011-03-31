@@ -8,8 +8,9 @@ depends=('coreutils' 'linux-firmware' 'module-init-tools' 'mkinitcpio>=0.5.20')
 optdepends=('crda: to set the correct wireless channels of your country')
 pkgname=kernel26-ice
 _kernelname=${pkgname#kernel26}
-pkgver=2.6.37
+_basekernel=2.6.37
 _minor_patch=5
+pkgver=${_basekernel}
 pkgrel=6
 install=$pkgname.install
 makedepends=('xmlto' 'docbook-xsl')
@@ -40,18 +41,18 @@ file_toi="current-tuxonice-for-2.6.37.patch_0.bz2"
 file_bfs="2.6.37-sched-bfs-363.patch"
 file_bfs_b="2637-bfs363-nonhotplug_fix.patch"
 patch_rev_ck="ck2"
-file_ck="patch-${pkgver}-${patch_rev_ck}.bz2"
+file_ck="patch-${_basekernel}-${patch_rev_ck}.bz2"
 ###
 
 options=(!strip)
-source=(http://kernel.org/pub/linux/kernel/v2.6/linux-${pkgver}.tar.bz2
-        http://www.kernel.org/pub/linux/kernel/v2.6/patch-${pkgver}.${_minor_patch}.bz2
+source=(http://kernel.org/pub/linux/kernel/v2.6/linux-${_basekernel}.tar.bz2
+        http://www.kernel.org/pub/linux/kernel/v2.6/patch-${_basekernel}.${_minor_patch}.bz2
         http://www.kernel.org/pub/linux/kernel/projects/rt/${file_rt}
-        #http://www.kernel.org/pub/linux/kernel/people/ck/patches/2.6/${pkgver}/${pkgver}-${patch_rev_ck}/${file_ck}
+        #http://www.kernel.org/pub/linux/kernel/people/ck/patches/2.6/${_basekernel}/${_basekernel}-${patch_rev_ck}/${file_ck}
         http://www.kernel.org/pub/linux/kernel/people/edward/reiser4/reiser4-for-2.6/${file_reiser4}
         http://www.tuxonice.net/files/${file_toi}
-        http://ck.kolivas.org/patches/bfs/${pkgver}/${file_bfs}
-        http://ck.kolivas.org/patches/bfs/${pkgver}/${file_bfs_b}
+        http://ck.kolivas.org/patches/bfs/${_basekernel}/${file_bfs}
+        http://ck.kolivas.org/patches/bfs/${_basekernel}/${file_bfs_b}
         config config.x86_64
         $pkgname.preset)
 md5sums=('c8ee37b4fdccdb651e0603d35350b434'
@@ -66,12 +67,12 @@ md5sums=('c8ee37b4fdccdb651e0603d35350b434'
          'fb68a8239ef0794deb70cbb7397c2f23')
 
 build() {
-  cd ${srcdir}/linux-$pkgver
+  cd ${srcdir}/linux-$_basekernel
 
   # Applying official patch
   if [ "$_minor_patch" != "0" ] && [ "$_skip_minor_patch" != "1" ] ; then
-    echo "Applying patch-${pkgver}.${_minor_patch}.bz2"
-    patch -Np1 -i ${srcdir}/patch-${pkgver}.${_minor_patch} || { echo Failed patch-${pkgver}.${_minor_patch}.bz2 ; return 1 ; }
+    echo "Applying patch-${_basekernel}.${_minor_patch}.bz2"
+    patch -Np1 -i ${srcdir}/patch-${_basekernel}.${_minor_patch} || { echo Failed patch-${_basekernel}.${_minor_patch}.bz2 ; return 1 ; }
   fi
 
   if [ -n "${local_patch_dir}" ] && [ -d "${local_patch_dir}" ] ; then
@@ -156,12 +157,12 @@ build() {
   fi
 
   # hack to prevent output kernel from being marked as dirty or git
-  chmod +x ${srcdir}/linux-$pkgver/scripts/setlocalversion
+  chmod +x ${srcdir}/linux-${_basekernel}/scripts/setlocalversion
   sed 's/head=`git rev-parse --verify --short HEAD 2>\/dev\/null`/0/' \
-    ${srcdir}/linux-$pkgver/scripts/setlocalversion \
-    > ${srcdir}/linux-$pkgver/scripts/setlocalversion.new
-  mv ${srcdir}/linux-$pkgver/scripts/setlocalversion.new \
-    ${srcdir}/linux-$pkgver/scripts/setlocalversion
+    ${srcdir}/linux-${_basekernel}/scripts/setlocalversion \
+    > ${srcdir}/linux-${_basekernel}/scripts/setlocalversion.new
+  mv ${srcdir}/linux-${_basekernel}/scripts/setlocalversion.new \
+    ${srcdir}/linux-${_basekernel}/scripts/setlocalversion
 
   make prepare
 
@@ -170,8 +171,6 @@ build() {
     make menuconfig
   fi
   yes "" | make config
-
-  cd ${srcdir}/linux-$pkgver
   # build kernel
   make -j${make_jobs} bzImage modules || return 1
 }
@@ -185,7 +184,7 @@ KARCH=x86
     # Keep the source code
     cd $startdir
     mkdir -p $pkgdir/usr/src || return 1
-    cp -a ${srcdir}/linux-$pkgver $pkgdir/usr/src/linux-${_kernver} || return 1
+    cp -a ${srcdir}/linux-${_basekernel} $pkgdir/usr/src/linux-${_kernver} || return 1
 
     #Add a link from the modules directory
     mkdir -p $pkgdir/lib/modules/${_kernver} || return 1
@@ -195,21 +194,45 @@ KARCH=x86
     echo "OK"
   fi
    
-  cd $srcdir/linux-$pkgver
+  cd $srcdir/linux-${_basekernel}
   # get kernel version
   _kernver="$(make kernelrelease)"
   mkdir -p ${pkgdir}/{lib/modules,lib/firmware,boot}
   make INSTALL_MOD_PATH=${pkgdir} modules_install
   cp System.map ${pkgdir}/boot/System.map26${_kernelname}
   cp arch/$KARCH/boot/bzImage ${pkgdir}/boot/vmlinuz26${_kernelname}
-  install -D -m644 Makefile $pkgdir/usr/src/linux-${_kernver}/Makefile
-  install -D -m644 kernel/Makefile $pkgdir/usr/src/linux-${_kernver}/kernel/Makefile
-  install -D -m644 .config $pkgdir/usr/src/linux-${_kernver}/.config
-  install -D -m644 .config $pkgdir/boot/kconfig26$kernelname
-  mkdir -p $pkgdir/usr/src/linux-${_kernver}/include
+  #  # add vmlinux
+  install -m644 -D vmlinux ${pkgdir}/usr/src/linux-${_kernver}/vmlinux
+
   # install fallback mkinitcpio.conf file and preset file for kernel
   install -m644 -D ${srcdir}/$pkgname.preset ${pkgdir}/etc/mkinitcpio.d/${pkgname}.preset
+  # set correct depmod command for install
+  sed \
+    -e  "s/KERNEL_NAME=.*/KERNEL_NAME=${_kernelname}/g" \
+    -e  "s/KERNEL_VERSION=.*/KERNEL_VERSION=${_kernver}/g" \
+    -i $startdir/${pkgname}.install
+  sed \
+    -e "s|source .*|source /etc/mkinitcpio.d/kernel26${_kernelname}.kver|g" \
+    -e "s|default_image=.*|default_image=\"/boot/${pkgname}.img\"|g" \
+    -e "s|fallback_image=.*|fallback_image=\"/boot/${pkgname}-fallback.img\"|g" \
+    -i ${pkgdir}/etc/mkinitcpio.d/${pkgname}.preset
 
+  echo -e "# DO NOT EDIT THIS FILE\nALL_kver='${_kernver}'" > ${pkgdir}/etc/mkinitcpio.d/${pkgname}.kver
+  # remove build and source links
+  rm -f ${pkgdir}/lib/modules/${_kernver}/{source,build}
+  # remove the firmware
+  rm -rf ${pkgdir}/lib/firmware
+
+  cd ${pkgdir}/lib/modules/${_kernver}
+  ln -sf ../../../usr/src/linux-${_kernver} build
+  cd ${srcdir}/linux-$_basekernel
+  install -D -m644 Makefile \
+    ${pkgdir}/usr/src/linux-${_kernver}/Makefile
+  install -D -m644 kernel/Makefile \
+    ${pkgdir}/usr/src/linux-${_kernver}/kernel/Makefile
+  install -D -m644 .config \
+    ${pkgdir}/usr/src/linux-${_kernver}/.config
+  mkdir -p ${pkgdir}/usr/src/linux-${_kernver}/include
 
   for i in acpi asm-generic config generated linux math-emu media net pcmcia scsi sound trace video xen; do
     cp -a include/$i ${pkgdir}/usr/src/linux-${_kernver}/include/
@@ -241,31 +264,19 @@ KARCH=x86
    mkdir -p ${pkgdir}/usr/src/linux-${_kernver}/drivers/media/video/$i
    cp -a drivers/media/video/$i/*.h ${pkgdir}/usr/src/linux-${_kernver}/drivers/media/video/$i
   done
-
   # add dm headers
   mkdir -p ${pkgdir}/usr/src/linux-${_kernver}/drivers/md
   cp drivers/md/*.h  ${pkgdir}/usr/src/linux-${_kernver}/drivers/md
   # add inotify.h
   mkdir -p ${pkgdir}/usr/src/linux-${_kernver}/include/linux
   cp include/linux/inotify.h ${pkgdir}/usr/src/linux-${_kernver}/include/linux/
-
-  # add CLUSTERIP file for iptables
-  mkdir -p $pkgdir/usr/src/linux-${_kernver}/net/ipv4/netfilter/
-  cp net/ipv4/netfilter/ipt_CLUSTERIP.c $pkgdir/usr/src/linux-${_kernver}/net/ipv4/netfilter/
-
   # add wireless headers
   mkdir -p ${pkgdir}/usr/src/linux-${_kernver}/net/mac80211/
   cp net/mac80211/*.h ${pkgdir}/usr/src/linux-${_kernver}/net/mac80211/
-
   # add xfs and shmem for aufs building
   mkdir -p ${pkgdir}/usr/src/linux-${_kernver}/fs/xfs
   mkdir -p ${pkgdir}/usr/src/linux-${_kernver}/mm
   cp fs/xfs/xfs_sb.h ${pkgdir}/usr/src/linux-${_kernver}/fs/xfs/xfs_sb.h
-  cp mm/shmem.c $pkgdir/usr/src/linux-${_kernver}/mm/shmem.c
-
-  # add vmlinux
-  cp vmlinux $pkgdir/usr/src/linux-${_kernver}
-
   # copy in Kconfig files
   for i in `find . -name "Kconfig*"`; do 
     mkdir -p ${pkgdir}/usr/src/linux-${_kernver}/`echo $i | sed 's|/Kconfig.*||'`
@@ -274,18 +285,9 @@ KARCH=x86
 
   chown -R root.root ${pkgdir}/usr/src/linux-${_kernver}
   find ${pkgdir}/usr/src/linux-${_kernver} -type d -exec chmod 755 {} \;
-  cd $pkgdir/lib/modules/${_kernver} && (rm -f source build;
-  ln -sf ../../../usr/src/linux-${_kernver} build)
-
-  # set correct depmod command for install
-  sed -i -e "s/KERNEL_VERSION=.*/KERNEL_VERSION=${_kernver}/g" $startdir/$pkgname.install
-  echo -e "# DO NOT EDIT THIS FILE\nALL_kver='${_kernver}'" > $pkgdir/etc/mkinitcpio.d/$pkgname.kver
-
+  # remove unneeded architectures
   if [ "$keep_source_code" = "0" ]; then
-    # remove unneeded architectures
     rm -rf ${pkgdir}/usr/src/linux-${_kernver}/arch/{alpha,arm,arm26,avr32,blackfin,cris,frv,h8300,ia64,m32r,m68k,m68knommu,mips,microblaze,mn10300,parisc,powerpc,ppc,s390,sh,sh64,sparc,sparc64,um,v850,xtensa}
   fi
 
-  # Delete firmware directory
-  rm -rf $pkgdir/lib/firmware
 }
