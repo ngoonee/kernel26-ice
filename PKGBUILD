@@ -24,6 +24,7 @@ enable_toi=${enable_toi:-1}
 bfs_scheduler=${bfs_scheduler:-0}
 #ck_patches=${ck_patches:-0}
 keep_source_code=${keep_source_code:-0}
+xconfig=${xconfig:-0}
 menuconfig=${menuconfig:-0}
 realtime_patch=${realtime_patch:-0}
 local_patch_dir="${local_patch_dir:-}"
@@ -166,8 +167,12 @@ build() {
   make prepare
   # load configuration
   # Configure the kernel. Replace the line below with one of your choice.
-  if [ "$menuconfig" = "1" ]; then
-    make menuconfig
+  if [ "$xconfig" = "1" ]; then
+    make xconfig
+  else
+    if [ "$menuconfig" = "1" ]; then
+      make menuconfig
+    fi
   fi
   yes "" | make config
   make prepare # Necessary in case config has been changed
