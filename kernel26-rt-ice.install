@@ -1,4 +1,4 @@
-KERNEL_VERSION=2.6.37-ice
+KERNEL_VERSION=2.6.33-rt-ice
 
 post_install () {
   # updating module dependencies
@@ -13,7 +13,7 @@ post_install () {
   echo ">>> http://wiki.archlinux.org/index.php/Mkinitcpio"
   echo ""
   echo ">>> Generating initial ramdisk, using mkinitcpio.  Please wait..."
-	/sbin/mkinitcpio -p kernel26-ice
+	/sbin/mkinitcpio -p kernel26-rt-ice
 }
 
 post_upgrade() {

@@ -1,31 +1,30 @@
-# Contributor: Giuseppe Calderaro <giuseppecalderaro@gmail.com>
-# Contributor: (misc updates) Michael Evans <mjevans1983@gmail.com>
-# Maintainer: (RT and misc) Ng Oon-Ee <ngoonee.talk@gmail.com>
+# Almost wholly taken from kernel26-ice by Giuseppe Calderaro
+# Maintainer: Ng Oon-Ee <ngoonee.talk@gmail.com>
+# Source Contributor: Giuseppe Calderaro <giuseppecalderaro@gmail.com>
 
-pkgdesc="The Linux Kernel and modules with tuxonice support and optional bfs/ck patches"
+pkgdesc="The Linux Kernel and modules with tuxonice support and rt-patchset"
 depends=('coreutils' 'linux-firmware' 'module-init-tools' 'mkinitcpio>=0.5.20')
 optdepends=('crda: to set the correct wireless channels of your country')
-pkgname=kernel26-ice
+pkgname=kernel26-rt-ice
 backup=(etc/mkinitcpio.d/$pkgname.preset)
 _kernelname=${pkgname#kernel26}
-_basekernel=2.6.37
-_minor_patch=5
+_basekernel=2.6.33
+_minor_patch=7
 pkgver=${_basekernel}
-pkgrel=6
+pkgrel=16
 install=$pkgname.install
 makedepends=('xmlto' 'docbook-xsl')
 arch=(i686 x86_64)
 license=('GPL2')
-url="http://www.kernel.org"
+url="https://rt.wiki.kernel.org"
 
 ### User/Environment defined variables
 _skip_minor_patch=${_skip_minor_patch:-0}
 enable_toi=${enable_toi:-1}
 bfs_scheduler=${bfs_scheduler:-0}
-#ck_patches=${ck_patches:-0}
 keep_source_code=${keep_source_code:-0}
 menuconfig=${menuconfig:-0}
-realtime_patch=${realtime_patch:-0}
+realtime_patch=${realtime_patch:-1}
 local_patch_dir="${local_patch_dir:-}"
 use_config="${use_config:-}"
 use_config_gz=${use_config_gz:-0}
@@ -35,35 +34,29 @@ enable_reiser4=${enable_reiser4:-0}
 
 ### Files / Versions
 file_rt="patch-2.6.33.7.2-rt30.bz2"
-file_reiser4="reiser4-for-2.6.37.patch.bz2"
-file_toi="current-tuxonice-for-2.6.37.patch_0.bz2"
-file_bfs="2.6.37-sched-bfs-363.patch"
-file_bfs_b="2637-bfs363-nonhotplug_fix.patch"
-patch_rev_ck="ck2"
-file_ck="patch-${_basekernel}-${patch_rev_ck}.bz2"
+file_reiser4="reiser4-for-2.6.33.patch.bz2"
+file_toi="tuxonice-3.2-rc2-for-2.6.33.patch.bz2"
+file_bfs="2.6.33.7-sched-bfs-318.patch"
 ###
 
 options=(!strip)
 source=(http://kernel.org/pub/linux/kernel/v2.6/linux-${_basekernel}.tar.bz2
         http://www.kernel.org/pub/linux/kernel/v2.6/patch-${_basekernel}.${_minor_patch}.bz2
         http://www.kernel.org/pub/linux/kernel/projects/rt/${file_rt}
-        #http://www.kernel.org/pub/linux/kernel/people/ck/patches/2.6/${_basekernel}/${_basekernel}-${patch_rev_ck}/${file_ck}
         http://www.kernel.org/pub/linux/kernel/people/edward/reiser4/reiser4-for-2.6/${file_reiser4}
         http://www.tuxonice.net/files/${file_toi}
         http://ck.kolivas.org/patches/bfs/${_basekernel}/${file_bfs}
-        http://ck.kolivas.org/patches/bfs/${_basekernel}/${file_bfs_b}
         config config.x86_64
         $pkgname.preset)
-md5sums=('c8ee37b4fdccdb651e0603d35350b434'
-         '55efa62ef683700869ef33f56046b521'
+md5sums=('c3883760b18d50e8d78819c54d579b00'
+         '04b3affb4f7fb3035303a32bd6080baf'
          'da527aea6a4a374f963f4063e548dc74'
-         '42405369b3395bcdfd53d7d389b23d4a'
-         '6b19322620d4fabfb2db1bf6748020eb'
-         '3455da009658ce7dd2f5f4ab358d29ee'
-         '06ce0480314f6ec0818ba5c5b7a53886'
-         '33946ae31868ea734e7d6750f6e113d1'
-         '56f7920169e0e7e6808fe86412b865fc'
-         'fb68a8239ef0794deb70cbb7397c2f23')
+         '49da31ea1e6c3ae65f954cd5fc8fcc4e'
+         '86b3531de9526af8fcf0409bab6d00ff'
+         'c358419edc76f33a2623fa8ce80efe16'
+         '3190adf1f80be498865e3250cbffa3dc'
+         'a0f03c2b99d35cddb0e6cbeff5f215a1'
+         'b54202c40593240256f40562d6f3aee2')
 
 build() {
   cd ${srcdir}/linux-$_basekernel
@@ -113,7 +106,7 @@ build() {
     fi
   fi
 
-  if [ "${bfs_scheduler}" = "1" ] && [ "${ck_patches}" = "0" ]; then
+  if [ "${bfs_scheduler}" = "1" ]; then
     # applying BFS scheduler patch
     echo "Applying BFS scheduler patch"
     patch -Np1 -i ${srcdir}/${file_bfs} || { echo "Failed BFS"; return 1 ; }
@@ -121,13 +114,6 @@ build() {
     #Applying quick-fix 2.6.37.1 patch for bfs/ck
     patch -Np1 -i ${srcdir}/2.6.37.1-fix-no-more-unsigned.patch
   fi
-  #if [ "${ck_patches}" = "1" ] ; then
-    #echo "Applying CK patches ${file_ck%.*}"
-    ## sed out the -ckX version to make kernel naming happy.
-    #bzip2 -dck ${srcdir}/${file_ck} \
-      #| sed 's/+EXTRAVERSION := $(EXTRAVERSION)$(CKVERSION)/+EXTRAVERSION := $(EXTRAVERSION)/' \
-      #| patch -Np1 || { echo "Failed CK"; return 1 ; }
-  #fi
 
   # remove extraversion
   sed -i 's|^EXTRAVERSION = .*$|EXTRAVERSION =|g' Makefile
@@ -175,7 +161,7 @@ build() {
   make ${MAKEFLAGS} bzImage modules
 }
 
-package_kernel26-ice() {
+package_kernel26-rt-ice() {
 
   KARCH=x86
   cd ${srcdir}/linux-$_basekernel
