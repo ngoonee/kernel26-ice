@@ -11,7 +11,7 @@ _kernelname=${pkgname#kernel26}
 _basekernel=2.6.37
 _minor_patch=5
 pkgver=${_basekernel}
-pkgrel=6
+pkgrel=7
 install=$pkgname.install
 makedepends=('xmlto' 'docbook-xsl')
 arch=(i686 x86_64)
@@ -51,6 +51,7 @@ source=(http://kernel.org/pub/linux/kernel/v2.6/linux-${_basekernel}.tar.bz2
         http://ck.kolivas.org/patches/bfs/${_basekernel}/${file_bfs}
         http://ck.kolivas.org/patches/bfs/${_basekernel}/${file_bfs_b}
         config config.x86_64
+        2.6.37.1-fix-no-more-unsigned.patch
         $pkgname.preset)
 md5sums=('c8ee37b4fdccdb651e0603d35350b434'
          '55efa62ef683700869ef33f56046b521'
@@ -61,6 +62,7 @@ md5sums=('c8ee37b4fdccdb651e0603d35350b434'
          '06ce0480314f6ec0818ba5c5b7a53886'
          '33946ae31868ea734e7d6750f6e113d1'
          '56f7920169e0e7e6808fe86412b865fc'
+         'c99a13ccbba56e3516ca8907c211a27b'
          'fb68a8239ef0794deb70cbb7397c2f23')
 
 build() {
