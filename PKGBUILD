@@ -110,7 +110,7 @@ build() {
     fi
   fi
 
-  if [ "${bfs_scheduler}" = "1" && "${realtime_patch}" = "0" ]; then
+  if [ "${bfs_scheduler}" = "1" ] && [ "${realtime_patch}" = "0" ]; then
     # applying BFS scheduler patch
     echo "Applying BFS scheduler patch"
     patch -Np1 -i ${srcdir}/${file_bfs} || { echo "Failed BFS"; return 1 ; }
