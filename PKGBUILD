@@ -23,6 +23,7 @@ _skip_minor_patch=${_skip_minor_patch:-0}
 enable_toi=${enable_toi:-1}
 bfs_scheduler=${bfs_scheduler:-0}
 keep_source_code=${keep_source_code:-0}
+gconfig=${gconfig:-0}
 xconfig=${xconfig:-0}
 menuconfig=${menuconfig:-0}
 realtime_patch=${realtime_patch:-0}
@@ -156,11 +157,15 @@ build() {
   make prepare
   # load configuration
   # Configure the kernel. Replace the line below with one of your choice.
-  if [ "$xconfig" = "1" ]; then
-    make xconfig
+  if [ "$gconfig" = "1" ]; then
+    make gconfig
   else
-    if [ "$menuconfig" = "1" ]; then
-      make menuconfig
+    if [ "$xconfig" = "1" ]; then
+      make xconfig
+    else
+      if [ "$menuconfig" = "1" ]; then
+        make menuconfig
+      fi
     fi
   fi
   yes "" | make config
