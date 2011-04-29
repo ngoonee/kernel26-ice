@@ -48,6 +48,7 @@ source=(http://kernel.org/pub/linux/kernel/v2.6/linux-${_basekernel}.tar.bz2
         http://www.kernel.org/pub/linux/kernel/people/edward/reiser4/reiser4-for-2.6/${file_reiser4}
         http://www.tuxonice.net/files/${file_toi}
         http://ck.kolivas.org/patches/bfs/${_basekernel}/${file_bfs}
+        kernel26-member-page.patch
         config config.x86_64
         $pkgname.preset)
 md5sums=('c3883760b18d50e8d78819c54d579b00'
@@ -56,12 +57,16 @@ md5sums=('c3883760b18d50e8d78819c54d579b00'
          '49da31ea1e6c3ae65f954cd5fc8fcc4e'
          '86b3531de9526af8fcf0409bab6d00ff'
          'c358419edc76f33a2623fa8ce80efe16'
+         '0ecef4f750421203a9e4453d1694fd9d'
          '3190adf1f80be498865e3250cbffa3dc'
          'a0f03c2b99d35cddb0e6cbeff5f215a1'
          'b54202c40593240256f40562d6f3aee2')
 
 build() {
   cd ${srcdir}/linux-$_basekernel
+
+  # Patching for compilation with gcc-4.6 and above (thanks beroal)
+  patch -Np1 -i ${srcdir}/kernel26-member-page.patch
 
   # Applying official patch
   if [ "$_minor_patch" != "0" ] && [ "$_skip_minor_patch" != "1" ] ; then
