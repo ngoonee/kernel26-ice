@@ -52,8 +52,8 @@ md5sums=('7d471477bfa67546f902da62227fa976'
          'f9f3f59a2a4cbbef3be3944fe350bfc9'
          'e0e0bb351ff773cf3ad80a65b6671c51'
          '55174ad997e84d7e29ee480ef13e64c7'
-         '33946ae31868ea734e7d6750f6e113d1'
-         '56f7920169e0e7e6808fe86412b865fc'
+         '620d67be59a2ca606b471c8998f51ee8'
+         'b0a4c6d9c17384d66599df27abf69919'
          'fb68a8239ef0794deb70cbb7397c2f23')
 
 build() {
