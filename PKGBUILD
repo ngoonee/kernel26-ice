@@ -3,15 +3,15 @@
 # Maintainer: (RT and misc) Ng Oon-Ee <ngoonee.talk@gmail.com>
 
 pkgdesc="The Linux Kernel and modules with tuxonice support and optional bfs/ck patches"
-depends=('coreutils' 'linux-firmware' 'module-init-tools' 'mkinitcpio>=0.5.20')
+depends=('coreutils' 'linux-firmware' 'module-init-tools>=3.16' 'mkinitcpio>=0,7')
 optdepends=('crda: to set the correct wireless channels of your country')
 pkgname=kernel26-ice
 backup=(etc/mkinitcpio.d/$pkgname.preset)
 _kernelname=${pkgname#kernel26}
-_basekernel=2.6.38
-_minor_patch=8
+_basekernel=3.0
+_minor_patch=0
 pkgver=${_basekernel}
-pkgrel=4
+pkgrel=1
 install=$pkgname.install
 makedepends=('xmlto' 'docbook-xsl')
 arch=(i686 x86_64)
@@ -35,26 +35,27 @@ enable_reiser4=${enable_reiser4:-0}
 
 ### Files / Versions
 file_reiser4="reiser4-for-2.6.38.patch.bz2"
-file_toi="tuxonice-3.2-for-2.6.38.patch.bz2"
+file_toi="current-tuxonice-for-3.0.patch.bz2"
 file_bfs="2.6.38.3-sched-bfs-401.patch"
 ###
 
 options=(!strip)
-source=(http://kernel.org/pub/linux/kernel/v2.6/linux-${_basekernel}.tar.bz2
-        http://www.kernel.org/pub/linux/kernel/v2.6/patch-${_basekernel}.${_minor_patch}.bz2
-        http://www.kernel.org/pub/linux/kernel/people/edward/reiser4/reiser4-for-2.6/${file_reiser4}
+source=(http://kernel.org/pub/linux/kernel/v3.0/linux-${_basekernel}.tar.bz2
+        # http://www.kernel.org/pub/linux/kernel/v3.0/patch-${_basekernel}.${_minor_patch}.bz2
+        # http://www.kernel.org/pub/linux/kernel/people/edward/reiser4/reiser4-for-2.6/${file_reiser4}
         http://www.tuxonice.net/files/${file_toi}
-        http://ck.kolivas.org/patches/bfs/${_basekernel}/${file_bfs}
+        # http://ck.kolivas.org/patches/bfs/${_basekernel}/${file_bfs}
+        # the main kernel config files
         config config.x86_64
-        $pkgname.preset)
-md5sums=('7d471477bfa67546f902da62227fa976'
-         'c0f416f6a2e916633f697287cc7cb914'
-         'f9f3f59a2a4cbbef3be3944fe350bfc9'
-         'e0e0bb351ff773cf3ad80a65b6671c51'
-         '55174ad997e84d7e29ee480ef13e64c7'
-         '620d67be59a2ca606b471c8998f51ee8'
-         'b0a4c6d9c17384d66599df27abf69919'
-         'fb68a8239ef0794deb70cbb7397c2f23')
+        # standard config files for mkinitcpio ramdisk
+        ${pkgname}.preset
+        fix-i915.patch)
+md5sums=('398e95866794def22b12dfbc15ce89c0'
+         'afbd01926c57fc5b82ee6034dc9311e5'
+         'c466c85e967fe004455aacd26b89e1fb'
+         'fd5a1712ddea696eee5255de2d854218'
+         '1d27835b55d02f8cc66507a5ae1a6885'
+         '263725f20c0b9eb9c353040792d644e5')
 
 build() {
   cd ${srcdir}/linux-$_basekernel
@@ -89,13 +90,17 @@ build() {
 
   if [ "${bfs_scheduler}" = "1" ]; then
     # applying BFS scheduler patch
-    echo "Applying BFS scheduler patch"
-    patch -Np1 -i ${srcdir}/${file_bfs} || { echo "Failed BFS"; return 1 ; }
+    echo "BFS scheduler patch not available yet, sorry"
+    # echo "Applying BFS scheduler patch"
+    # patch -Np1 -i ${srcdir}/${file_bfs} || { echo "Failed BFS"; return 1 ; }
   fi
 
   # remove extraversion
   sed -i 's|^EXTRAVERSION = .*$|EXTRAVERSION =|g' Makefile
   
+  # fix #19234 i1915 display size
+  patch -Np1 -i ${srcdir}/fix-i915.patch
+
   # load configuration for i686 or x86_64
   if [ "$CARCH" = "x86_64" ]; then
     cat ../config.x86_64 >./.config
@@ -119,14 +124,20 @@ build() {
   if [ "${_kernelname}" != "" ]; then
     sed -i "s|CONFIG_LOCALVERSION=.*|CONFIG_LOCALVERSION=\"${_kernelname}\"|g" ./.config
   fi
+  # remove the extraversion from Makefile
+  # this ensures our kernel version is always 3.X-ARCH
+  # this way, minor kernel updates will not break external modules
+  # we need to change this soon, see FS#16702
+  sed -i 's|^EXTRAVERSION = .*$|EXTRAVERSION = |g' Makefile
+  # get kernel version
 
   # hack to prevent output kernel from being marked as dirty or git
-  chmod +x ${srcdir}/linux-${_basekernel}/scripts/setlocalversion
-  sed 's/head=`git rev-parse --verify --short HEAD 2>\/dev\/null`/0/' \
-    ${srcdir}/linux-${_basekernel}/scripts/setlocalversion \
-    > ${srcdir}/linux-${_basekernel}/scripts/setlocalversion.new
-  mv ${srcdir}/linux-${_basekernel}/scripts/setlocalversion.new \
-    ${srcdir}/linux-${_basekernel}/scripts/setlocalversion
+  #chmod +x ${srcdir}/linux-${_basekernel}/scripts/setlocalversion
+  #sed 's/head=`git rev-parse --verify --short HEAD 2>\/dev\/null`/0/' \
+  #  ${srcdir}/linux-${_basekernel}/scripts/setlocalversion \
+  #  > ${srcdir}/linux-${_basekernel}/scripts/setlocalversion.new
+  #mv ${srcdir}/linux-${_basekernel}/scripts/setlocalversion.new \
+  #  ${srcdir}/linux-${_basekernel}/scripts/setlocalversion
 
   make prepare
   # load configuration
@@ -172,8 +183,8 @@ package_kernel26-ice() {
   mkdir -p ${pkgdir}/{lib/modules,lib/firmware,boot}
   make INSTALL_MOD_PATH=${pkgdir} modules_install
   cp System.map ${pkgdir}/boot/System.map26${_kernelname}
-  cp arch/$KARCH/boot/bzImage ${pkgdir}/boot/vmlinuz26${_kernelname}
-  #  # add vmlinux
+  cp arch/$KARCH/boot/bzImage ${pkgdir}/boot/vmlinuz-${pkgname}
+  # add vmlinux
   install -m644 -D vmlinux ${pkgdir}/usr/src/linux-${_kernver}/vmlinux
 
   # install fallback mkinitcpio.conf file and preset file for kernel
@@ -209,7 +220,8 @@ package_kernel26-ice() {
     ${pkgdir}/usr/src/linux-${_kernver}/.config
   mkdir -p ${pkgdir}/usr/src/linux-${_kernver}/include
 
-  for i in acpi asm-generic config generated linux math-emu media net pcmcia scsi sound trace video xen; do
+  for i in acpi asm-generic config crypto drm generated linux math-emu \
+    media net pcmcia scsi sound trace video xen; do
     cp -a include/$i ${pkgdir}/usr/src/linux-${_kernver}/include/
   done
 

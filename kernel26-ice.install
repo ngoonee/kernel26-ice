@@ -1,19 +1,15 @@
-KERNEL_VERSION=2.6.38-ice
+# arg 1:  the new package version
+# arg 2:  the old package version
+
+KERNEL_NAME=-ice
+KERNEL_VERSION=3.0.0-ice
 
 post_install () {
   # updating module dependencies
   echo ">>> Updating module dependencies. Please wait ..."
-  depmod $KERNEL_VERSION 
-  # generate init ramdisks
-  echo ">>> MKINITCPIO SETUP"
-  echo ">>> ----------------"
-  echo ">>> If you use LVM2, Encrypted root or software RAID,"
-  echo ">>> Ensure you enable support in /etc/mkinitcpio.conf ."
-  echo ">>> More information about mkinitcpio setup can be found here:"
-  echo ">>> http://wiki.archlinux.org/index.php/Mkinitcpio"
-  echo ""
+  depmod ${KERNEL_VERSION}
   echo ">>> Generating initial ramdisk, using mkinitcpio.  Please wait..."
-	/sbin/mkinitcpio -p kernel26-ice
+  mkinitcpio -p kernel26-${KERNEL_NAME}
 }
 
 post_upgrade() {
