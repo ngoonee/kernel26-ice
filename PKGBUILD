@@ -144,6 +144,7 @@ build() {
     zcat /proc/config.gz > ./.config
     make oldconfig
   fi
+
   if [ "${_kernelname}" != "" ]; then
     sed -i "s|CONFIG_LOCALVERSION=.*|CONFIG_LOCALVERSION=\"${_kernelname}\"|g" ./.config
   fi
@@ -179,7 +180,7 @@ build() {
 package_kernel26-rt-ice() {
 
   KARCH=x86
-  cd ${srcdir}/linux-$_basekernel
+  cd ${srcdir}/linux-${_basekernel}
   if [ "$keep_source_code" = "1" ]; then
     echo -n "Copying source code..."
     # Keep the source code
@@ -284,6 +285,11 @@ package_kernel26-rt-ice() {
   # http://bugs.archlinux.org/task/9912
   mkdir -p ${pkgdir}/usr/src/linux-${_kernver}/drivers/media/dvb/dvb-core
   cp drivers/media/dvb/dvb-core/*.h ${pkgdir}/usr/src/linux-${_kernver}/drivers/media/dvb/dvb-core/
+  # add dvb headers for external modules
+  # in reference to:
+  # http://bugs.archlinux.org/task/11194
+  #mkdir -p ${pkgdir}/usr/src/linux-${_kernver}/include/config/dvb/
+  #cp include/config/dvb/*.h ${pkgdir}/usr/src/linux-${_kernver}/include/config/dvb/
   # add dvb headers for http://mcentral.de/hg/~mrec/em28xx-new
   # in reference to:
   # http://bugs.archlinux.org/task/13146
@@ -306,15 +312,15 @@ package_kernel26-rt-ice() {
   # add headers vor virtualbox
   # in reference to:
   # http://bugs.archlinux.org/task/14568
-  cp -a include/drm $pkgdir/usr/src/linux-${_kernver}/include/
+  #cp -a include/drm $pkgdir/usr/src/linux-${_kernver}/include/
   # add headers for broadcom wl
   # in reference to:
   # http://bugs.archlinux.org/task/14568
-  cp -a include/trace $pkgdir/usr/src/linux-${_kernver}/include/
+  #cp -a include/trace $pkgdir/usr/src/linux-${_kernver}/include/
   # add headers for crypto modules
   # in reference to:
   # http://bugs.archlinux.org/task/22081
-  cp -a include/crypto $pkgdir/usr/src/linux-${_kernver}/include/
+  #cp -a include/crypto $pkgdir/usr/src/linux-${_kernver}/include/
   # copy in Kconfig files
   for i in `find . -name "Kconfig*"`; do 
     mkdir -p ${pkgdir}/usr/src/linux-${_kernver}/`echo $i | sed 's|/Kconfig.*||'`
