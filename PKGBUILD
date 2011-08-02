@@ -3,16 +3,19 @@
 # Source Contributor: Giuseppe Calderaro <giuseppecalderaro@gmail.com>
 
 pkgdesc="The Linux Kernel and modules with tuxonice support and rt-patchset"
-depends=('coreutils' 'linux-firmware' 'module-init-tools' 'mkinitcpio>=0.5.20')
+depends=('coreutils' 'linux-firmware' 'module-init-tools>=3.16' 'mkinitcpio>=0,7')
 optdepends=('crda: to set the correct wireless channels of your country')
-pkgname=kernel26-rt-ice
+pkgname=linux-rt-ice
 backup=(etc/mkinitcpio.d/$pkgname.preset)
-_kernelname=${pkgname#kernel26}
-_basekernel=2.6.33
-_minor_patch=9
+_kernelname=${pkgname#linux}
+_basekernel=3.0
+_minor_patch=0
 pkgver=${_basekernel}
-pkgrel=18
+pkgrel=1
 install=$pkgname.install
+provides=('kernel26-rt-ice')
+conflicts=('kernel26-rt-ice')
+replaces=('kernel26-rt-ice')
 makedepends=('xmlto' 'docbook-xsl')
 arch=(i686 x86_64)
 license=('GPL2')
@@ -35,38 +38,34 @@ enable_reiser4=${enable_reiser4:-0}
 ###
 
 ### Files / Versions
-file_rt="patch-2.6.33.9-rt31.bz2"
+file_rt="patch-3.0-rt6.patch.bz2"
 file_reiser4="reiser4-for-2.6.33.patch.bz2"
-file_toi="tuxonice-3.2-for-2.6.33.patch.bz2"
-file_bfs="2.6.33.7-sched-bfs-318.patch"
+file_toi="current-tuxonice-for-3.0.patch.bz2"
+file_bfs="2.6.38.3-sched-bfs-401.patch"
 ###
 
 options=(!strip)
-source=(http://kernel.org/pub/linux/kernel/v2.6/linux-${_basekernel}.tar.bz2
-        http://www.kernel.org/pub/linux/kernel/v2.6/longterm/v2.6.33/patch-${_basekernel}.${_minor_patch}.bz2
+source=(http://kernel.org/pub/linux/kernel/v3.0/linux-${_basekernel}.tar.bz2
         http://www.kernel.org/pub/linux/kernel/projects/rt/${file_rt}
-        http://www.kernel.org/pub/linux/kernel/people/edward/reiser4/reiser4-for-2.6/${file_reiser4}
+        # http://www.kernel.org/pub/linux/kernel/v3.0/patch-${_basekernel}.${_minor_patch}.bz2
+        # http://www.kernel.org/pub/linux/kernel/people/edward/reiser4/reiser4-for-2.6/${file_reiser4}
         http://www.tuxonice.net/files/${file_toi}
-        http://ck.kolivas.org/patches/bfs/${_basekernel}/${file_bfs}
-        kernel26-member-page.patch
+        # http://ck.kolivas.org/patches/bfs/${_basekernel}/${file_bfs}
+        # the main kernel config files
         config config.x86_64
-        $pkgname.preset)
-md5sums=('c3883760b18d50e8d78819c54d579b00'
-         'f6801744832f9cc7c7993fa2265e86c3'
-         '110380e5eeb2fbc019c7232037dc522c'
-         '49da31ea1e6c3ae65f954cd5fc8fcc4e'
-         '4d00f21b71dd195afa00c07a3b4cbfa7'
-         'c358419edc76f33a2623fa8ce80efe16'
-         '0ecef4f750421203a9e4453d1694fd9d'
-         '3194718676dd2759f71d4dd2586af89f'
-         '5c21cbbc34d677dae8c9a5171e1b9663'
-         'b54202c40593240256f40562d6f3aee2')
+        # standard config files for mkinitcpio ramdisk
+        ${pkgname}.preset
+        fix-i915.patch)
+md5sums=('398e95866794def22b12dfbc15ce89c0'
+         '607492a1ea16e9f38c9d71e1106b090f'
+         'afbd01926c57fc5b82ee6034dc9311e5'
+         '6c355b2e1dcffb6ff783069be6570301'
+         '144400971a7a5c4e4d55222dd73a9654'
+         '7c9725208ab6834602c8b9d645ed001d'
+         '263725f20c0b9eb9c353040792d644e5')
 
 build() {
   cd ${srcdir}/linux-$_basekernel
-
-  # Patching for compilation with gcc-4.6 and above (thanks beroal)
-  patch -Np1 -i ${srcdir}/kernel26-member-page.patch
 
   # Applying official patch
   if [ "$_minor_patch" != "0" ] && [ "$_skip_minor_patch" != "1" ] ; then
@@ -101,30 +100,31 @@ build() {
   if [ "${enable_toi}" = "1" ]; then
     echo "Applying ${file_toi%.bz2}"
     # fix to tuxonice patch to work with rt
-    if [ "$realtime_patch" = "1" ]; then
-      bzip2 -dck ${srcdir}/${file_toi} \
-        | sed '/diff --git a\/kernel\/fork.c b\/kernel\/fork.c/,/{/d' \
-        | sed 's/printk(KERN_INFO "PM: Creating hibernation image:\\n/printk(KERN_INFO "PM: Creating hibernation image: \\n/' \
-        | patch -Np1 || { echo "Failed TOI w/rt" ; return 1 ; }
-    else
-      bzip2 -dck ${srcdir}/${file_toi} \
-        | sed 's/printk(KERN_INFO "PM: Creating hibernation image:\\n/printk(KERN_INFO "PM: Creating hibernation image: \\n/' \
-        | patch -Np1 -F4 || { echo "Failed TOI"; return 1 ; }
-    fi
+    #if [ "$realtime_patch" = "1" ]; then
+      #bzip2 -dck ${srcdir}/${file_toi} \
+        #| sed '/diff --git a\/kernel\/fork.c b\/kernel\/fork.c/,/{/d' \
+        #| sed 's/printk(KERN_INFO "PM: Creating hibernation image:\\n/printk(KERN_INFO "PM: Creating hibernation image: \\n/' \
+        #| patch -Np1 || { echo "Failed TOI w/rt" ; return 1 ; }
+    #else
+      #bzip2 -dck ${srcdir}/${file_toi} \
+        #| sed 's/printk(KERN_INFO "PM: Creating hibernation image:\\n/printk(KERN_INFO "PM: Creating hibernation image: \\n/' \
+        #| patch -Np1 -F4 || { echo "Failed TOI"; return 1 ; }
+    #fi
   fi
 
   if [ "${bfs_scheduler}" = "1" ] && [ "${realtime_patch}" = "0" ]; then
     # applying BFS scheduler patch
-    echo "Applying BFS scheduler patch"
-    patch -Np1 -i ${srcdir}/${file_bfs} || { echo "Failed BFS"; return 1 ; }
-    patch -Np1 -i ${srcdir}/${file_bfs_b} || { echo "Failed BFS (file 2)"; return 1 ; }
-    #Applying quick-fix 2.6.37.1 patch for bfs/ck
-    patch -Np1 -i ${srcdir}/2.6.37.1-fix-no-more-unsigned.patch
+    echo "BFS scheduler patch not available yet, sorry"
+    # echo "Applying BFS scheduler patch"
+    # patch -Np1 -i ${srcdir}/${file_bfs} || { echo "Failed BFS"; return 1 ; }
   fi
 
   # remove extraversion
   sed -i 's|^EXTRAVERSION = .*$|EXTRAVERSION =|g' Makefile
   
+  # fix #19234 i1915 display size
+  patch -Np1 -i ${srcdir}/fix-i915.patch
+
   # load configuration for i686 or x86_64
   if [ "$CARCH" = "x86_64" ]; then
     cat ../config.x86_64 >./.config
@@ -148,14 +148,20 @@ build() {
   if [ "${_kernelname}" != "" ]; then
     sed -i "s|CONFIG_LOCALVERSION=.*|CONFIG_LOCALVERSION=\"${_kernelname}\"|g" ./.config
   fi
+  # remove the extraversion from Makefile
+  # this ensures our kernel version is always 3.X-ARCH
+  # this way, minor kernel updates will not break external modules
+  # we need to change this soon, see FS#16702
+  sed -i 's|^EXTRAVERSION = .*$|EXTRAVERSION = |g' Makefile
+  # get kernel version
 
   # hack to prevent output kernel from being marked as dirty or git
-  chmod +x ${srcdir}/linux-${_basekernel}/scripts/setlocalversion
-  sed 's/head=`git rev-parse --verify --short HEAD 2>\/dev\/null`/0/' \
-    ${srcdir}/linux-${_basekernel}/scripts/setlocalversion \
-    > ${srcdir}/linux-${_basekernel}/scripts/setlocalversion.new
-  mv ${srcdir}/linux-${_basekernel}/scripts/setlocalversion.new \
-    ${srcdir}/linux-${_basekernel}/scripts/setlocalversion
+  #chmod +x ${srcdir}/linux-${_basekernel}/scripts/setlocalversion
+  #sed 's/head=`git rev-parse --verify --short HEAD 2>\/dev\/null`/0/' \
+  #  ${srcdir}/linux-${_basekernel}/scripts/setlocalversion \
+  #  > ${srcdir}/linux-${_basekernel}/scripts/setlocalversion.new
+  #mv ${srcdir}/linux-${_basekernel}/scripts/setlocalversion.new \
+  #  ${srcdir}/linux-${_basekernel}/scripts/setlocalversion
 
   make prepare
   # load configuration
@@ -177,7 +183,7 @@ build() {
   make ${MAKEFLAGS} bzImage modules
 }
 
-package_kernel26-rt-ice() {
+package_linux-rt-ice() {
 
   KARCH=x86
   cd ${srcdir}/linux-${_basekernel}
@@ -201,8 +207,8 @@ package_kernel26-rt-ice() {
   mkdir -p ${pkgdir}/{lib/modules,lib/firmware,boot}
   make INSTALL_MOD_PATH=${pkgdir} modules_install
   cp System.map ${pkgdir}/boot/System.map26${_kernelname}
-  cp arch/$KARCH/boot/bzImage ${pkgdir}/boot/vmlinuz26${_kernelname}
-  #  # add vmlinux
+  cp arch/$KARCH/boot/bzImage ${pkgdir}/boot/vmlinuz-${pkgname}
+  # add vmlinux
   install -m644 -D vmlinux ${pkgdir}/usr/src/linux-${_kernver}/vmlinux
 
   # install fallback mkinitcpio.conf file and preset file for kernel
@@ -214,13 +220,15 @@ package_kernel26-rt-ice() {
     -i $startdir/${pkgname}.install
   sed \
     -e "s|source .*|source /etc/mkinitcpio.d/kernel26${_kernelname}.kver|g" \
-    -e "s|default_image=.*|default_image=\"/boot/${pkgname}.img\"|g" \
-    -e "s|fallback_image=.*|fallback_image=\"/boot/${pkgname}-fallback.img\"|g" \
+    -e "s|default_image=.*|default_image=\"/boot/initramfs-${pkgname}.img\"|g" \
+    -e "s|fallback_image=.*|fallback_image=\"/boot/initramfs-${pkgname}-fallback.img\"|g" \
     -i ${pkgdir}/etc/mkinitcpio.d/${pkgname}.preset
 
   echo -e "# DO NOT EDIT THIS FILE\nALL_kver='${_kernver}'" > ${pkgdir}/etc/mkinitcpio.d/${pkgname}.kver
   # remove build and source links
   rm -f ${pkgdir}/lib/modules/${_kernver}/{source,build}
+  # add compat symlink for the kernel image
+  ln -sf vmlinuz-${pkgname} ${pkgdir}/boot/vmlinuz26${_kernelname}
   # remove the firmware
   rm -rf ${pkgdir}/lib/firmware
   # gzip -9 all modules to safe 100MB of space
@@ -238,7 +246,8 @@ package_kernel26-rt-ice() {
     ${pkgdir}/usr/src/linux-${_kernver}/.config
   mkdir -p ${pkgdir}/usr/src/linux-${_kernver}/include
 
-  for i in acpi asm-generic config generated linux math-emu media net pcmcia scsi sound trace video xen; do
+  for i in acpi asm-generic config crypto drm generated linux math-emu \
+    media net pcmcia scsi sound trace video xen; do
     cp -a include/$i ${pkgdir}/usr/src/linux-${_kernver}/include/
   done
 
