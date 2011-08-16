@@ -9,9 +9,9 @@ pkgname=linux-ice
 backup=(etc/mkinitcpio.d/$pkgname.preset)
 _kernelname=${pkgname#linux}
 _basekernel=3.0
-_minor_patch=1
+_minor_patch=2
 pkgver=${_basekernel}
-pkgrel=3
+pkgrel=4
 install=$pkgname.install
 provides=('kernel26-ice')
 conflicts=('kernel26-ice')
@@ -44,7 +44,7 @@ file_bfs="3.0-sched-bfs-406.patch"
 
 options=(!strip)
 source=(http://kernel.org/pub/linux/kernel/v3.0/linux-${_basekernel}.tar.bz2
-        http://www.kernel.org/pub/linux/kernel/v3.0/patch-${_basekernel}.${_minor_patch}.bz2
+        http://www.kernel.org/pub/linux/kernel/v3.0/patch-${_basekernel}.${_minor_patch}.gz
         # http://www.kernel.org/pub/linux/kernel/people/edward/reiser4/reiser4-for-2.6/${file_reiser4}
         http://www.tuxonice.net/files/${file_toi}
         http://ck.kolivas.org/patches/bfs/3.0.0/${file_bfs}
@@ -54,14 +54,14 @@ source=(http://kernel.org/pub/linux/kernel/v3.0/linux-${_basekernel}.tar.bz2
         ${pkgname}.preset
         fix-i915.patch)
 md5sums=('398e95866794def22b12dfbc15ce89c0'
-         'ac49f7907f1fc85fbab92d0f1aa1552a'
+         'd4ff10b7c9a5d8d0aa4c97579c81b7f9'
          'afbd01926c57fc5b82ee6034dc9311e5'
          '0399ec35c4c0998ce423e656094b91ac'
          'c466c85e967fe004455aacd26b89e1fb'
          'e932681c602ba4ddfbbb0fa96c5a7bc5'
          '1d27835b55d02f8cc66507a5ae1a6885'
          '263725f20c0b9eb9c353040792d644e5')
-
+         
 build() {
   cd ${srcdir}/linux-$_basekernel
 
